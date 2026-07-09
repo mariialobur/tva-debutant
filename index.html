@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+<!--
+Prototype pédagogique développé par Mariia Lobur.
+Version de démonstration – usage de test uniquement.
+Profil LinkedIn: https://www.linkedin.com/in/mariia-lobur/
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TVA Suisse — Simulateur Débutant Pro v8.3 corrections expertes · @MariiaLobur</title>
+<meta name="robots" content="noindex,nofollow">
+<title>Déclaration TVA suisse – simulateur interactif débutant | Mariia Lobur</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;font-size:14px;background:#f5f4f0;color:#1a1a18}
@@ -258,6 +264,35 @@ html,body{overflow-x:hidden}
 .guide.compact .gs{padding:3px 10px}
 @media(max-width:720px){.guide.compact .gs{font-size:10px}.hdr-r{min-width:auto}}
 
+/* Auteur / démonstration */
+.hdr-author a{
+  color:rgba(255,255,255,.88);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.38);
+}
+.hdr-author a:hover{
+  color:#fff;
+  border-bottom-color:#fff;
+}
+.demo-footer{
+  max-width:1280px;
+  margin:0 auto 24px;
+  padding:16px 18px;
+  font-size:12px;
+  color:#52524a;
+  text-align:center;
+  line-height:1.6;
+}
+.demo-footer a{
+  color:#2f5f73;
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:1px solid rgba(47,95,115,.28);
+}
+.demo-footer a:hover{
+  border-bottom-color:#2f5f73;
+}
+
 </style>
 </head>
 <body>
@@ -270,7 +305,9 @@ html,body{overflow-x:hidden}
   <div class="hdr-r">
     <div>Progression globale</div>
     <div class="hdr-prog" id="hProg">0 / 8 cas</div>
-    <div class="hdr-author">© 2026 @MariiaLobur</div>
+    <div class="hdr-author">
+      © 2026 <a href="https://www.linkedin.com/in/mariia-lobur/" target="_blank" rel="noopener noreferrer">Mariia Lobur</a>
+    </div>
   </div>
 </header>
 <div class="guide compact" aria-label="Mode d'emploi compact">
@@ -1418,5 +1455,11 @@ function rst(){
 /* ============================================================ INIT */
 renderTabs();renderSB();renderForm();
 </script>
+<footer class="demo-footer">
+  Prototype pédagogique développé par
+  <a href="https://www.linkedin.com/in/mariia-lobur/" target="_blank" rel="noopener noreferrer">Mariia Lobur</a>.<br>
+  Version de démonstration – usage de test uniquement.
+</footer>
+
 </body>
 </html>
