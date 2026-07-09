@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TVA Suisse — Simulateur Débutant Pro v8.3 corrections expertes · @MariiaLobur</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;font-size:14px;background:#f5f4f0;color:#1a1a18}
+:root{
+  --primary:#2f5f73;--primary-dark:#244b5c;--primary-bg:#eef5f7;--danger-bg:#f7ebe7;
+  --bg:#fff;--bg2:#f8f7f4;--bg3:#eeede8;
+  --border:#dddcd8;--border2:#c5c4bc;
+  --text:#1a1a18;--text2:#52524a;--text3:#8c8c84;
+  --green:#1a6b2e;--green-bg:#f0fff4;
+  --amber:#7a4a00;--amber-bg:#fff9f0;
+  --danger:#8a3b2e;--info:#244b5c;
+  --s1:#1a4e8a;--s1b:#e8f0fa;
+  --s2:#8a5200;--s2b:#fff3e0;
+  --s3:#1a6b2e;--s3b:#eaf5ee;
+  --s4:#34495e;--s4b:#eef2f4;
+  --mono:'Courier New',Consolas,monospace;
+  --r:6px;--rl:10px;
+}
+.hdr{background:#111318;color:#fff;padding:12px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.hdr-l h1{font-size:15px;font-weight:600}
+.hdr-l p{font-size:10.5px;opacity:.8;margin-top:2px}
+.hdr-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.22);padding:2px 10px;border-radius:20px;font-size:10px;margin-bottom:5px}
+.hdr-mode{background:rgba(255,255,255,.95);color:#111318;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.hdr-r{text-align:right;font-size:10.5px;opacity:.85}
+.hdr-prog{font-weight:700;font-size:13px;opacity:1;margin-top:2px}
+.hdr-author{font-size:10px;opacity:.65;margin-top:2px}
+.guide{background:var(--s1b);border-bottom:2px solid var(--s1);padding:8px 18px;color:var(--s1)}
+.guide-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px}
+.guide-steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:5px}
+.gs{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;background:#fff;border-radius:20px;border:1px solid #c5d8ff}
+.gs-n{background:var(--s1);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.gloss{background:#fff;border-bottom:1px solid var(--border);padding:6px 18px;display:flex;gap:18px;flex-wrap:wrap;font-size:11px;color:var(--text2)}
+.gt{display:flex;align-items:baseline;gap:5px}
+.gk{font-weight:700;color:var(--text);white-space:nowrap}
+.gv{color:var(--text2)}
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;flex-shrink:0;scrollbar-width:thin}
+.tab{padding:9px 12px;border:none;background:none;cursor:pointer;font-size:11.5px;color:var(--text2);white-space:nowrap;display:flex;align-items:center;gap:5px;border-bottom:2px solid transparent}
+.tab:hover{color:var(--text)}.tab.a{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+.rdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.schip{font-size:9.5px;padding:1px 5px;border-radius:8px;font-weight:600}
+.main{display:grid;grid-template-columns:285px 1fr}
+.sb{background:var(--bg);border-right:1px solid var(--border);padding:16px 14px;display:flex;flex-direction:column;gap:12px;min-height:100vh}
+.fa{padding:16px;background:var(--bg2);display:flex;flex-direction:column;gap:14px}
+.sb-name{font-size:14px;font-weight:700}.sb-meta{font-size:11px;color:var(--text2);margin-top:2px}
+.rb{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;margin-top:6px}
+.sb-task{background:#eef4ff;border:1px solid #c5d8ff;border-radius:var(--r);padding:9px 11px;font-size:12px;color:var(--s1);line-height:1.6;margin-top:4px}
+.sb-task strong{display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.sb-sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:6px}
+.di{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid var(--border);gap:8px}
+.di:last-child{border-bottom:none}
+.di-l{flex:1;font-size:12px}.di-n{display:block;font-size:10px;color:var(--text3);margin-top:1px}
+.di-t{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--bg3);color:var(--text2);margin-left:3px}
+.di-a{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.sb-leg{font-size:10.5px;color:var(--text2);padding:6px 9px;background:var(--bg2);border-left:3px solid var(--primary);border-radius:0 3px 3px 0;line-height:1.5}
+.sb-prog{border-top:1px solid var(--border);padding-top:10px}
+.prog-dots{display:flex;gap:3px;margin-bottom:6px;flex-wrap:wrap}
+.pdot{height:7px;width:20px;border-radius:4px;background:var(--bg3);transition:background .3s}
+.pdot.s100{background:#1a6b2e}.pdot.s80{background:#2a8a3e}.pdot.s50{background:#c6a700}.pdot.s0{background:#cc8800}
+.fc{font-size:12px;color:var(--text2)}.fc b{color:var(--text)}
+.sb-acts{display:flex;flex-direction:column;gap:7px;margin-top:auto;padding-top:10px;border-top:1px solid var(--border)}
+.btn{padding:9px 14px;border:1px solid var(--border2);border-radius:var(--r);background:var(--bg);cursor:pointer;font-size:13px;font-weight:500;color:var(--text);width:100%;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .1s}
+.btn:hover{background:var(--bg2)}.btn:active{background:var(--bg3)}
+.btn-p{background:var(--primary);color:#fff;border-color:var(--primary);font-size:14px;padding:10px 14px}.btn-p:hover{background:var(--primary-dark)}
+.btn-s{padding:6px 12px;font-size:12px}
+.form-info{background:var(--s1b);border:1px solid #c5d8ff;border-radius:var(--r);padding:9px 13px;font-size:11.5px;color:var(--s1);line-height:1.6;margin-bottom:2px}
+.form-info strong{font-weight:700}
+.fc-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.col-hdr{display:grid;grid-template-columns:48px 1fr 150px 120px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.col-hdr>div{padding:6px 10px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.04em;text-transform:uppercase}
+.col-hdr>div:first-child{text-align:center;border-right:1px solid var(--border)}
+.col-hdr>div:nth-child(2){border-right:1px solid var(--border)}
+.col-hdr>div:nth-child(3){text-align:right;border-right:1px solid var(--border)}
+.col-hdr>div:last-child{text-align:right}
+.fsh{color:#fff;padding:7px 14px;font-size:11.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.fsh-s1{background:var(--s1)}.fsh-s2{background:var(--s2)}.fsh-s3{background:var(--s3)}.fsh-s4{background:var(--s4)}
+.fsh-tag{background:rgba(255,255,255,.25);font-size:9px;padding:1px 7px;border-radius:20px;font-weight:500}
+.fr{display:grid;grid-template-columns:48px 1fr 150px 120px;border-bottom:1px solid var(--border);min-height:44px;align-items:stretch}
+.fr:last-child{border-bottom:none}
+.fr.ro{background:var(--bg2)}.fr.ed{background:#fffef8}.fr.cp{background:#f5f4f0}.fr.hi{border-top:2px solid var(--primary)}
+.fr-code{font-size:10px;font-weight:700;color:var(--text3);border-right:1px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg3)}
+.fr-code.primary{color:var(--primary);background:var(--primary-bg)}
+.fr-lbl{border-right:1px solid var(--border);padding:7px 11px;display:flex;flex-direction:column;justify-content:center}
+.fr-lbl-m{font-size:12.5px;color:var(--text);font-weight:500}
+.fr-lbl-s{font-size:10px;color:var(--text3);margin-top:2px;line-height:1.4}
+.fr-lbl-h{font-size:10px;color:#b8860b;margin-top:3px;padding:2px 7px;background:#fffce0;border-radius:3px;display:inline-block}
+.fr-note{font-size:10px;color:var(--s1);margin-top:3px;padding:2px 7px;background:var(--s1b);border-radius:3px;display:inline-block}
+.fr-inp{border-right:1px solid var(--border);padding:5px 7px;display:flex;align-items:center}
+.fr-tva{padding:5px 11px;display:flex;align-items:center;justify-content:flex-end;font-family:var(--mono);font-size:12.5px;color:var(--text2)}
+input.fi{width:100%;border:1.5px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-family:var(--mono);font-size:13px;background:#fff;color:var(--text);text-align:right}
+input.fi:focus{outline:none;box-shadow:0 0 0 3px rgba(47,95,115,.16);border-color:var(--primary)}
+input.fi.ro{background:var(--bg3);color:var(--text2);border-color:var(--border);pointer-events:none}
+input.fi.ue{background:#fffce0;border-color:#c6a700}
+input.fi.ok{background:var(--green-bg);border-color:var(--green)}
+input.fi.er{background:var(--danger-bg);border-color:#b27768}
+.cv{font-family:var(--mono);font-size:12.5px;color:var(--text2)}.cv.hi{font-weight:700;color:var(--primary)}
+.res-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:20px}
+.res-hdr{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:13px;border-bottom:1px solid var(--border)}
+.res-sc{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
+.res-title{font-size:15px;font-weight:700}
+.res-sub{font-size:12px;color:var(--text2);margin-top:3px}
+.fb-item{padding:10px 0;border-bottom:1px solid var(--border)}
+.fb-item:last-child{border-bottom:none}
+.fb-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.fb-name{font-size:13px;font-weight:600}
+.fb-val{font-size:11.5px;color:var(--text2);margin-top:2px}
+.fb-expl{font-size:12px;color:var(--text2);margin-top:8px;padding:9px 12px;background:var(--bg2);border-left:3px solid #4a9eff;border-radius:0 4px 4px 0;line-height:1.7}
+.afc-note{margin-top:12px;padding:10px 12px;background:var(--amber-bg);border-left:3px solid var(--primary);border-radius:0 4px 4px 0;font-size:12.5px;line-height:1.6}
+.res-legal{margin-top:12px;padding-top:11px;border-top:1px solid var(--border);font-size:11px;color:var(--text3)}
+.res-legal a{color:var(--info)}
+.tag-ok{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:#eaf5ee;color:#1a6b2e;font-weight:700;margin-left:5px}
+.tag-er{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--danger-bg);color:var(--danger);font-weight:700;margin-left:5px}
+/* ── FULL FORM BANNER ──────── */
+.fm-banner{background:linear-gradient(135deg,#1a4e8a 0%,#2a6eaa 100%);color:#fff;padding:10px 16px;border-radius:var(--r);margin-bottom:4px;display:flex;align-items:center;gap:12px}
+.fm-banner-icon{font-size:22px;flex-shrink:0}
+.fm-banner-text{font-size:11.5px;line-height:1.55}
+.fm-banner-text strong{font-size:13px;display:block;margin-bottom:2px}
+/* ── FULL FORM PANEL ────────── */
+.ff-card{background:var(--bg);border:2px solid var(--primary);border-radius:var(--rl);overflow:hidden}
+.ff-hdr{background:var(--primary);color:#fff;padding:11px 16px}
+.ff-hdr-title{font-size:14px;font-weight:700}
+.ff-hdr-sub{font-size:10.5px;opacity:.85;margin-top:2px}
+.ff-table{width:100%;border-collapse:collapse}
+.ff-table thead th{padding:5px 10px;font-size:10px;color:var(--text3);background:var(--bg3);font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.ff-sec-hdr td{padding:7px 14px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a4e8a}
+.ffr{border-bottom:1px solid var(--border)}
+.ffr:last-child{border-bottom:none}
+.ff-code{font-size:10px;font-weight:700;color:var(--text3);text-align:center;padding:6px 4px;background:var(--bg3);border-right:1px solid var(--border);vertical-align:middle;width:44px}
+.ff-lbl{padding:6px 12px;border-right:1px solid var(--border);vertical-align:middle}
+.ff-lbl-m{font-size:12px;font-weight:500}
+.ff-lbl-s{font-size:9.5px;color:var(--text3);margin-top:1px;line-height:1.3}
+.ff-amt{padding:5px 12px;font-family:var(--mono);font-size:12.5px;text-align:right;border-right:1px solid var(--border);vertical-align:middle;white-space:nowrap;min-width:120px}
+.ff-tva{padding:5px 12px;font-family:var(--mono);font-size:12.5px;text-align:right;vertical-align:middle;white-space:nowrap;min-width:90px}
+.ff-computed{background:var(--bg2)}
+.ff-subtotal{background:#e8f0fa}
+.ff-subtotal .ff-code{background:#1a4e8a;color:#fff}
+.ff-subtotal .ff-lbl-m{color:#1a4e8a;font-weight:700}
+.ff-subtotal .ff-amt{color:#1a4e8a;font-weight:700}
+.ff-iptotal{background:#eaf5ee}
+.ff-iptotal .ff-code{background:#1a6b2e;color:#fff}
+.ff-iptotal .ff-lbl-m{color:#1a6b2e;font-weight:700}
+.ff-iptotal .ff-amt{color:#1a6b2e;font-weight:700}
+.ff-tvasum{background:#fff3e0}
+.ff-tvasum .ff-code{background:#8a5200;color:#fff}
+.ff-tvasum .ff-lbl-m{color:#8a5200;font-weight:700}
+.ff-tvasum .ff-tva{font-weight:700;font-size:14px;color:#8a5200}
+.ff-result-pay{background:#f7f0ed;border-top:3px solid var(--primary)}
+.ff-result-credit{background:#f0fff4;border-top:3px solid #1a6b2e}
+.ff-result-pay .ff-code{background:var(--primary);color:#fff;font-size:13px;font-weight:700}
+.ff-result-credit .ff-code{background:#1a6b2e;color:#fff;font-size:13px;font-weight:700}
+.ff-result-pay .ff-lbl-m{font-size:13px;font-weight:700;color:var(--primary)}
+.ff-result-credit .ff-lbl-m{font-size:13px;font-weight:700;color:#1a6b2e}
+.ff-result-pay .ff-tva{font-size:16px;font-weight:700;color:var(--primary)}
+.ff-result-credit .ff-tva{font-size:16px;font-weight:700;color:#1a6b2e}
+.ff-badge-ok{display:inline-flex;align-items:center;font-size:9px;padding:1px 6px;border-radius:8px;background:#eaf5ee;color:#1a6b2e;font-weight:700;margin-left:6px;vertical-align:middle}
+.ff-badge-er{display:inline-flex;align-items:center;font-size:9px;padding:1px 6px;border-radius:8px;background:#f7ebe7;color:#8a3b2e;font-weight:700;margin-left:6px;vertical-align:middle}
+.ff-zero{color:#bbb}
+.ff-neg{color:#8a5200}
+.ff-plus{color:#1a6b2e}
+.ff-note{padding:9px 14px;background:#e8f0fa;border-top:1px solid #c5d8ff;font-size:11px;line-height:1.6;color:#1a4e8a}
+.ff-note a{color:var(--info)}
+.ff-note strong{font-weight:700}
+
+.learnmap{background:#fff;border-bottom:1px solid var(--border);padding:9px 18px;display:grid;grid-template-columns:auto repeat(4,1fr);gap:8px;align-items:stretch}
+.lm-title{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--s1);display:flex;align-items:center;padding-right:4px}
+.lm-item{background:#f8f7f4;border:1px solid var(--border);border-radius:10px;padding:7px 9px;display:flex;gap:7px;align-items:flex-start;font-size:11px;line-height:1.35;color:var(--text2)}
+.lm-item strong{background:var(--s1);color:#fff;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.precheck{border:1px solid #c5d8ff;background:#f7fbff;border-radius:10px;padding:10px 13px;color:#1a4e8a;font-size:12px;line-height:1.55}
+.precheck strong{font-size:11px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px}.precheck ul{margin:0;padding-left:18px}.precheck li{margin:3px 0}.precheck-ok{border-color:#cce8d3;background:#f7fff9;color:#1a6b2e}.precheck-warn{border-color:#f0d39a;background:#fffaf0;color:#7a4a00}
+.checklist{background:#f8f7f4;border:1px solid var(--border);border-radius:10px;padding:10px 11px;font-size:11.5px;line-height:1.5;color:var(--text2)}
+.checklist strong{display:block;color:var(--text);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}.checklist div{margin:4px 0}.checklist b{color:var(--s1)}
+
+.legal-disclaimer{background:#fffaf0;border:1px solid #f0d39a;border-left:4px solid #8a5200;border-radius:10px;margin:8px 18px;padding:9px 12px;font-size:11.5px;line-height:1.55;color:#7a4a00}
+.legal-disclaimer strong{color:#5e3800}.legal-disclaimer a{color:var(--info)}
+.concordance-card{margin:10px 14px 12px;background:#f7fbff;border:1px solid #c5d8ff;border-left:4px solid #1a4e8a;border-radius:10px;padding:11px 13px;color:#1a4e8a;font-size:11.5px;line-height:1.6}
+.concordance-card strong{display:block;text-transform:uppercase;letter-spacing:.05em;font-size:10.5px;margin-bottom:6px}.concordance-card ul{margin:0;padding-left:18px}.concordance-card li{margin:3px 0}
+
+@media(max-width:720px){
+  .learnmap{grid-template-columns:1fr;padding:8px 12px}.lm-title{padding:0}.lm-item{font-size:10.5px;padding:6px 8px}
+  .legal-disclaimer{margin:7px 12px;font-size:10.8px;padding:8px 10px}
+  .precheck{font-size:11px;padding:8px 10px}
+  .ff-table,.ff-table thead,.ff-table tbody,.ff-table tr,.ff-table th,.ff-table td{display:block;width:100%}
+  .ff-table thead{display:none}.ffr{border:1px solid var(--border);border-radius:9px;margin:7px 8px;overflow:hidden;background:#fff}.ff-code{width:auto;text-align:left;border-right:none;border-bottom:1px solid var(--border);padding:5px 8px}.ff-lbl{border-right:none;border-bottom:1px solid var(--border);padding:6px 8px}.ff-amt,.ff-tva{border-right:none;text-align:left;padding:6px 8px;min-width:0}.ff-sec-hdr{border-radius:0;margin:10px 0 4px 0}.ff-sec-hdr td{margin:0;border-radius:0}.ff-result-pay,.ff-result-credit{border-width:2px}
+}
+
+/* ── V8: MODE GUIDÉ / FORMULAIRE + STATS + EXAMEN ────────── */
+.modebar{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.modebar-title{font-size:12px;color:var(--text2);line-height:1.45}.modebar-title strong{display:block;color:var(--text);font-size:13px}
+.mode-actions{display:flex;gap:6px;flex-wrap:wrap}.mode-btn{border:1px solid var(--border2);background:#fff;border-radius:20px;padding:6px 10px;font-size:11.5px;font-weight:700;cursor:pointer;color:var(--text2)}
+.mode-btn.a{background:var(--primary);border-color:var(--primary);color:#fff}.mode-btn:hover{background:var(--primary-bg);color:var(--primary)}.mode-btn.a:hover{background:var(--primary-dark);color:#fff}
+.stats-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:8px 10px;font-size:11.5px;color:var(--text2);line-height:1.5}
+.stats-card strong{display:block;color:var(--text);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}.stat-line{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--border);padding-top:4px;margin-top:4px}.stat-line:first-of-type{border-top:none;margin-top:0;padding-top:0}.stat-bad{color:var(--danger);font-weight:700}.stat-good{color:var(--green);font-weight:700}
+.exam-card{background:#fff;border:2px solid var(--primary);border-radius:var(--rl);overflow:hidden;margin-top:12px}.exam-hdr{background:#111318;color:#fff;padding:12px 15px}.exam-hdr-title{font-size:14px;font-weight:700}.exam-hdr-sub{font-size:11px;opacity:.82;margin-top:2px;line-height:1.45}.exam-body{padding:14px}.exam-q{border:1px solid var(--border);border-radius:var(--r);padding:10px 11px;margin-bottom:9px;background:var(--bg2)}.exam-q strong{display:block;font-size:12.5px;margin-bottom:7px}.exam-opt{display:block;margin:5px 0;font-size:12px;color:var(--text2);cursor:pointer}.exam-opt input{margin-right:6px}.exam-result{margin-top:10px;padding:10px 12px;border-radius:var(--r);font-size:12px;line-height:1.6}.exam-ok{background:var(--green-bg);color:var(--green);border:1px solid #b8dfc2}.exam-warn{background:var(--amber-bg);color:var(--amber);border:1px solid #ead3aa}.exam-bad{background:var(--danger-bg);color:var(--danger);border:1px solid #e0bfb8}
+@media(max-width:720px){.modebar{align-items:flex-start}.mode-actions{width:100%}.mode-btn{flex:1}.exam-body{padding:10px}.exam-q{padding:9px}}
+
+/* ── MOBILE ────────────────── */
+@media(max-width:720px){
+  .main{grid-template-columns:1fr}
+  .sb{min-height:auto;border-right:none;border-bottom:1px solid var(--border);max-height:300px;overflow-y:auto}
+  .fa{padding:10px;gap:10px}
+  .col-hdr{grid-template-columns:36px 1fr 95px}
+  .col-hdr>div:nth-child(4){display:none}
+  .fr{grid-template-columns:36px 1fr 95px}
+  .fr-tva{display:none}
+  .fr-code{font-size:9px;min-width:36px}
+  .fr-lbl-m{font-size:11.5px}
+  .fr-lbl-s{font-size:8.5px;color:var(--text3)}
+  .fr-lbl{padding:5px 8px}
+  .fr-inp{padding:3px 5px}
+  input.fi{font-size:12px;padding:5px 6px}
+  .fsh{font-size:10.5px;padding:6px 10px}
+  .fsh-tag{display:none}
+  .tabs{font-size:10.5px}
+  .tab{padding:8px 9px;font-size:10px}
+  .hdr-l h1{font-size:13.5px}
+  .guide{padding:7px 12px}
+  .guide-steps{gap:6px}
+  .gs{font-size:10px;padding:2px 7px}
+  .gloss{padding:5px 12px;gap:10px;font-size:10.5px}
+  .sb-acts{flex-direction:row;flex-wrap:wrap;gap:6px}
+  .sb-acts .btn{flex:1;min-width:100px;font-size:12px;padding:7px 6px}
+  .sb-acts .btn-p{font-size:12.5px}
+  .form-info{font-size:11px;padding:7px 10px}
+  .ff-table{font-size:11px}
+  .ff-amt,.ff-tva{padding:4px 7px;min-width:70px}
+  .ff-lbl{padding:4px 8px}
+  .ff-lbl-s{display:none}
+}
+
+/* UX compact v14: working screen first, support blocks at bottom */
+html,body{overflow-x:hidden}
+.hdr{padding:9px 18px}
+.hdr-l h1{font-size:14.5px}.hdr-l p{font-size:10px}.hdr-badge{font-size:9.5px;margin-bottom:4px}.hdr-prog{font-size:12px}
+.guide{padding:7px 18px}.guide-top{font-size:11px}.guide-steps{gap:7px;margin-top:4px}.gs{font-size:10.5px;padding:2px 8px}.gs-n{width:17px;height:17px;font-size:9px}
+.tabs{position:sticky;top:0;z-index:20;background:var(--bg2);box-shadow:0 1px 0 var(--border);max-width:100%}
+.learning-footer{background:#fff;border-top:1px solid var(--border);padding:14px 18px 20px;display:grid;gap:10px}
+.support-details{border:1px solid var(--border);border-radius:10px;background:#fff;overflow:hidden}
+.support-details summary{cursor:pointer;list-style:none;padding:10px 13px;font-size:12px;font-weight:800;color:var(--primary);letter-spacing:.02em;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.support-details summary::-webkit-details-marker{display:none}
+.support-details summary::after{content:'+';font-size:16px;color:var(--text3);font-weight:700}
+.support-details[open] summary::after{content:'–'}
+.support-details .gloss,.support-details .learnmap{border-bottom:none;padding:0 13px 13px;margin:0}
+.support-details .gloss{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;background:#fff}
+.support-details .learnmap{display:grid;grid-template-columns:auto repeat(4,1fr);gap:8px;background:#fff}
+.learning-footer .legal-disclaimer{margin:0;background:#fffaf0}
+@media(max-width:720px){
+  .hdr{padding:8px 12px}.hdr-l h1{font-size:13px}.hdr-l p{display:none}.hdr-badge{font-size:9px}.guide{padding:6px 12px}.guide-top{display:none}.guide-steps{gap:5px}.gs{font-size:9.8px;padding:2px 6px}.tabs{top:0}.learning-footer{padding:10px 12px 14px}.support-details .learnmap{grid-template-columns:1fr}.support-details .gloss{font-size:10.5px;gap:9px}
+}
+
+/* UX compact v2 — footer cadré et aide déplacée hors du premier écran */
+.learning-footer{max-width:1280px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border)}
+.guide.compact .guide-steps{margin-top:0}
+.guide.compact .gs{padding:3px 10px}
+@media(max-width:720px){.guide.compact .gs{font-size:10px}.hdr-r{min-width:auto}}
+
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-badge">&#127464;&#127469; AFC — Administration fédérale des contributions</div>
+    <h1>Simulateur de décompte TVA suisse — <span class="hdr-mode">&#127891; MODE DÉBUTANT</span></h1>
+    <p>Méthode effective · Niveau débutant · Taux depuis 01.01.2024 · Montants en CHF HT · ePortal AFC</p>
+  </div>
+  <div class="hdr-r">
+    <div>Progression globale</div>
+    <div class="hdr-prog" id="hProg">0 / 8 cas</div>
+    <div class="hdr-author">© 2026 @MariiaLobur</div>
+  </div>
+</header>
+<div class="guide compact" aria-label="Mode d'emploi compact">
+  <div class="guide-steps">
+    <div class="gs"><span class="gs-n">1</span>Lisez le cas</div>
+    <div class="gs"><span class="gs-n">2</span>Saisissez les montants HT</div>
+    <div class="gs"><span class="gs-n">3</span>Vérifiez</div>
+    <div class="gs"><span class="gs-n">4</span>Analysez les erreurs et le décompte TVA pédagogique</div>
+  </div>
+</div>
+<div class="tabs" id="tabs"></div>
+<div class="main">
+  <aside class="sb" id="sb"></aside>
+  <div class="fa" id="fa">
+    <div id="formWrap"></div>
+    <div id="precheckWrap"></div>
+    <div id="resWrap"></div>
+  </div>
+</div>
+
+
+<div class="learning-footer" aria-label="Aide pédagogique et limites du simulateur">
+  <details class="support-details">
+    <summary>Glossaire TVA rapide</summary>
+    <div class="gloss">
+      <div class="gt"><span class="gk">HT</span><span class="gv">= Hors Taxe (sans TVA). Dans ce module, les montants à saisir sont en CHF HT.</span></div>
+      <div class="gt"><span class="gk">TTC</span><span class="gv">= Toutes Taxes Comprises. Prix affiché au client final.</span></div>
+      <div class="gt"><span class="gk">Contre-prestation</span><span class="gv">= ce que l’entreprise reçoit en échange de sa prestation.</span></div>
+      <div class="gt"><span class="gk">IP</span><span class="gv">= Impôt préalable, c’est-à-dire TVA payée sur les achats professionnels.</span></div>
+      <div class="gt"><span class="gk">N° TVA</span><span class="gv">= CHE-xxx.xxx.xxx MWST/TVA — à vérifier sur uid.admin.ch.</span></div>
+      <div class="gt"><span class="gk">Méthode effective</span><span class="gv">= TVA collectée sur ventes − impôt préalable réel sur achats.</span></div>
+      <div class="gt"><span class="gk">TDFN / TaF</span><span class="gv">= méthodes simplifiées séparées, non travaillées dans le module débutant.</span></div>
+    </div>
+  </details>
+  <details class="support-details">
+    <summary>Parcours Débutant Pro</summary>
+    <div class="learnmap" aria-label="Parcours pédagogique">
+      <div class="lm-title">Parcours</div>
+      <div class="lm-item"><strong>1</strong><span>Comprendre ch.200, ch.302 et IP ch.400.</span></div>
+      <div class="lm-item"><strong>2</strong><span>Ventiler les 3 taux TVA sans mélanger restaurant, denrées et hébergement.</span></div>
+      <div class="lm-item"><strong>3</strong><span>Traiter remises, activités exclues, exportations et crédit TVA.</span></div>
+      <div class="lm-item"><strong>4</strong><span>Remplir un premier décompte TVA pédagogique avec contrôle métier.</span></div>
+    </div>
+  </details>
+  <details class="support-details">
+    <summary>Limites pédagogiques et dépôt officiel AFC</summary>
+    <div class="legal-disclaimer">
+      <strong>Note pédagogique importante:</strong> ce simulateur utilise un décompte TVA pédagogique inspiré du formulaire AFC pour l’apprentissage. Le vrai dépôt doit toujours être effectué dans l’ePortal AFC selon le formulaire et les instructions AFC en vigueur. Les cas ne remplacent pas une analyse TVA complète, notamment pour les prestations transfrontalières, les exclusions, les subventions et les corrections d’impôt préalable.
+    </div>
+  </details>
+</div>
+
+<script>
+/* ============================================================
+   TVA Débutant Pro v8.3 — © 2026 @MariiaLobur
+   Version v8.3 UX compact: écran de travail prioritaire, aide déplacée en bas,
+   micro-contrôles pédagogiques, checklists par cas et meilleure lecture mobile.
+   Sources: LTVA RS 641.20 · OTVA RS 641.201
+   ============================================================ */
+
+const CASES = [
+/* ── CAS A: Consultant solo ── */
+{
+  id:"A", tab:"CAS A · Assujettissement",
+  title:"Thomas Müller — Premier décompte volontaire",
+  entity:"Thomas Müller, Consultant indépendant",
+  sector:"Conseil en management", loc:"Berne", period:"Q1 2026",
+  risk:"v", rl:"Niveau débutant — seuil + méthode effective", fullForm:false,
+  show:['ca200','ca302','ip400'],
+  checks:["Qualification avant formulaire: Thomas est sous le seuil annuel prévisible de CHF 100'000", "L'assujettissement est volontaire: ne pas confondre avec une obligation TVA", "ch.200 = ch.302 car tout est imposable à 8,1% et aucune déduction n'existe", "ch.400 exige des factures fournisseurs conformes"],
+  infoBox:"<strong>&#128073; Réflexe n°1 avant le décompte TVA:</strong><br>Avant de remplir une case, on qualifie la situation: l'entreprise est-elle assujettie obligatoirement, volontairement ou encore libérée de l'assujettissement? Ici, le CA prévisible reste sous CHF 100'000 par année, mais Thomas renonce à la libération et s'inscrit volontairement. Ensuite seulement, on remplit le décompte pédagogique.",
+  task:"D'abord, identifiez pourquoi l'assujettissement est volontaire. Ensuite, saisissez le CA total au ch.200, le même montant au ch.302, et l'impôt préalable au ch.400.",
+  desc:"Premier décompte volontaire: activité entièrement imposable, un seul taux (8,1%), aucune exclusion. Le CA du trimestre est de CHF 22'000 et la prévision annuelle est de CHF 88'000: sous le seuil usuel, mais Thomas choisit l'assujettissement volontaire pour pouvoir facturer la TVA et récupérer l'IP.",
+  leg:"Art. 10 LTVA (assujettissement et seuil) · Art. 11 LTVA (renonciation à la libération / assujettissement volontaire) · Art. 25 al.1 LTVA (8,1%) · Art. 28 al.1 LTVA (IP)",
+  given:[
+    {l:"CA honoraires facturés jan.–mars 2026",a:22000,n:"Montants en HT. Prévision annuelle: CHF 88'000 → sous le seuil usuel, inscription volontaire.",t:"8.1%"},
+    {l:"TVA sur factures d'achat (loyer, IT, télécom)",a:900,n:"IP = TVA figurant sur les factures fournisseurs conformes, avec N° TVA si requis."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:22000,h:"CA total HT du trimestre = CHF 22'000",tol:1},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:22000,h:"CA imposable 8,1% = ch.200 entier = CHF 22'000",tol:1},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:900,h:"TVA sur achats = CHF 900",tol:1},
+    ip405:{v:0,e:0},ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = total des contre-prestations HT de la période: CHF 22'000. Point pédagogique: ce cas est volontaire, car la prévision annuelle reste sous CHF 100'000.",
+    ca302:"Ch.302 = CA au taux normal 8,1%. Aucune exclusion, aucune déduction: ch.302 = ch.200 = CHF 22'000. TVA = CHF 1'782.",
+    ip400:"Ch.400 = impôt préalable sur les achats: CHF 900. Condition: lien avec l'activité imposable et justificatifs conformes.",
+    result:"Résultat: CHF 1'782 − CHF 900 = <strong>CHF 882 à verser</strong>. Réflexe appris: ne pas ouvrir le formulaire avant d'avoir qualifié l'assujettissement. Ici: volontaire, pas obligatoire."
+  }
+},
+/* ── CAS B: Boulangerie ── */
+{
+  id:'B', tab:"CAS B · 2 taux",
+  title:"Boulangerie Schmid — 2 taux TVA",
+  entity:"Boulangerie Schmid Sàrl",
+  sector:"Alimentation", loc:"Lucerne", period:"Q1 2026",
+  risk:"v", rl:"Niveau débutant", fullForm:false,
+  show:['ca200','ca302','ca312','ip400'],
+  checks:["ch.302 + ch.312 doit être égal au ch.200","Service consommé sur place = 8,1%","Denrées alimentaires à emporter = 2,6%"],
+  infoBox:"<strong>&#128073; Deux taux = deux cases:</strong> Répartissez le CA total (ch.200) entre ch.302 (8,1%) et ch.312 (2,6%). Vérification: ch.302 + ch.312 = ch.289 = ch.200 quand aucune exclusion.",
+  task:"Répartissez les revenus entre ch.200, ch.302 (service 8,1%) et ch.312 (denrées 2,6%). Quatre champs.",
+  desc:"Deux activités, deux taux. Critère AFC: la prestation PRÉPONDÉRANTE détermine le taux. Service accompagnatoire = 8,1%. Denrée vendue comme marchandise = 2,6%.",
+  leg:"Art. 25 al.1 LTVA (8,1% — service) · Art. 25 al.2 let. a LTVA (2,6% — denrées alimentaires sans service)",
+  given:[
+    {l:"Café, boissons, sandwiches avec service (commande, plateau)",a:35000,n:"Prestation de service: client servi → 8,1%",t:"8.1%"},
+    {l:"Pain, croissants, gâteaux emballés à emporter",a:95000,n:"Denrée vendue sans service → 2,6% (art. 25 al.2 let. a LTVA)",t:"2.6%"},
+    {l:"TVA sur factures d'achat (farine, énergie)",a:4100,n:"100% déductible (art. 28 LTVA)"}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:130000,h:"CA total = service (35'000) + denrées (95'000) = 130'000",tol:1},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:35000,h:"Service café/comptoir avec accompagnement → 8,1% = 35'000",tol:1},
+    ca312:{v:null,e:1,a:95000,h:"Denrées alimentaires emballées → 2,6% = 95'000",tol:1},
+    ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:4100,h:"TVA sur achats = 4'100",tol:1},
+    ip405:{v:0,e:0},ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = CA total HT des deux activités: service (35'000) + denrées (95'000) = CHF 130'000.",
+    ca302:"Ch.302 = 8,1% pour la PRESTATION DE SERVICE (café, sandwiches avec service). CHF 35'000 × 8,1% = CHF 2'835.",
+    ca312:"Ch.312 = 2,6% pour les DENRÉES ALIMENTAIRES emballées. CHF 95'000 × 2,6% = CHF 2'470.",
+    ip400:"Ch.400 = TVA sur achats = CHF 4'100 (art. 28 LTVA).",
+    result:"TVA due: CHF 5'305. IP: CHF 4'100. Résultat: <strong>CHF 1'205 à verser</strong>. RÈGLE: 8,1% = service / 2,6% = denrée. Vérification: 35'000 + 95'000 = 130'000 = ch.200 ✓"
+  }
+},
+/* ── CAS C: Remises ── */
+{
+  id:'C', tab:"CAS C · Remises",
+  title:"Quincaillerie Martin — Remises & retours",
+  entity:"Quincaillerie Martin SA",
+  sector:"Commerce de détail", loc:"Neuchâtel", period:"Q2 2026",
+  risk:"v", rl:"Niveau débutant", fullForm:false,
+  show:['ca200','ca230','ca302','ip400'],
+  checks:["ch.200 reste le chiffre d’affaires brut avant remises","ch.230 regroupe remises, retours et notes de crédit HT","ch.302 = ch.200 − ch.230"],
+  infoBox:"<strong>&#128073; Nouveau: ch.230 — Diminutions de la contre-prestation</strong><br>Les remises et retours réduisent le CA imposable → déduits au ch.230. Vérification: ch.302 = ch.200 − ch.230.",
+  task:"Le CA brut (ch.200) doit être réduit des remises et retours (ch.230). Calculez le CA net imposable (ch.302). Quatre champs.",
+  desc:"Les remises accordées aux clients et les retours de marchandises réduisent la contre-prestation reçue. La TVA se calcule sur le CA NET après déductions.",
+  leg:"Art. 40 LTVA (diminutions de la contre-prestation) · Art. 25 al.1 LTVA (8,1%)",
+  given:[
+    {l:"CA brut total facturé (avant remises)",a:175000,n:"CA total facturé aux clients — à mettre au ch.200",t:"8.1%"},
+    {l:"Remises accordées aux clients professionnels",a:6000,n:"Réductions commerciales → réduisent la contre-prestation → ch.230",t:"ch.230"},
+    {l:"Retours de marchandises (notes de crédit émises)",a:4000,n:"Avoirs pour marchandises retournées → ch.230",t:"ch.230"},
+    {l:"TVA sur factures d'achat",a:8500,n:"100% déductible (art. 28 LTVA)"}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:175000,h:"CA brut facturé = 175'000 (avant toute déduction)",tol:1},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},
+    ca230:{v:null,e:1,a:10000,h:"Remises (6'000) + retours (4'000) = 10'000",tol:50},
+    ca302:{v:null,e:1,a:165000,h:"CA net = 175'000 − 10'000 = 165'000",tol:50},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:8500,h:"TVA sur achats = 8'500",tol:1},
+    ip405:{v:0,e:0},ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = CA BRUT facturé = CHF 175'000. Toujours le montant facturé total, avant remises. Les remises sont déduites séparément au ch.230.",
+    ca230:"Ch.230 = remises CHF 6'000 + retours CHF 4'000 = CHF 10'000 (toujours HT). Réduisent la base TVA. ch.280 = 10'000.",
+    ca302:"Ch.302 = CA NET = ch.200 − ch.230 = CHF 165'000. TVA = 165'000 × 8,1% = CHF 13'365. Vérification: ch.302 = ch.289 = 165'000 ✓",
+    ip400:"Ch.400 = TVA sur achats = CHF 8'500.",
+    result:"TVA due: CHF 13'365 − IP CHF 8'500 = <strong>CHF 4'865 à verser</strong>. RÈGLE: la TVA se calcule toujours sur le CA NET (après remises), jamais sur le CA brut."
+  }
+},
+/* ── CAS D: Hôtel 3 taux ── */
+{
+  id:'D', tab:"CAS D · Hôtel 3 taux",
+  title:"Hôtel Beauséjour — Les 3 taux en pratique",
+  entity:"Hôtel Beauséjour Sàrl",
+  sector:"Hôtellerie & Restauration", loc:"Montreux (VD)", period:"Q1 2026",
+  risk:"v", rl:"Niveau débutant", fullForm:false,
+  show:['ca200','ca302','ca312','ca342','ip400'],
+  checks:["3,8% uniquement pour l’hébergement","Restaurant et boissons servies restent à 8,1%","ch.302 + ch.312 + ch.342 = ch.200"],
+  infoBox:"<strong>&#128073; Les 3 taux TVA suisses (depuis 01.01.2024):</strong><br>· <strong>8,1%</strong> (normal) — ch.302 — services, restaurant, la plupart des prestations<br>· <strong>2,6%</strong> (réduit) — ch.312 — denrées alimentaires, médicaments (règles ESTV), livres<br>· <strong>3,8%</strong> (spécial) — ch.342 — <u>HÉBERGEMENT UNIQUEMENT</u> (nuitées, apparts. vacances)<br>Vérification: ch.302 + ch.312 + ch.342 = ch.289 = ch.200",
+  task:"Répartissez les revenus de l'hôtel entre les 3 taux. Cinq champs. Attention: 3,8% = nuitées seulement, pas le restaurant.",
+  desc:"Les 3 taux TVA suisses réunis en une entreprise. Règle absolue: 3,8% = hébergement seulement. Le restaurant de l'hôtel reste à 8,1% même dans le même bâtiment.",
+  leg:"Art. 25 al.1 LTVA (8,1%) · Art. 25 al.2 LTVA (2,6%) · Art. 25 al.4 LTVA (3,8% hébergement)",
+  given:[
+    {l:"Nuitées et séjours (chambres)",a:180000,n:"HÉBERGEMENT → 3,8% (art. 25 al.4 LTVA). Uniquement les nuitées.",t:"3.8%"},
+    {l:"Restaurant — repas et boissons avec service",a:70000,n:"SERVICE RESTAURATION → 8,1%. Même dans un hôtel.",t:"8.1%"},
+    {l:"Boutique — produits alimentaires emballés à emporter",a:15000,n:"DENRÉES EMBALLÉES → 2,6% (art. 25 al.2 let. a LTVA).",t:"2.6%"},
+    {l:"TVA sur factures d'achat",a:7200,n:"100% déductible (toutes activités imposables)"}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:265000,h:"CA total = 180'000 + 70'000 + 15'000 = 265'000",tol:1},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:70000,h:"Restaurant (service avec service) → 8,1% = 70'000",tol:1},
+    ca312:{v:null,e:1,a:15000,h:"Boutique alimentaire emballée → 2,6% = 15'000",tol:1},
+    ca342:{v:null,e:1,a:180000,h:"Nuitées/hébergement → 3,8% = 180'000",tol:1},
+    ip400:{v:null,e:1,a:7200,h:"TVA sur achats = 7'200",tol:1},
+    ip405:{v:0,e:0},ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = 180'000 + 70'000 + 15'000 = CHF 265'000.",
+    ca302:"Ch.302 = 8,1% RESTAURATION avec service. CHF 70'000 × 8,1% = CHF 5'670.",
+    ca312:"Ch.312 = 2,6% denrées emballées. CHF 15'000 × 2,6% = CHF 390.",
+    ca342:"Ch.342 = 3,8% HÉBERGEMENT SEULEMENT. CHF 180'000 × 3,8% = CHF 6'840. Vérification: 70'000+15'000+180'000 = 265'000 = ch.200 ✓",
+    ip400:"Ch.400 = TVA sur achats = CHF 7'200. 100% déductible.",
+    result:"TVA due: 5'670+390+6'840 = CHF 12'900. IP: CHF 7'200. Résultat: <strong>CHF 5'700 à verser</strong>."
+  }
+},
+/* ── CAS E: Activités mixtes ── */
+{
+  id:'E', tab:"CAS E · Activités exclues",
+  title:"Cabinet Dr. Weber — Activités mixtes",
+  entity:"Cabinet médical Dr. Weber",
+  sector:"Santé", loc:"Zurich", period:"Q2 2026",
+  risk:"o", rl:"Niveau intermédiaire", fullForm:false,
+  show:['ca200','ca225','ca302','ip400','ip405'],
+  checks:["Identifier l’activité exclue avant de calculer la TVA","ch.225 diminue le CA imposable","IP liée à l’activité exclue: correction ch.405 obligatoire"],
+  infoBox:"<strong>&#128073; Nouveaux chiffres: ch.225 et ch.405</strong><br>· Ch.225 = activités exclues du champ TVA → déduits du CA imposable (ch.280)<br>· Ch.405 = correction de l'IP: l'IP lié aux activités exclues N'EST PAS déductible<br><strong>Logique:</strong> (1) tout l'IP au ch.400, (2) déduire la part non déductible au ch.405.<br><strong>Différence fondamentale — EXCLU (ch.225) vs EXONÉRÉ (ch.221):</strong><br>Exclu = IP perdu. Exonéré (export) = IP conservé.",
+  task:"Saisissez le CA total (ch.200), les consultations médicales exclues (ch.225), le CA location imposable (ch.302), l'IP total (ch.400) et l'IP non déductible (ch.405). Cinq champs.",
+  desc:"Activités mixtes: consultations médicales EXCLUES (art. 21 al.2 ch.2 LTVA) + location avec option imposable (8,1%). Une activité exclue = pas de TVA collectée + IP correspondant perdu.",
+  leg:"Exclusion médicale: art. 21 al.2 ch.2 LTVA · Option imposition: art. 22 LTVA · Correction IP: art. 29-30 LTVA",
+  given:[
+    {l:"Consultations médicales (médecin reconnu LPMéd)",a:120000,n:"EXCLUES (art. 21 al.2 ch.2 LTVA) → ch.225. Pas de TVA + IP lié NON déductible.",t:"EXCLU"},
+    {l:"Location d'une salle à un autre cabinet (avec option TVA)",a:24000,n:"Option exercée (art. 22 LTVA) → IMPOSABLE 8,1%. IP sur charges déductible.",t:"8.1%"},
+    {l:"IP lié aux consultations médicales",a:5000,n:"NON déductible (art. 29 LTVA). Inclus ch.400, à corriger ch.405."},
+    {l:"IP lié à la location (charges, entretien salle)",a:1800,n:"100% déductible. Total ch.400 = 5'000 + 1'800 = 6'800."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:144000,h:"CA total = consultations (120'000) + location (24'000) = 144'000",tol:50},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},
+    ca225:{v:null,e:1,a:120000,h:"Consultations médicales exclues → ch.225 = 120'000",tol:100},
+    ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:24000,h:"Location avec option 8,1% → ch.302 = 24'000",tol:50},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:6800,h:"IP total: médecine (5'000) + location (1'800) = 6'800",tol:50},
+    ip405:{v:null,e:1,a:5000,h:"IP médecine non déductible (activité exclue) → ch.405 = 5'000",tol:200},
+    ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = consultations (120'000) + location (24'000) = CHF 144'000. Toutes recettes ici d'abord, même les exclues.",
+    ca225:"Ch.225 (art. 21 al.2 ch.2 LTVA): actes médicaux exclus. Double sanction: (1) pas de TVA collectée ET (2) IP lié perdu. ch.289 = 144'000 − 120'000 = 24'000.",
+    ca302:"Ch.302 = location imposable = CHF 24'000. TVA = 24'000 × 8,1% = CHF 1'944.",
+    ip400:"Ch.400 = IP total: médecine (5'000) + location (1'800) = CHF 6'800. Mettre d'abord TOUT l'IP ici, puis corriger ch.405.",
+    ip405:"Ch.405 = IP médecine non déductible: CHF 5'000. IP net = 6'800 − 5'000 = CHF 1'800.",
+    result:"TVA: CHF 1'944 − IP net CHF 1'800 = <strong>CHF 144 à verser</strong>. Si le cabinet investit en matériel médical, l'IP sur ce matériel est perdu (activité exclue)."
+  }
+},
+/* ── CAS F: Exportation ── */
+{
+  id:'F', tab:"CAS F · Exportation",
+  title:"SwissMade SA — Exportation vers l'UE",
+  entity:"SwissMade SA",
+  sector:"Industrie / Export", loc:"Bâle", period:"Q2 2026",
+  risk:"o", rl:"Niveau intermédiaire", fullForm:false,
+  show:['ca200','ca221','ca302','ip400'],
+  checks:["Conserver la preuve d’exportation ou du lieu de prestation","ch.221 ne crée pas de TVA suisse collectée","L’IP reste en principe conservé pour les opérations exonérées"],
+  infoBox:"<strong>&#128073; Nouveau: ch.221 — Exportations exonérées</strong><br>Exportations EXONÉRÉES: pas de TVA CH collectée, MAIS l'IP reste 100% déductible.<br><strong>Différence fondamentale:</strong><br>&#10007; Exclu (ch.225) = IP perdu<br>&#10003; Exonéré / export (ch.221) = IP CONSERVÉ<br>Vérification: ch.302 = ch.200 − ch.221",
+  task:"CA total (ch.200), exportations exonérées (ch.221), CA imposable Suisse (ch.302), IP (ch.400). Quatre champs.",
+  desc:"Les exportations hors Suisse sont exonérées de TVA CH (art. 23 LTVA). Exonéré ≠ Exclu: l'IP est intégralement conservé. Preuve d'exportation obligatoire (document douanier, CMR).",
+  leg:"Exportations: art. 23 LTVA (IP conservé) · Art. 25 al.1 LTVA (8,1% ventes CH) · Art. 29 al.1 let. a LTVA",
+  given:[
+    {l:"Ventes à clients suisses (HT)",a:240000,n:"Territoire suisse → imposable 8,1%",t:"8.1%"},
+    {l:"Exportations vers Allemagne et France",a:110000,n:"EXONÉRÉES (art. 23 LTVA) → ch.221. Pas de TVA CH + IP CONSERVÉ. Preuve: document douanier obligatoire.",t:"EXON."},
+    {l:"TVA sur factures d'achat suisses",a:18000,n:"100% déductible — exportations conservent le droit à l'IP"}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:350000,h:"CA total = ventes CH (240'000) + exports (110'000) = 350'000",tol:50},
+    ca205:{v:0,e:0},
+    ca221:{v:null,e:1,a:110000,h:"Exportations UE → ch.221 (exonérées) = 110'000",tol:50},
+    ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:240000,h:"Ventes clients suisses → ch.302 (8,1%) = 240'000",tol:50},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:18000,h:"TVA sur achats = 18'000",tol:50},
+    ip405:{v:0,e:0},ip410:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = ventes CH (240'000) + exports (110'000) = CHF 350'000. Toutes recettes ici, même les exonérées.",
+    ca221:"Ch.221 — EXONÉRÉ (art. 23 LTVA): livraison à l'étranger = libérée de TVA CH. IP CONSERVÉ (différence fondamentale vs ch.225). ch.280 = 110'000. ch.289 = 240'000. PREUVE OBLIGATOIRE.",
+    ca302:"Ch.302 = ventes suisses = CHF 240'000. TVA = CHF 19'440. Vérification: ch.302 = ch.289 = 240'000 ✓",
+    ip400:"Ch.400 = CHF 18'000. 100% déductible même pour la partie exportée.",
+    result:"TVA: CHF 19'440 − IP CHF 18'000 = <strong>CHF 1'440 à verser</strong>. RÉSUMÉ CLÉ: EXONÉRÉ export = IP conservé. EXCLU médecine = IP perdu. C'est l'erreur la plus coûteuse lors des contrôles AFC."
+  }
+},
+/* ── CAS F.5: Crédit TVA ── */
+{
+  id:"F5", tab:"CAS F.5 · Crédit TVA &#128200;",
+  title:"Centre Médical Lémanique SA — Résultat = crédit",
+  entity:"Centre Médical Lémanique SA",
+  sector:"Santé / Export dispositifs médicaux", loc:"Genève", period:"Q3 2026",
+  risk:"o", rl:"Bonus intermédiaire — Passage vers avancé", fullForm:false,
+  show:['ca200','ca221','ca225','ca302','ca900','ip400','ip405','ip420'],
+  checks:["Bonus intermédiaire: vérifier séparément export, activité exclue et subvention","La subvention hors contre-prestation ne va pas au ch.200: elle est suivie au ch.900","ch.420 n’est pas le montant de la subvention: c’est une réduction IP calculée et documentée","ch.405 corrige l’IP lié aux prestations exclues; ch.420 réduit l’IP en présence d’un financement public"],
+  infoBox:"<strong>&#128200; NOUVEAU: résultat négatif = CRÉDIT en votre faveur</strong><br>Quand l'IP net dépasse la TVA due, l'AFC vous rembourse la différence (art. 88 LTVA). Situation fréquente: exportateurs, entreprises avec activités exclues importantes, phases d'investissement élevé.<br><strong>Subvention:</strong> ne l'ajoutez pas au ch.200. Elle se suit séparément au ch.900. La réduction d'IP au ch.420 est un montant <u>calculé</u>, pas automatiquement le montant de la subvention.",
+  task:"Saisissez les 8 champs: CA total hors subvention (ch.200), exportations (ch.221), activités exclues (ch.225), CA imposable (ch.302), subvention hors contre-prestation (ch.900), IP total (ch.400), correction IP médecine (ch.405) et réduction IP calculée liée à la subvention (ch.420). Le résultat sera un CRÉDIT!",
+  desc:"Centre médical avec trois activités: consultations exclues, export matériel médical (exonéré), ventes matériel en Suisse (imposable), plus une subvention cantonale sans contre-prestation. L'IP total élevé (investissements) dépasse la TVA collectée → crédit à récupérer auprès de l'AFC.",
+  leg:"Exclusion médicale: art. 21 al.2 ch.2 LTVA · Export: art. 23 LTVA · Subventions: art. 18 al.2 let. a LTVA · Réduction IP subvention: art. 33 al.2 LTVA · Remboursement: art. 88 LTVA",
+  given:[
+    {l:"Consultations médicales (médecins reconnus LPMéd)",a:80000,n:"EXCLUES (art. 21 al.2 ch.2 LTVA) → ch.225. IP lié (12'000) non déductible.",t:"EXCLU"},
+    {l:"Ventes matériel médical à des cliniques UE",a:60000,n:"EXONÉRÉES (art. 23 LTVA) → ch.221. IP CONSERVÉ. Preuve douanière obligatoire.",t:"EXON."},
+    {l:"Ventes matériel médical en Suisse",a:40000,n:"Imposable 8,1% → ch.302",t:"8.1%"},
+    {l:"Subvention cantonale Santé reçue",a:30000,n:"Hors contre-prestation → ch.900. Ne va pas dans ch.200.",t:"SUBV."},
+    {l:"Réduction IP calculée selon clé interne",a:3000,n:"Montant calculé et documenté lié au financement public → ch.420. Attention: ce n’est pas automatiquement le montant de la subvention.",t:"ch.420"},
+    {l:"IP total toutes activités (dont 12'000 médecine)",a:22000,n:"12'000 lié aux consultations exclues → ch.405. 10'000 lié au matériel/export avant réduction subvention."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:180000,h:"CA total HORS subvention = consultations (80'000) + export UE (60'000) + ventes CH (40'000) = 180'000",tol:100},
+    ca205:{v:0,e:0},
+    ca221:{v:null,e:1,a:60000,h:"Matériel médical exporté UE → ch.221 (exonéré) = 60'000. IP lié CONSERVÉ.",tol:100},
+    ca225:{v:null,e:1,a:80000,h:"Consultations médicales exclues → ch.225 = 80'000. IP lié PERDU.",tol:100},
+    ca230:{v:0,e:0},
+    ca900:{v:null,e:1,a:30000,h:"Subvention cantonale hors contre-prestation → ch.900 = 30'000. Ne pas ajouter au ch.200.",tol:100},
+    ca302:{v:null,e:1,a:40000,h:"Ventes CH matériel → 8,1% = 40'000. ch.289 = 180'000 − 140'000 = 40'000 = ch.302 ✓",tol:50},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:22000,h:"IP total: médecine (12'000) + matériel/export (10'000) = 22'000",tol:100},
+    ip405:{v:null,e:1,a:12000,h:"IP médecine non déductible → ch.405 = 12'000",tol:100},
+    ip410:{v:0,e:0},
+    ip420:{v:null,e:1,a:3000,h:"Réduction IP calculée liée à la subvention cantonale → ch.420 = 3'000. IP net = 22'000 − 12'000 − 3'000 = 7'000",tol:50}
+  },
+  E:{
+    ca200:"Ch.200 = contre-prestations HT seulement: consultations (80'000) + export UE (60'000) + ventes CH (40'000) = CHF 180'000. La subvention ne fait pas partie du ch.200.",
+    ca221:"Ch.221 — Matériel médical exporté UE: exonéré TVA CH (art. 23 LTVA). IP CONSERVÉ. ch.280 = 60'000 + 80'000 = 140'000. ch.289 = 40'000.",
+    ca225:"Ch.225 — Consultations exclues (art. 21 al.2 ch.2 LTVA): CHF 80'000. IP lié (12'000) PERDU → corriger ch.405.",
+    ca900:"Ch.900 = subvention cantonale hors contre-prestation: CHF 30'000. Elle est suivie séparément et ne crée pas de TVA collectée. Elle ne doit pas être ajoutée au ch.200.",
+    ca302:"Ch.302 = ventes CH matériel = CHF 40'000. TVA = 40'000 × 8,1% = CHF 3'240. ch.302 = ch.289 ✓",
+    ip400:"Ch.400 = IP total = CHF 22'000 (dont 12'000 non déductible — médecine).",
+    ip405:"Ch.405 = IP médecine non déductible = CHF 12'000. IP après correction = 10'000.",
+    ip420:"Ch.420 = réduction IP calculée liée à la subvention cantonale (art. 33 al.2 LTVA) = CHF 3'000. Ce montant est déterminé par une clé documentée; il n’est pas automatiquement égal à la subvention. IP NET = 10'000 − 3'000 = CHF 7'000.",
+    result:"TVA due: CHF 3'240. IP net: CHF 7'000. Résultat: <strong>CHF 3'760 de CRÉDIT en votre faveur</strong> (ch.500 &lt; 0). L'AFC vous rembourse CHF 3'760! Réflexe clé: subvention hors contre-prestation = ch.900 + réduction IP ch.420, pas ch.200/ch.230."
+  }
+},
+
+/* ── CAS G: Déclaration complète simple ── */
+{
+  id:"G", tab:"CAS G · Décompte simple 🎯",
+  title:"Atelier Graphique Léman Sàrl — Déclaration complète simple",
+  entity:"Atelier Graphique Léman Sàrl",
+  sector:"Services graphiques / vente de livres", loc:"Lausanne (VD)", period:"Q2 2026",
+  risk:"v", rl:"Débutant avancé — décompte complet simple", fullForm:true,
+  show:['ca200','ca302','ca312','ip400'],
+  checks:["Qualifier: deux activités imposables, aucune exclusion", "Ventiler correctement 8,1% et 2,6%", "Vérifier que ch.302 + ch.312 = ch.200", "Contrôler que l'IP repose sur des factures conformes"],
+  infoBox:"<strong>&#127942; Premier décompte complet sans piège:</strong><br>Ce cas sert à consolider la structure: CA total, ventilation par taux, IP, résultat. Pas encore de subvention, pas encore de correction IP.",
+  task:"Remplissez une version pédagogique complète simple: ch.200, ch.302, ch.312 et ch.400. Objectif: maîtriser la structure avant les cas avec exclusions et subventions.",
+  desc:"L'entreprise vend des prestations de graphisme imposables à 8,1% et quelques livres imprimés à 2,6%. Toutes les activités sont imposables. Aucun export, aucune activité exclue, aucune subvention.",
+  leg:"Art. 25 al.1 LTVA (taux normal) · Art. 25 al.2 LTVA (taux réduit) · Art. 28 LTVA (impôt préalable)",
+  given:[
+    {l:"Prestations graphiques B2B",a:155000,n:"Services imposables au taux normal.",t:"8.1%"},
+    {l:"Vente de livres imprimés",a:20000,n:"Taux réduit pédagogique.",t:"2.6%"},
+    {l:"TVA sur achats et logiciels",a:7000,n:"IP lié à des activités imposables, déductible si justificatifs conformes."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:175000,h:"CA total = 155'000 + 20'000 = CHF 175'000",tol:100},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:155000,h:"Prestations graphiques 8,1% = CHF 155'000",tol:100},
+    ca312:{v:null,e:1,a:20000,h:"Livres imprimés 2,6% = CHF 20'000",tol:100},
+    ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:7000,h:"IP total sur factures conformes = CHF 7'000",tol:100},
+    ip405:{v:0,e:0},ip410:{v:0,e:0},ip420:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = CHF 175'000. Toutes les recettes sont imposables, aucune déduction au ch.221/225/230.",
+    ca302:"Ch.302 = CHF 155'000 à 8,1%. TVA = CHF 12'555.",
+    ca312:"Ch.312 = CHF 20'000 à 2,6%. TVA = CHF 520. Vérification: 155'000 + 20'000 = 175'000.",
+    ip400:"Ch.400 = CHF 7'000 d'IP déductible.",
+    result:"TVA due: CHF 13'075. IP: CHF 7'000. Résultat: <strong>CHF 6'075 à verser</strong>. Cas volontairement simple: l'objectif est la structure du décompte."
+  }
+},
+/* ── CAS H: Activités exclues ── */
+{
+  id:"H", tab:"CAS H · Activité exclue",
+  title:"École Multilangues Sàrl — Cours imposables et formations exclues",
+  entity:"École Multilangues Sàrl",
+  sector:"Formation professionnelle", loc:"Lausanne (VD)", period:"Q2 2026",
+  risk:"o", rl:"Débutant avancé — exclusion + correction IP", fullForm:true,
+  show:['ca200','ca225','ca302','ip400','ip405'],
+  checks:["Qualifier les formations reconnues avant de remplir le formulaire", "ch.225 n'est pas un rabais: c'est une activité exclue", "L'IP directement lié aux activités exclues doit être corrigé", "Vérifier que ch.302 = ch.200 − ch.225"],
+  infoBox:"<strong>&#9888; Activité exclue ≠ export ≠ rabais:</strong><br>Une activité exclue n'est pas soumise à TVA, mais elle peut faire perdre le droit à l'impôt préalable lié à cette activité. C'est un réflexe fondamental en TVA.",
+  task:"Identifiez la part imposable et la part exclue. Saisissez ch.200, ch.225, ch.302, ch.400 et ch.405.",
+  desc:"L'école vend des cours de langues ordinaires imposables et des formations certifiantes reconnues exclues du champ TVA. Une partie de l'IP est directement liée aux formations exclues.",
+  leg:"Art. 21 al.2 ch.11 LTVA (certaines prestations de formation exclues) · Art. 29-30 LTVA (restriction/correction IP) · Art. 25 al.1 LTVA",
+  given:[
+    {l:"Cours de langues ordinaires",a:160000,n:"Prestations imposables au taux normal.",t:"8.1%"},
+    {l:"Formations certifiantes reconnues",a:90000,n:"Prestations exclues dans ce cas pédagogique → ch.225.",t:"EXCLU"},
+    {l:"IP total toutes activités",a:15000,n:"Dont CHF 6'000 directement liés aux formations exclues."},
+    {l:"IP lié aux formations exclues",a:6000,n:"À corriger au ch.405."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:250000,h:"CA total = cours imposables 160'000 + formations exclues 90'000",tol:100},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},
+    ca225:{v:null,e:1,a:90000,h:"Formations exclues = CHF 90'000",tol:100},
+    ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:160000,h:"CA imposable = 250'000 − 90'000 = CHF 160'000",tol:100},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:15000,h:"IP total = CHF 15'000",tol:100},
+    ip405:{v:null,e:1,a:6000,h:"IP lié aux formations exclues non déductible = CHF 6'000",tol:100},
+    ip410:{v:0,e:0},ip420:{v:0,e:0}
+  },
+  E:{
+    ca200:"Ch.200 = CHF 250'000: le total des recettes est saisi avant déductions pédagogiques.",
+    ca225:"Ch.225 = CHF 90'000 de formations exclues. Ce n'est pas une remise commerciale.",
+    ca302:"Ch.302 = CHF 160'000 imposables à 8,1%. TVA = CHF 12'960.",
+    ip400:"Ch.400 = CHF 15'000 d'IP brut.",
+    ip405:"Ch.405 = CHF 6'000 d'IP non déductible car lié aux formations exclues.",
+    result:"TVA due: CHF 12'960. IP net: 15'000 − 6'000 = CHF 9'000. Résultat: <strong>CHF 3'960 à verser</strong>. Réflexe appris: activité exclue = vérifier le droit à l'IP."
+  }
+},
+/* ── CAS I: Subvention vs sponsoring ── */
+{
+  id:"I", tab:"CAS I · Subvention",
+  title:"Association CultureLab — Subvention ou sponsoring?",
+  entity:"Association CultureLab",
+  sector:"Culture / événements", loc:"Fribourg (FR)", period:"Q3 2026",
+  risk:"o", rl:"Débutant avancé — financement public", fullForm:true,
+  show:['ca200','ca302','ca900','ip400','ip420'],
+  checks:["Qualifier le financement: subvention réelle ou contre-prestation publicitaire?", "Une vraie subvention sans contre-prestation ne se traite pas comme un rabais ch.230", "La subvention hors champ se suit séparément au ch.900", "Si le financement est hors champ, vérifier la réduction IP au ch.420", "Documenter la décision ou convention de subvention"],
+  infoBox:"<strong>&#128269; Avant la case: qualification juridique.</strong><br>Un montant reçu d'une collectivité publique peut être une vraie subvention ou une contre-prestation imposable. Ici, la convention ne prévoit pas de visibilité publicitaire ni d'obligation de prestation spécifique: on retient une subvention hors contre-prestation. Elle ne va donc pas dans le CA imposable: ch.200 = billetterie seulement, ch.900 = subvention, ch.420 = réduction d'IP.",
+  task:"Traitez la billetterie imposable et la subvention sans contre-prestation directe. Saisissez ch.200, ch.302, ch.900, ch.400 et ch.420.",
+  desc:"L'association organise des ateliers culturels imposables et reçoit une aide communale sans prestation publicitaire individualisée. Le cas vise le réflexe officiel: subvention hors contre-prestation à suivre hors CA + réduction IP à documenter.",
+  leg:"Art. 18 al.2 let. a LTVA (subventions ne constituent pas une contre-prestation) · Art. 33 al.2 LTVA (réduction IP) · Art. 25 al.1 LTVA",
+  given:[
+    {l:"Billetterie ateliers imposables",a:70000,n:"Prestations imposables à 8,1%. À saisir au ch.200 et ch.302.",t:"8.1%"},
+    {l:"Subvention communale sans contre-prestation directe",a:30000,n:"Hors contre-prestation: à documenter par décision/convention, à suivre au ch.900.",t:"SUBV."},
+    {l:"IP total sur dépenses",a:6000,n:"IP brut sur factures conformes."},
+    {l:"Réduction IP liée au financement public",a:1200,n:"Réduction de la déduction IP à saisir au ch.420."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:70000,h:"Ch.200 = uniquement les contre-prestations: billetterie 70'000. Ne pas ajouter la subvention.",tol:100},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},
+    ca230:{v:0,e:0},
+    ca900:{v:null,e:1,a:30000,h:"Subvention communale hors contre-prestation → ch.900 = CHF 30'000",tol:100},
+    ca302:{v:null,e:1,a:70000,h:"CA imposable = billetterie CHF 70'000",tol:100},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:null,e:1,a:6000,h:"IP brut = CHF 6'000",tol:100},
+    ip405:{v:0,e:0},
+    ip410:{v:0,e:0},
+    ip420:{v:null,e:1,a:1200,h:"Réduction IP liée à la subvention = CHF 1'200",tol:100}
+  },
+  E:{
+    ca200:"Ch.200 = CHF 70'000: uniquement la billetterie, car c'est la contre-prestation reçue en échange des ateliers. La subvention sans contre-prestation ne s'ajoute pas ici.",
+    ca900:"Ch.900 = CHF 30'000: subvention communale hors contre-prestation, à documenter par décision ou convention. Elle ne génère pas de TVA collectée.",
+    ca302:"Ch.302 = CHF 70'000 imposables à 8,1%. TVA = CHF 5'670.",
+    ip400:"Ch.400 = CHF 6'000 d'IP brut.",
+    ip420:"Ch.420 = CHF 1'200 de réduction IP liée à la subvention.",
+    result:"TVA due: CHF 5'670. IP net: 6'000 − 1'200 = CHF 4'800. Résultat: <strong>CHF 870 à verser</strong>. Réflexe appris: vraie subvention sans contre-prestation = ch.900 + ch.420; sponsoring/publicité = contre-prestation imposable."
+  }
+},
+/* ── CAS J: Concordance annuelle débutant ── */
+{
+  id:"J", tab:"CAS J · Concordance",
+  title:"ServicePlus SA — Mini-concordance annuelle TVA",
+  entity:"ServicePlus SA",
+  sector:"Services B2B", loc:"Genève (GE)", period:"Clôture 2026",
+  risk:"o", rl:"Débutant avancé — contrôle annuel", fullForm:true,
+  show:['ca200','ca302','regIP'],
+  checks:["Comparer les comptes annuels avec les décomptes déjà déposés", "Identifier les factures de vente oubliées", "Reprendre l'IP non justifié comme régularisation, pas comme IP négatif", "Préparer une correction documentée"],
+  infoBox:"<strong>&#128269; La TVA ne s'arrête pas au dépôt trimestriel.</strong><br>À la clôture annuelle, il faut rapprocher comptabilité, décomptes TVA et justificatifs. Ce cas est une mini-concordance annuelle.",
+  task:"Corrigez une facture client oubliée et un IP déjà déduit à tort. Saisissez le CA oublié, sa ventilation à 8,1%, puis la reprise IP comme régularisation annuelle séparée.",
+  desc:"Les décomptes trimestriels ont été déposés, mais la clôture révèle une facture client oubliée et une facture fournisseur non conforme déjà déduite comme IP. On traite la reprise IP comme une régularisation annuelle, sans créer d’IP net négatif.",
+  leg:"Art. 72 LTVA (corrections) · obligation de concordance annuelle selon pratique AFC · Art. 28 LTVA (conditions IP)",
+  given:[
+    {l:"Facture client B2B oubliée",a:25000,n:"Prestation imposable 8,1% absente des décomptes TVA.",t:"8.1%"},
+    {l:"IP déduit à tort",a:900,n:"Facture fournisseur non conforme / dépense non admissible: à reverser comme régularisation de concordance annuelle, pas comme IP négatif.",t:"RÉGUL."}
+  ],
+  F:{
+    ca200:{v:null,e:1,a:25000,h:"Correction CA = facture oubliée CHF 25'000",tol:50},
+    ca205:{v:0,e:0},ca221:{v:0,e:0},ca225:{v:0,e:0},ca230:{v:0,e:0},
+    ca302:{v:null,e:1,a:25000,h:"Facture oubliée imposable à 8,1% = CHF 25'000",tol:50},
+    ca312:{v:0,e:0},ca342:{v:0,e:0},
+    ip400:{v:0,e:0},
+    ip405:{v:0,e:0},
+    ip410:{v:0,e:0},ip420:{v:0,e:0},
+    regIP:{v:null,e:1,a:900,h:"Régularisation annuelle: IP déduit à tort à reverser = CHF 900. Ne pas saisir comme IP net négatif.",tol:10}
+  },
+  E:{
+    ca200:"Ch.200 correction = CHF 25'000 de chiffre d'affaires oublié.",
+    ca302:"Ch.302 = CHF 25'000 à 8,1%. TVA supplémentaire = CHF 2'025.",
+    regIP:"Régularisation annuelle = CHF 900 d’IP déjà déduit à tort à reverser. On l’ajoute à la correction nette, sans transformer l’IP net en montant négatif.",
+    result:"Correction nette: TVA supplémentaire CHF 2'025 + reprise IP CHF 900 = <strong>CHF 2'925 à régulariser</strong>. Réflexe appris: concordance annuelle = contrôle entre comptes, décomptes et pièces; les reprises IP se documentent séparément."
+  }
+}
+
+]; /* end CASES */
+
+/* ============================================================ STATE */
+const S={cur:0,uv:{},validated:false,scores:{},mode:'guided',stats:{},exam:{}};
+try{const sv=JSON.parse(localStorage.getItem('tva_deb8_3')||'{}');
+  if(sv.scores)S.scores=sv.scores;
+  if(typeof sv.cur==='number')S.cur=sv.cur;
+  if(sv.mode)S.mode=sv.mode;
+  if(sv.stats)S.stats=sv.stats;
+  if(sv.exam)S.exam=sv.exam;
+}catch(e){}
+
+
+/* ============================================================ SCHÉMA DÉBUTANT
+   Ce module exclut volontairement le reverse charge (ch.220) et les méthodes avancées de correction IP,
+   les TDFN/TaF, groupes TVA, pro-rata complexes et opérations immobilières.
+   Ces sujets sont réservés au module AVANCÉ pour éviter la surcharge cognitive.
+   ============================================================ */
+const DEBUTANT_FIELDS=['ca200','ca205','ca221','ca225','ca230','ca900','ca302','ca312','ca342','ip400','ip405','ip410','ip420','regIP'];
+const FIELD_TOPIC={
+  ca200:'CA total',ca205:'Prestations à soi-même',ca221:'Export / hors Suisse',ca225:'Activités exclues',ca230:'Diminutions commerciales',ca900:'Subventions hors contre-prestation',
+  ca302:'Taux 8,1%',ca312:'Taux 2,6%',ca342:'Taux 3,8%',ip400:'Impôt préalable',ip405:'Correction IP',ip410:'Autres corrections IP',ip420:'Réduction IP — subventions',regIP:'Concordance / reprise IP'
+};
+function formViewFull(c){return S.mode==='form'||!!c.fullForm;}
+
+/* ============================================================ UTILS */
+const fmt=n=>{if(n===null||n===undefined||n==='')return'—';return Math.abs(Math.round(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,"'");};
+const chf=n=>'CHF\u00a0'+fmt(n);
+const pn=s=>{if(s===null||s===undefined||s==='')return 0;const n=parseFloat(String(s).replace(/['\s]/g,'').replace(',','.'));return isNaN(n)?0:n;};
+const RC={v:'#2d7a3a',o:'#8a5200',r:'#8a3b2e',n:'#111'};
+const RCB={v:{bg:'#eaf5ee',c:'#2d7a3a'},o:{bg:'#fff3e0',c:'#8a5200'},r:{bg:'#f7ebe7',c:'#8a3b2e'},n:{bg:'#1a1a1a',c:'#e0e0d0'}};
+
+/* ============================================================ COMPUTE */
+function cmp(){
+  const c=CASES[S.cur],f=c.F;
+  const g=k=>f[k]&&f[k].e?pn(S.uv[k]):(f[k]?f[k].v||0:0);
+  const ca200=g('ca200'),ca205=g('ca205'),
+        ca221=g('ca221'),ca225=g('ca225'),ca230=g('ca230'),ca900=g('ca900');
+  const ca280=ca221+ca225+ca230,ca289=ca200+ca205-ca280;
+  const ca302=g('ca302'),ca312=g('ca312'),ca342=g('ca342');
+  const t302=ca302*.081,t312=ca312*.026,t342=ca342*.038;
+  const tvaDue=t302+t312+t342;
+  const ip400=g('ip400'),ip405=g('ip405'),ip410=g('ip410'),ip420=g('ip420');
+  const ipNet=ip400-ip405-ip410-ip420;
+  const regIP=g('regIP');
+  return{ca200,ca205,ca221,ca225,ca230,ca900,ca280,ca289,ca302,ca312,ca342,
+         t302,t312,t342,tvaDue,ip400,ip405,ip410,ip420,ipNet,regIP,res:tvaDue-ipNet+regIP};
+}
+function edFields(){return Object.entries(CASES[S.cur].F).filter(([,d])=>d.e).map(([k])=>k);}
+function filledCnt(){return edFields().filter(k=>S.uv[k]!==undefined&&S.uv[k]!=='').length;}
+function persist(){try{localStorage.setItem('tva_deb8_3',JSON.stringify({scores:S.scores,cur:S.cur,mode:S.mode,stats:S.stats,exam:S.exam}));}catch(e){}}
+
+/* ============================================================ TABS */
+function renderTabs(){
+  document.getElementById('hProg').textContent=`${Object.keys(S.scores).length} / ${CASES.length} cas`;
+  document.getElementById('tabs').innerHTML=CASES.map((c,i)=>{
+    const sc=S.scores[i];
+    const chip=sc!==undefined?`<span class="schip" style="background:${sc>=80?'#eaf5ee':sc>=50?'#fff3e0':'#f7ebe7'};color:${sc>=80?'#2d7a3a':sc>=50?'#8a5200':'#8a3b2e'};">${sc}%</span>`:'';
+    return `<button class="tab ${i===S.cur?'a':''}" onclick="selCase(${i})">
+      <span class="rdot" style="background:${RC[c.risk]};"></span>${c.tab} ${chip}</button>`;
+  }).join('');
+}
+
+/* ============================================================ SIDEBAR */
+function renderChecklist(c){
+  const q=(c.qualif&&c.qualif.length?c.qualif:["L'opération est-elle imposable, exclue, exonérée ou hors champ?","Existe-t-il une déduction ou une correction IP?"]);
+  const qbox=`<div class="checklist" style="background:#fffaf0;border-color:#f0d39a"><strong>Qualification avant formulaire</strong>${q.map((it,i)=>`<div><b>${i+1}.</b> ${it}</div>`).join('')}</div>`;
+  const base=[
+    "Les montants sont-ils bien HT?",
+    "Le total ch.200 correspond-il au dossier client?",
+    "Les justificatifs TVA sont-ils disponibles?"
+  ];
+  const items=(c.checks&&c.checks.length?c.checks:base);
+  return qbox+`<div class="checklist"><strong>Contrôle métier — cas ${c.id}</strong>${items.map((it,i)=>`<div><b>${i+1}.</b> ${it}</div>`).join('')}</div>`;
+}
+function renderStats(){
+  const entries=Object.entries(S.stats||{}).map(([topic,d])=>({topic,attempts:d.attempts||0,errors:d.errors||0})).filter(x=>x.attempts>0);
+  if(!entries.length)return `<div class="stats-card"><strong>Statistiques d'erreurs</strong>Aucune correction enregistrée pour le moment. Les thèmes faibles apparaîtront ici après vos validations.</div>`;
+  entries.sort((a,b)=>(b.errors/b.attempts)-(a.errors/a.attempts)||b.errors-a.errors);
+  return `<div class="stats-card"><strong>Statistiques d'erreurs</strong>`+entries.slice(0,4).map(e=>{
+    const rate=Math.round(e.errors/e.attempts*100);
+    const cls=rate>=40?'stat-bad':'stat-good';
+    return `<div class="stat-line"><span>${e.topic}</span><span class="${cls}">${e.errors}/${e.attempts}</span></div>`;
+  }).join('')+`<div style="font-size:10.5px;color:var(--text3);margin-top:6px">Objectif: repérer les thèmes à retravailler avant le mini-examen.</div></div>`;
+}
+function renderSB(){
+  const c=CASES[S.cur],rb=RCB[c.risk];
+  const ef=edFields();
+  const pdots=CASES.map((cc,i)=>{
+    const sc=S.scores[i];
+    let cls='';if(sc!==undefined)cls=sc>=100?'s100':sc>=80?'s80':sc>=50?'s50':'s0';
+    return `<div class="pdot ${cls}" title="${cc.tab}: ${sc!==undefined?sc+'%':'Non commencé'}"></div>`;
+  }).join('');
+  document.getElementById('sb').innerHTML=`
+    <div>
+      <div class="sb-name">${c.entity}</div>
+      <div class="sb-meta">${c.sector} · ${c.loc} · ${c.period}</div>
+      <div class="rb" style="background:${rb.bg};color:${rb.c};">
+        <span style="width:6px;height:6px;border-radius:50%;background:${rb.c};display:inline-block;flex-shrink:0;"></span>&nbsp;${c.rl}
+      </div>
+    </div>
+    <div class="sb-task"><strong>&#128203; Votre mission:</strong>${c.task}</div>
+    <div>
+      <div class="sb-sec">Données dossier client</div>
+      ${c.given.map(d=>`<div class="di">
+        <div class="di-l">${d.l}${d.t?`<span class="di-t">${d.t}</span>`:''}
+        <span class="di-n">${d.n}</span></div>
+        ${d.a!==null&&d.a!==undefined?`<div class="di-a">${chf(d.a)}</div>`:''}
+      </div>`).join('')}
+    </div>
+    <div class="sb-leg"><strong>Base légale:</strong><br>${c.leg}</div>
+    ${renderChecklist(c)}
+    <div class="sb-prog">
+      <div class="sb-sec">Progression globale</div>
+      <div class="prog-dots">${pdots}</div>
+      <div class="fc">Champs saisis: <b>${filledCnt()}/${ef.length}</b></div>
+    </div>
+    ${renderStats()}
+    <div class="sb-acts">
+      <button class="btn btn-p" onclick="vrfy()">&#10003;&nbsp; Vérifier mes réponses</button>
+      <button class="btn" onclick="sol()">&#9675;&nbsp; Voir la solution</button>
+      <button class="btn btn-s" onclick="rst()">&#8635;&nbsp; Recommencer</button>
+    </div>`;
+}
+
+/* ============================================================ FORM HELPERS */
+function iCell(key){
+  const fd=CASES[S.cur].F[key];
+  if(!fd||!fd.e)return`<div class="fr-inp"><input class="fi ro" type="number" value="${fd&&fd.v!=null?fd.v:0}" readonly></div>`;
+  const cv=S.uv[key]!==undefined?S.uv[key]:'';
+  let cls='fi ue';
+  if(S.validated){const diff=Math.abs(pn(S.uv[key])-(fd.a||0));cls='fi '+(diff<=(fd.tol||1)?'ok':'er');}
+  return`<div class="fr-inp"><input class="${cls}" id="fi_${key}" type="number" placeholder="0"
+    value="${cv}" oninput="onI('${key}',this.value)" step="1"${fd.h?` title="${fd.h}"`:''}></div>`;
+}
+function cpCell(val,id,hi){
+  return`<div class="fr-inp" style="padding:6px 9px;">
+    <span class="cv${hi?' hi':''}" id="${id}">${chf(val)}</span></div>`;
+}
+function row(code,lbl,sub,key,opts={}){
+  const c=CASES[S.cur],fd=c.F[key],editable=fd&&fd.e;
+  const sh=c.show||[];
+  if(!formViewFull(c)&&!sh.includes(key)&&!editable)return'';
+  let hint='',note='';
+  if(S.validated&&editable&&fd.h){
+    const diff=Math.abs(pn(S.uv[key])-(fd.a||0));
+    if(diff>(fd.tol||1))hint=`<div class="fr-lbl-h">&#128161; Indice: ${fd.h}</div>`;
+  }
+  if(opts.note&&!S.validated)note=`<div class="fr-note">&#8594; ${opts.note}</div>`;
+  const tvaCol=opts.tvid
+    ?`<div class="fr-tva"><span id="${opts.tvid}">${chf(opts.tvv||0)}</span></div>`
+    :`<div class="fr-tva"></div>`;
+  return`<div class="fr ${editable?'ed':'ro'}${opts.hi?' hi':''}">
+    <div class="fr-code">${code}</div>
+    <div class="fr-lbl">
+      <div class="fr-lbl-m">${lbl}</div>
+      <div class="fr-lbl-s">${sub}</div>${hint}${note}
+    </div>
+    ${iCell(key)}${tvaCol}</div>`;
+}
+function cpRow(code,lbl,sub,val,id,opts={}){
+  if(opts.cond===false)return'';
+  const cc=opts.primary?'fr-code primary':'fr-code';
+  const tvaCol=opts.tvid
+    ?`<div class="fr-tva" style="font-weight:700;font-size:13px;color:#2f5f73;"><span id="${opts.tvid}">${chf(opts.tvv||0)}</span></div>`
+    :`<div class="fr-tva"></div>`;
+  return`<div class="fr cp${opts.hi?' hi':''}">
+    <div class="${cc}">${code}</div>
+    <div class="fr-lbl">
+      <div class="fr-lbl-m"><strong>${lbl}</strong></div>
+      <div class="fr-lbl-s">${sub}</div>
+    </div>${cpCell(val,id,opts.hi)}${tvaCol}</div>`;
+}
+
+function setMode(mode){
+  S.mode=mode==='form'?'form':'guided';persist();renderForm();
+}
+const EXAM_Q=[
+  {q:"Dans un cas simple avec un seul taux et aucune déduction, quelle relation doit être vraie?",a:["ch.200 = ch.302","ch.200 = ch.400","ch.302 = ch.410"],ok:0,t:"CA total"},
+  {q:"Une remise accordée après facturation se déclare principalement où?",a:["ch.230","ch.342","ch.405"],ok:0,t:"Rabais & retours"},
+  {q:"La TVA payée sur les factures fournisseurs se saisit où?",a:["ch.400","ch.225","ch.312"],ok:0,t:"Impôt préalable"},
+  {q:"Un restaurant facture normalement ses repas servis sur place à quel taux?",a:["8,1%","2,6%","3,8%"],ok:0,t:"Taux 8,1%"},
+  {q:"Le taux spécial 3,8% concerne surtout…",a:["l’hébergement","les médicaments","les honoraires de conseil"],ok:0,t:"Taux 3,8%"},
+  {q:"Une activité exclue du champ TVA peut provoquer…",a:["une correction de l’IP ch.405","un taux spécial 3,8%","une augmentation du ch.302"],ok:0,t:"Correction IP"},
+  {q:"Une subvention publique hors contre-prestation se déclare principalement…",a:["au ch.900 et peut nécessiter une réduction IP ch.420","au ch.342","comme une TVA collectée à 8,1% dans tous les cas"],ok:0,t:"Subventions / ch.900-420"},
+  {q:"Après les décomptes trimestriels, le bon réflexe professionnel est…",a:["faire une concordance annuelle TVA","supprimer les justificatifs","ne plus comparer avec la comptabilité"],ok:0,t:"Concordance annuelle"}
+];
+function renderExam(c){
+  if(c.id!=='G')return'';
+  const answers=S.exam.answers||{};
+  const result=S.exam.result;
+  return `<div class="exam-card" id="miniExam">
+    <div class="exam-hdr"><div class="exam-hdr-title">🎓 Mini-examen final — Débutant TVA Suisse</div>
+    <div class="exam-hdr-sub">8 questions pour vérifier les réflexes essentiels avant de passer au module avancé. Ce test mesure la compréhension, pas seulement la saisie.</div></div>
+    <div class="exam-body">
+      ${EXAM_Q.map((q,i)=>`<div class="exam-q"><strong>${i+1}. ${q.q}</strong>${q.a.map((op,j)=>`<label class="exam-opt"><input type="radio" name="ex${i}" value="${j}" ${answers[i]==j?'checked':''} onchange="examChoose(${i},${j})">${op}</label>`).join('')}</div>`).join('')}
+      <button class="btn btn-p" onclick="checkExam()">✓ Corriger le mini-examen</button>
+      ${result?`<div class="exam-result ${result.score>=7?'exam-ok':result.score>=5?'exam-warn':'exam-bad'}"><strong>Résultat: ${result.score}/8</strong><br>${result.msg}${result.missed.length?'<br><br><strong>À revoir:</strong> '+result.missed.join(', '):''}</div>`:''}
+    </div>
+  </div>`;
+}
+function examChoose(i,j){
+  if(!S.exam.answers)S.exam.answers={};
+  S.exam.answers[i]=j;delete S.exam.result;persist();
+}
+function checkExam(){
+  const answers=S.exam.answers||{};let score=0,missed=[];
+  EXAM_Q.forEach((q,i)=>{if(Number(answers[i])===q.ok)score++;else missed.push(q.t);});
+  const msg=score>=7?'Très bon niveau débutant: vous pouvez passer au module avancé.':score>=5?'Base correcte, mais quelques réflexes doivent être consolidés avant l’avancé.':'Il vaut mieux refaire les cas A–G avant de passer au module avancé.';
+  S.exam.result={score,msg,missed:[...new Set(missed)]};persist();renderForm();setTimeout(()=>document.getElementById('miniExam')?.scrollIntoView({behavior:'smooth',block:'start'}),80);
+}
+
+/* ============================================================ RENDER FORM */
+function renderForm(){
+  const v=cmp(),c=CASES[S.cur],sh=c.show||[];
+  const rr=v.res>=0,rc=rr?'#2f5f73':'#1a6b2e';
+  const fullView=formViewFull(c);
+  const hasDeductions=sh.some(k=>['ca221','ca225','ca230'].includes(k))||['ca221','ca225','ca230'].some(k=>!!(c.F[k]&&c.F[k].e));
+  const has900=sh.includes('ca900')||!!(c.F.ca900&&c.F.ca900.e);
+  const has312=fullView||sh.includes('ca312')||!!(c.F.ca312&&c.F.ca312.e);
+  const has342=fullView||sh.includes('ca342')||!!(c.F.ca342&&c.F.ca342.e);
+  const has405=fullView||sh.includes('ip405')||!!(c.F.ip405&&c.F.ip405.e);
+  const has410=sh.includes('ip410')||!!(c.F.ip410&&c.F.ip410.e);
+  const has420=sh.includes('ip420')||!!(c.F.ip420&&c.F.ip420.e);
+  const hasReg=sh.includes('regIP')||!!(c.F.regIP&&c.F.regIP.e);
+
+  const modeBar=`
+    <div class="modebar">
+      <div class="modebar-title"><strong>Mode d'apprentissage</strong>${S.mode==='guided'?'Mode guidé: seules les cases utiles au cas sont affichées.':'Mode formulaire: vue pédagogique élargie avec les cases débutant non applicables à 0.'}</div>
+      <div class="mode-actions">
+        <button class="mode-btn ${S.mode==='guided'?'a':''}" onclick="setMode('guided')">Mode guidé</button>
+        <button class="mode-btn ${S.mode==='form'?'a':''}" onclick="setMode('form')">Formulaire pédagogique</button>
+      </div>
+    </div>`;
+
+  const fullBanner=c.fullForm?`
+    <div class="fm-banner">
+      <div class="fm-banner-icon">&#127942;</div>
+      <div class="fm-banner-text">
+        <strong>MODE DÉCLARATION PÉDAGOGIQUE — décompte TVA simplifié</strong>
+        Les intitulés sont pédagogiquement simplifiés. Les chiffres utiles au niveau débutant sont affichés. Les cases grisées sont à 0 (non applicables ici). Après validation, le formulaire complet s'affiche en bas avec vos réponses annotées.
+      </div>
+    </div>`:'';
+
+  document.getElementById('formWrap').innerHTML=`
+    ${modeBar}
+    ${fullBanner}
+    ${c.infoBox?`<div class="form-info">${c.infoBox}</div>`:''}
+
+    <div class="fc-card">
+      <div class="col-hdr">
+        <div>N°</div>
+        <div>Intitulé — décompte TVA pédagogique</div>
+        <div>Montant CHF (HT)</div>
+        <div>TVA CHF</div>
+      </div>
+
+      <div class="fsh fsh-s1">&#9312; Section I — Chiffres d'affaires (contre-prestations)
+        <span class="fsh-tag">Revenus encaissés — toujours en CHF HT</span>
+      </div>
+
+      ${row('200',"Total des contre-prestations reçues ou convenues",
+            "CA total HT de la période. Si TTC: HT = TTC ÷ (1 + taux ex. 1,081)",
+            'ca200',{note:'Saisissez ici le CA total HT de la période'})}
+      ${sh.includes('ca205')?row('205',"Prestations à soi-même (art. 24 al.2 LTVA)",
+            "Usage privé de biens ou services de l'entreprise — coût de revient. Imposable 8,1%.",'ca205'):''}
+
+      ${hasDeductions?`<div class="fsh" style="background:#5a3300;font-size:11px;padding:5px 14px;gap:6px;">
+        <span>&#11015; Déductions du CA — ch.280 = somme des trois lignes suivantes</span>
+      </div>`:''}
+
+      ${sh.includes('ca221')||!!(c.F.ca221&&c.F.ca221.e)?row('221',"Prestations exonérées — Exportations (art. 23 LTVA)",
+            "Libérées de TVA CH · Droit IP CONSERVÉ · Preuve d'exportation obligatoire",'ca221'):''}
+      ${sh.includes('ca225')||!!(c.F.ca225&&c.F.ca225.e)?row('225',"Prestations exclues du champ (art. 21 LTVA)",
+            "Médecine, formation certifiante, assurances... IP correspondant PERDU",'ca225'):''}
+      ${sh.includes('ca230')||!!(c.F.ca230&&c.F.ca230.e)?row('230',"Diminutions de la contre-prestation (art. 40 LTVA)",
+            "Escomptes, rabais, retours de marchandises, avoirs accordés aux clients",'ca230'):''}
+
+      ${cpRow('280',"Total des déductions","= ch.221 + ch.225 + ch.230",v.ca280,'v280',{cond:hasDeductions})}
+      ${cpRow('289',"Total des contre-prestations imposables",
+            "= ch.200 + ch.205 − ch.280 (= ch.200 si aucune déduction)",
+            v.ca289,'v289',{hi:true,rc:true})}
+
+      ${has900?`<div class="fsh" style="background:#244b5c;font-size:11px;padding:5px 14px;gap:6px;">
+        <span>&#9432; Informations hors contre-prestation — ch.900 n'entre pas dans ch.200 / ch.289</span>
+      </div>`:''}
+      ${has900?row('900',"Subventions, dons et autres montants hors contre-prestation",
+            "À déclarer séparément: pas de TVA collectée; peut entraîner une réduction de l'IP au ch.420",
+            'ca900',{note:"Saisissez ici la subvention hors contre-prestation, sans l'inclure au ch.200"}):''}
+
+      <div class="fsh fsh-s2">&#9313; Section II — Calcul de l'impôt · Taux depuis 01.01.2024
+        <span class="fsh-tag">Ventilation du CA net (ch.289) par taux</span>
+      </div>
+
+      ${row('302','CA imposable au taux normal (8,1%)',
+            'Art. 25 al.1 LTVA — services, travaux, restaurant, la plupart des prestations',
+            'ca302',{tvid:'v302',tvv:v.t302})}
+      ${has312?row('312','CA imposable au taux réduit (2,6%)',
+            'Art. 25 al.2 LTVA — denrées alimentaires, médicaments (règles ESTV), livres, journaux',
+            'ca312',{tvid:'v312',tvv:v.t312}):''}
+      ${has342?row('342','CA imposable au taux spécial (3,8%)',
+            'Art. 25 al.4 LTVA — HÉBERGEMENT UNIQUEMENT (nuitées, location touristique meublée)',
+            'ca342',{tvid:'v342',tvv:v.t342}):''}
+
+      <div class="fr cp hi" style="border-top:2px solid #8a5200;">
+        <div class="fr-code" style="color:#8a5200;background:#fff3e0;font-size:10px;">TVA</div>
+        <div class="fr-lbl">
+          <div class="fr-lbl-m"><strong>Total de l'impôt dû</strong></div>
+          <div class="fr-lbl-s">= (302×8,1%)${has312?' + (312×2,6%)':''}${has342?' + (342×3,8%)':''} — calculé automatiquement</div>
+        </div>
+        <div class="fr-inp" style="padding:6px 9px;color:#aaa;font-size:11px;">&rarr;</div>
+        <div class="fr-tva" style="font-weight:700;font-size:14px;color:#8a5200;">
+          <span id="vTD">${chf(v.tvaDue)}</span></div>
+      </div>
+
+      <div class="fsh fsh-s3">&#9314; Section III — Déduction de l'impôt préalable (IP)
+        <span class="fsh-tag">TVA payée sur vos propres achats</span>
+      </div>
+
+      ${row('400','IP — TVA sur vos factures d\'achat (art. 28 LTVA)',
+            'TVA figurant sur les factures de vos fournisseurs. Condition: N° TVA du fournisseur obligatoire.',
+            'ip400')}
+      ${has405?row('405','(−) Correction de l\'IP — activités exclues (art. 29-30 LTVA)',
+            'IP non déductible: part liée aux activités exclues du champ TVA','ip405'):''}
+      ${has410?row('410','(−) Autres corrections de l\'IP — cas avancés',
+            'Ligne pédagogique réservée à d\'autres corrections spécifiques','ip410'):''}
+      ${has420?row('420','(−) Réduction de la déduction de l\'IP — subventions (art. 33 LTVA)',
+            'Subventions publiques et autres montants hors contre-prestation: réduction de l\'IP','ip420'):''}
+      ${cpRow('IP','Impôt préalable déductible net',
+            '= ch.400 − ch.405 − ch.410 − ch.420 — calculé automatiquement',
+            v.ipNet,'vIN')}
+      ${hasReg?`<div class="fsh" style="background:#34495e;font-size:11px;padding:5px 14px;gap:6px;">
+        <span>&#128269; Régularisations de concordance annuelle — corrections à reverser séparément</span>
+      </div>`:''}
+      ${hasReg?row('RIP','Régularisation — IP déjà déduit à tort à reverser',
+            'Correction de concordance annuelle: augmente le montant à régulariser, sans créer d’IP net négatif',
+            'regIP',{note:"Saisissez la reprise IP ici, pas comme impôt préalable négatif"}):''}
+
+      <div class="fsh fsh-s4">&#9315; Section IV — Résultat (Chiffre 500)
+        <span class="fsh-tag">Calculé automatiquement</span>
+      </div>
+      <div class="fr" style="min-height:54px;background:${rr?'#f7f0ed':'#f0fff8'};">
+        <div class="fr-code" style="font-weight:700;color:${rc};background:${rr?'#ffe0e0':'#d0f0e0'};font-size:11px;">500</div>
+        <div class="fr-lbl">
+          <div class="fr-lbl-m" style="font-weight:700;font-size:13px;color:${rc};" id="vRL">
+            ${rr?"Montant dû à l'AFC (à payer)":"Excédent de l'impôt préalable (crédit en votre faveur)"}
+          </div>
+          <div class="fr-lbl-s">
+            ${hasReg?"= Impôt dû − IP déductible net + régularisations de concordance · correction documentée":(rr?"= Impôt dû − IP déductible net · Paiement dans les 60 jours (art. 86 al.1 LTVA) · ePortal AFC"
+               :"= IP déductible net − Impôt dû · Remboursement sur demande (art. 88 LTVA)")}
+          </div>
+        </div>
+        <div class="fr-inp" style="padding:6px 9px;color:#aaa;font-size:11px;">&rarr;</div>
+        <div class="fr-tva" style="font-weight:700;font-size:16px;color:${rc};">
+          <span id="vR">${chf(Math.abs(v.res))}</span></div>
+      </div>
+    </div>
+    ${renderExam(c)}
+    `;
+  renderPrecheck();
+}
+
+/* ============================================================ RENDER FULL FORM PANEL */
+function renderFullFormPanel(v,c){
+  /* Build a map of user answer status for editable fields */
+  const fbMap={};
+  Object.entries(c.F).forEach(([k,fd])=>{
+    if(!fd.e)return;
+    const uv=pn(S.uv[k]),ans=fd.a||0,tol=fd.tol||1;
+    fbMap[k]={ok:Math.abs(uv-ans)<=tol,uv,ans};
+  });
+  const isEd=k=>!!(c.F[k]&&c.F[k].e);
+  const badge=k=>{
+    if(!isEd(k))return'';
+    const fb=fbMap[k];if(!fb)return'';
+    return fb.ok
+      ?'<span class="ff-badge-ok">&#10003; OK</span>'
+      :`<span class="ff-badge-er">&#10007; Votre réponse: ${chf(fb.uv)}</span>`;
+  };
+  const rowCls=k=>{
+    if(!isEd(k))return'';
+    const fb=fbMap[k];if(!fb)return'';
+    return fb.ok?'user-ok':'user-er';
+  };
+  const fmtAmt=(n,k='',extraStyle='')=>{
+    const rc=rowCls(k);
+    const style=rc==='user-ok'?'color:#1a6b2e;font-weight:600':rc==='user-er'?'color:#8a3b2e;font-weight:600':extraStyle;
+    return`<td class="ff-amt" style="${style}">${n?chf(n):'<span class="ff-zero">—</span>'}${badge(k)}</td>`;
+  };
+  const fmtNeg=(n,k='')=>{
+    const rc=rowCls(k);
+    const style=rc==='user-ok'?'color:#1a6b2e;font-weight:600':rc==='user-er'?'color:#8a3b2e;font-weight:600':'color:#8a5200';
+    return`<td class="ff-amt" style="${style}">${n>0?'&#8722;&nbsp;'+fmt(n):'<span class="ff-zero">—</span>'}${badge(k)}</td>`;
+  };
+  const fmtPlus=(n,k='')=>{
+    const rc=rowCls(k);
+    const style=rc==='user-ok'?'color:#1a6b2e;font-weight:600':rc==='user-er'?'color:#8a3b2e;font-weight:600':'color:#1a6b2e';
+    return`<td class="ff-amt" style="${style}">${n>0?'+&nbsp;'+fmt(n):'<span class="ff-zero">—</span>'}${badge(k)}</td>`;
+  };
+  const fmtTva=n=>`<td class="ff-tva">${n>0?'<strong>'+chf(n)+'</strong>':'<span class="ff-zero">—</span>'}</td>`;
+  const noTva=()=>'<td class="ff-tva"></td>';
+  const sec=t=>`<tr class="ff-sec-hdr"><td colspan="4" style="padding:7px 14px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#1a4e8a">${t}</td></tr>`;
+
+  const tr=(code,lm,ls,amtHtml,tvaHtml,k='',extraCls='')=>`
+    <tr class="ffr ${rowCls(k)} ${extraCls}">
+      <td class="ff-code">${code}</td>
+      <td class="ff-lbl"><div class="ff-lbl-m">${lm}${badge(k)}</div><div class="ff-lbl-s">${ls}</div></td>
+      ${amtHtml}${tvaHtml}
+    </tr>`;
+
+  const rr=v.res>=0,rc=rr?'#2f5f73':'#1a6b2e';
+  const rCls=rr?'ff-result-pay':'ff-result-credit';
+  const hasReg=!!(v.regIP||isEd('regIP'));
+
+  return`
+  <div class="ff-card">
+    <div class="ff-hdr">
+      <div class="ff-hdr-title">&#128196; décompte TVA pédagogique — Vue structurée du décompte TVA</div>
+      <div class="ff-hdr-sub">${c.entity} · ${c.period} · Méthode effective · Montants en CHF HT · Taux depuis 01.01.2024 · Votre score: ${Object.values(fbMap).filter(f=>f.ok).length}/${Object.keys(fbMap).length} champs corrects</div>
+    </div>
+    <table class="ff-table">
+      <thead>
+        <tr>
+          <th style="width:44px;text-align:center;border-right:1px solid var(--border)">N°</th>
+          <th style="text-align:left;border-right:1px solid var(--border)">Description</th>
+          <th style="width:155px;text-align:right;border-right:1px solid var(--border)">Montant CHF</th>
+          <th style="width:105px;text-align:right">TVA CHF</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${sec('SECTION I — CHIFFRE D\'AFFAIRES (CONTRE-PRESTATIONS)')}
+        ${tr('200','Total des contre-prestations','Recettes HT reçues en échange d\'une prestation; exclut les subventions hors contre-prestation',fmtAmt(v.ca200,'ca200'),noTva(),'ca200')}
+        ${v.ca205||isEd('ca205')?tr('205','Prestations à soi-même','Usage privé biens/services entreprise — art. 24 al.2 LTVA',fmtAmt(v.ca205,'ca205'),noTva(),'ca205'):''}
+        ${v.ca221||isEd('ca221')?tr('221','(&#8722;) Opérations hors TVA CH / exportations','Pas de TVA CH dans le cas pédagogique; preuves à conserver; IP selon conditions',fmtNeg(v.ca221,'ca221'),noTva(),'ca221'):''}
+        ${v.ca225||isEd('ca225')?tr('225','(&#8722;) Activités exclues du champ TVA','IP lié perdu — art. 21 LTVA',fmtNeg(v.ca225,'ca225'),noTva(),'ca225'):''}
+        ${v.ca230||isEd('ca230')?tr('230','(&#8722;) Diminutions de la contre-prestation','Remises, escomptes, retours — art. 40 LTVA',fmtNeg(v.ca230,'ca230'),noTva(),'ca230'):''}
+        ${v.ca280?tr('280','Total pédagogique des déductions (ch.221 + ch.225 + ch.230)','Sous-total des montants déduits du CA brut',`<td class="ff-amt ff-neg" style="font-weight:700">&#8722;&nbsp;${fmt(v.ca280)}</td>`,noTva(),'','ff-computed'):''}
+        <tr class="ffr ff-subtotal">
+          <td class="ff-code">289</td>
+          <td class="ff-lbl"><div class="ff-lbl-m">= CA net imposable</div><div class="ff-lbl-s">ch.200 + ch.205 &#8722; ch.280 = base pédagogique de ventilation par taux</div></td>
+          <td class="ff-amt" style="font-weight:700;color:#1a4e8a">${chf(v.ca289)}</td>${noTva()}
+        </tr>
+        ${v.ca900||isEd('ca900')?sec('INFORMATIONS HORS CONTRE-PRESTATION — CH.900')+tr('900','Subventions / dons / autres montants hors contre-prestation','À déclarer séparément: n\'augmente pas ch.200/ch.289; peut entraîner une réduction IP au ch.420',fmtAmt(v.ca900,'ca900'),noTva(),'ca900','ff-computed'):''}
+        ${sec('SECTION II — TVA COLLECTÉE (VENTILATION PAR TAUX)')}
+        ${tr('302','CA taux normal 8,1%','Services, restaurant, la plupart des prestations — art. 25 al.1 LTVA',fmtAmt(v.ca302,'ca302'),fmtTva(v.t302),'ca302')}
+        ${tr('312','CA taux réduit 2,6%','Denrées alimentaires, médicaments, livres — art. 25 al.2 LTVA',fmtAmt(v.ca312,'ca312'),fmtTva(v.t312),'ca312')}
+        ${tr('342','CA taux hébergement 3,8%','Nuitées hôtel UNIQUEMENT — art. 25 al.4 LTVA',fmtAmt(v.ca342,'ca342'),fmtTva(v.t342),'ca342')}
+        <tr class="ffr ff-tvasum">
+          <td class="ff-code" style="background:#8a5200;color:#fff;font-size:9px;font-weight:700">TVA</td>
+          <td class="ff-lbl"><div class="ff-lbl-m" style="font-weight:700;color:#8a5200">TVA TOTALE DUE</div><div class="ff-lbl-s">&#931; TVA 302 + 312 + 342</div></td>
+          <td class="ff-amt" style="font-weight:700"></td>
+          <td class="ff-tva" style="font-weight:700;font-size:14px;color:#8a5200">${chf(v.tvaDue)}</td>
+        </tr>
+        ${sec('SECTION III — IMPÔT PRÉALABLE (IP) DÉDUCTIBLE')}
+        ${tr('400','IP total — TVA payée sur vos achats','Total TVA sur factures d\'achats et investissements (N° TVA fournisseur obligatoire)',fmtAmt(v.ip400,'ip400'),noTva(),'ip400')}
+        ${v.ip405||isEd('ip405')?tr('405','(&#8722;) Correction IP — activités exclues','IP non déductible lié aux activités exclues du champ — art. 29-30 LTVA',fmtNeg(v.ip405,'ip405'),noTva(),'ip405'):''}
+        ${v.ip410||isEd('ip410')?tr('410','(&#8722;) Autres corrections IP','Ligne pédagogique réservée à des cas spécifiques avancés',fmtNeg(v.ip410,'ip410'),noTva(),'ip410'):''}
+        ${v.ip420||isEd('ip420')?tr('420','(&#8722;) Réduction de la déduction IP — subventions reçues','Subventions publiques reçues réduisent l\'IP déductible — art. 33 LTVA',fmtNeg(v.ip420,'ip420'),noTva(),'ip420'):''}
+        <tr class="ffr ff-iptotal">
+          <td class="ff-code">IP</td>
+          <td class="ff-lbl"><div class="ff-lbl-m">= IP net déductible</div><div class="ff-lbl-s">ch.400 &#8722; ch.405 &#8722; ch.410 &#8722; ch.420</div></td>
+          <td class="ff-amt" style="font-weight:700;color:#1a6b2e">${chf(v.ipNet)}</td>${noTva()}
+        </tr>
+        ${hasReg?sec('SECTION III BIS — RÉGULARISATIONS DE CONCORDANCE ANNUELLE'):''}
+        ${hasReg?tr('RIP','IP déjà déduit à tort à reverser','Correction annuelle documentée: s’ajoute au montant à régulariser sans rendre l’IP net négatif',fmtPlus(v.regIP,'regIP'),noTva(),'regIP','ff-computed'):''}
+        ${sec('SECTION IV — RÉSULTAT (CHIFFRE 500)')}
+        <tr class="ffr ${rCls}">
+          <td class="ff-code">500</td>
+          <td class="ff-lbl">
+            <div class="ff-lbl-m">${rr?"&#9654; MONTANT DÛ À L'AFC":"&#9654; EXCÉDENT IP — CRÉDIT EN VOTRE FAVEUR"}</div>
+            <div class="ff-lbl-s">${hasReg?"TVA due &#8722; IP net + régularisations de concordance annuelle":(rr?"TVA due &#8722; IP net · Paiement 60 jours après fin de période (art. 86 al.1 LTVA)":"IP net > TVA due · Remboursable sur demande à l'AFC (art. 88 LTVA)")}</div>
+          </td>
+          <td class="ff-amt"></td>
+          <td class="ff-tva" style="font-size:16px;font-weight:700">${chf(Math.abs(v.res))}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="ff-note">
+      <strong>&#128279; Déposer le vrai décompte:</strong>
+      <a href="https://eportal.admin.ch" target="_blank" rel="noopener">eportal.admin.ch</a>
+      &#8594; «Décompte TVA pro» (service «easy» supprimé dès mai 2026) ·
+      Délai: <strong>60 jours</strong> après la fin de la période (art. 86 al.1 LTVA) ·
+      Paiement simultané à la remise du décompte (art. 86 al.2 LTVA) ·
+      Dépôt en ligne selon l’art. 71a LTVA et les modalités AFC applicables. Contrôle métier recommandé: concordance annuelle TVA avant clôture.
+    </div>
+    <div class="concordance-card">
+      <strong>&#128269; Après le décompte: mini-contrôle de concordance annuelle TVA</strong>
+      <ul>
+        <li><strong>CA:</strong> le chiffre d’affaires comptable correspond-il aux ch.200 cumulés de l’année?</li>
+        <li><strong>Ventilation:</strong> les montants par taux 8,1%, 2,6% et 3,8% sont-ils justifiés par les ventes?</li>
+        <li><strong>Déductions:</strong> rabais, retours, exportations et activités exclues ont-ils une pièce justificative?</li>
+        <li><strong>IP:</strong> l’impôt préalable ch.400 repose-t-il sur des factures conformes avec N° TVA fournisseur?</li>
+        <li><strong>Corrections:</strong> les ch.405, ch.410 et ch.420 sont-ils documentés et cohérents avec la comptabilité?</li>
+        <li><strong>Écarts:</strong> préparer une rectification ou une correction lors de la concordance annuelle TVA.</li>
+      </ul>
+    </div>
+  </div>`;
+}
+
+
+/* ============================================================ MICRO-CONTROLES PEDAGOGIQUES */
+function renderPrecheck(){
+  const el=document.getElementById('precheckWrap');
+  if(!el)return;
+  const c=CASES[S.cur],v=cmp(),sh=c.show||[],tips=[];
+  const hasAny=filledCnt()>0;
+  const entered=k=>S.uv[k]!==undefined&&S.uv[k]!=='';
+  const sumRates=v.ca302+v.ca312+v.ca342;
+  if(entered('ca200')&&entered('ca302')&&!sh.includes('ca312')&&!sh.includes('ca342')&&!sh.includes('ca230')&&!sh.includes('ca221')&&!sh.includes('ca225')&&!sh.includes('ca205')&&Math.abs(v.ca200-v.ca302)>1){
+    const ecart=Math.abs(v.ca200-v.ca302);
+    tips.push('Écart détecté: ch.200 = '+chf(v.ca200)+' alors que ch.302 = '+chf(v.ca302)+'. Dans ce cas simple, ils doivent être identiques. Écart: '+chf(ecart)+'.');
+  }
+  if((entered('ca302')||entered('ca312')||entered('ca342'))&&Math.abs(sumRates-v.ca289)>1){
+    const ecart=Math.abs(sumRates-v.ca289);
+    tips.push('Écart de ventilation: ch.289 calculé = '+chf(v.ca289)+', mais 302 + 312 + 342'+' = '+chf(sumRates)+'. Écart: '+chf(ecart)+'.');
+  }
+  if(sh.includes('ca230')&&entered('ca200')&&entered('ca230')&&!entered('ca302')){
+    tips.push('Remises/retours: après ch.230, pensez à saisir le CA net imposable au ch.302.');
+  }
+  if(sh.includes('ca225')&&entered('ca225')&&!entered('ip405')){
+    tips.push('Activité exclue: pensez au ch.405 si une partie de l\'IP n\'est pas déductible.');
+  }
+  if(sh.includes('ca900')&&entered('ca200')&&v.ca900>0&&c.F.ca200&&c.F.ca200.e){
+    const caAttendu=c.F.ca200.a||0;
+    if(v.ca200>caAttendu+(c.F.ca200.tol||1)){
+      tips.push('Subvention hors contre-prestation: votre ch.200 semble trop élevé. N\'incluez pas la subvention dans ch.200; mettez seulement les contre-prestations au ch.200 et la subvention au ch.900.');
+    }
+  }
+  if(sh.includes('ca900')&&entered('ca200')&&entered('ca900')&&v.ca900>0&&Math.abs(v.ca302-v.ca289)>1){
+    tips.push('Subvention hors contre-prestation: après ch.900, vérifiez la réduction IP au ch.420 et la ventilation du CA imposable.');
+  }
+  if(sh.includes('ip420')&&entered('ip400')&&!entered('ip420')){
+    tips.push('Subvention reçue: vérifiez s\'il faut réduire l\'impôt préalable au ch.420.');
+  }
+  if(sh.includes('regIP')&&(entered('ca200')||entered('ca302'))&&!entered('regIP')){
+    tips.push('Concordance annuelle: n\'oubliez pas la reprise de l\'IP déjà déduit à tort dans la ligne de régularisation.');
+  }
+  if(!hasAny){
+    el.innerHTML='<div class="precheck"><strong>Contrôle pédagogique avant validation</strong>Commencez par saisir les cases jaunes. Les contrôles de cohérence apparaîtront ici avant la correction finale.</div>';
+    return;
+  }
+  if(tips.length){
+    el.innerHTML='<div class="precheck precheck-warn"><strong>Points à vérifier avant de cliquer sur “Vérifier”</strong><ul>'+tips.map(t=>'<li>'+t+'</li>').join('')+'</ul></div>';
+  }else{
+    el.innerHTML='<div class="precheck precheck-ok"><strong>Contrôle rapide</strong>Aucune incohérence évidente détectée. Vérifiez quand même les bases légales et les justificatifs avant validation.</div>';
+  }
+}
+
+/* ============================================================ UPDATE COMPUTED */
+function updCmp(){
+  const v=cmp();
+  const s=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=chf(val);};
+  s('v280',v.ca280);s('v289',v.ca289);
+  s('v302',v.t302);s('v312',v.t312);s('v342',v.t342);
+  s('vTD',v.tvaDue);s('vIN',v.ipNet);s('vR',Math.abs(v.res));
+  const rr=v.res>=0,rc=rr?'#2f5f73':'#1a6b2e';
+  const rl=document.getElementById('vRL');
+  if(rl){rl.textContent=rr?"Montant dû à l'AFC (à payer)":"Excédent de l'impôt préalable (crédit en votre faveur)";rl.style.color=rc;}
+  const vr=document.getElementById('vR');if(vr)vr.style.color=rc;
+  const fc=document.querySelector('.fc b');if(fc)fc.textContent=`${filledCnt()}/${edFields().length}`;
+}
+
+function onI(key,val){
+  S.uv[key]=val;
+  if(S.validated){S.validated=false;const el=document.getElementById(`fi_${key}`);if(el)el.className='fi ue';}
+  document.getElementById('resWrap').innerHTML='';
+  updCmp();
+  renderPrecheck();
+}
+
+function selCase(n){
+  S.cur=n;S.uv={};S.validated=false;persist();
+  document.getElementById('resWrap').innerHTML='';
+  renderTabs();renderSB();renderForm();
+  window.scrollTo(0,0);
+}
+
+/* ============================================================ VERIFY */
+function vrfy(){
+  const c=CASES[S.cur];S.validated=true;
+  const FN={
+    ca200:'Ch.200 — Total des contre-prestations',
+    ca205:'Ch.205 — Prestations à soi-même',
+    ca221:'Ch.221 — Exportations (exonérées)',
+    ca225:'Ch.225 — Activités exclues du champ',
+    ca230:'Ch.230 — Diminutions (remises, retours)',
+    ca900:'Ch.900 — Subventions / hors contre-prestation',
+    ca302:'Ch.302 — CA taux normal (8,1%)',
+    ca312:'Ch.312 — CA taux réduit (2,6%)',
+    ca342:'Ch.342 — CA taux spécial hébergement (3,8%)',
+    ip400:'Ch.400 — Impôt préalable total',
+    ip405:'Ch.405 — Correction IP (activités exclues)',
+    ip410:'Ch.410 — Autres corrections IP',
+    ip420:'Ch.420 — Réduction IP (subventions)',
+    regIP:'Régularisation — reprise IP à reverser'
+  };
+  let ok=0,tot=0,fbs=[];
+  Object.entries(c.F).forEach(([k,fd])=>{
+    if(!fd.e)return;tot++;
+    const uv=pn(S.uv[k]),ans=fd.a||0,tol=fd.tol||1,correct=Math.abs(uv-ans)<=tol;
+    if(correct)ok++;
+    const topic=FIELD_TOPIC[k]||k;
+    if(!S.stats[topic])S.stats[topic]={attempts:0,errors:0};
+    S.stats[topic].attempts++;
+    if(!correct)S.stats[topic].errors++;
+    fbs.push({k,name:FN[k]||k,uv,ans,ok:correct,expl:c.E[k]||''});
+  });
+  const v=cmp(),sc=tot>0?Math.round(ok/tot*100):0;
+  S.scores[S.cur]=sc;persist();
+  const scol=sc>=80?'#1a6b2e':sc>=50?'#8a5200':'#8a3b2e';
+  const slbl=sc>=80?'&#127881; Excellent!':sc>=50?'&#128077; Bien — relisez les explications ci-dessous':'&#128218; À retravailler — lisez les explications';
+
+  const resultCard=`
+    <div class="res-card">
+      <div class="res-hdr">
+        <div class="res-sc" style="background:${scol}18;border:2px solid ${scol};color:${scol};">${sc}%</div>
+        <div>
+          <div class="res-title" style="color:${scol};">${slbl} — ${ok}/${tot} cases correctes</div>
+          <div class="res-sub">Chiffre 500: ${chf(Math.abs(v.res))}
+            ${v.res>=0?'(à payer à l\'AFC)':'(crédit en faveur de l\'assujetti)'}</div>
+        </div>
+      </div>
+      <div>
+        ${fbs.map(f=>`<div class="fb-item">
+          <div class="fb-row"><div>
+            <div class="fb-name">${f.ok?'&#10003;':'&#10007;'} ${f.name}
+              <span class="${f.ok?'tag-ok':'tag-er'}">${f.ok?'OK':'INCORRECT'}</span></div>
+            <div class="fb-val">Votre réponse: <strong>${chf(f.uv)}</strong>
+              ${!f.ok?` · Réponse correcte: <strong>${chf(f.ans)}</strong>`:''}</div>
+          </div></div>
+          ${f.expl?`<div class="fb-expl">${f.expl}</div>`:''}</div>`).join('')}
+      </div>
+      ${c.E.result?`<div class="afc-note"><strong style="color:#244b5c;">&#128216; Résultat &amp; leçon à retenir:</strong> ${c.E.result}</div>`:''}
+      <div class="res-legal">
+        <strong>Base légale:</strong> ${c.leg} —
+        <a href="https://www.fedlex.admin.ch/eli/cc/2009/615/fr" target="_blank" rel="noopener">LTVA RS 641.20</a> ·
+        <a href="https://www.estv.admin.ch/fr/taxe-sur-la-valeur-ajoutee" target="_blank" rel="noopener">estv.admin.ch</a> ·
+        <a href="https://www.uid.admin.ch" target="_blank" rel="noopener">uid.admin.ch (vérifier N° TVA)</a>
+      </div>
+    </div>`;
+
+  const sep=`<div style="margin-top:14px;padding-top:4px;border-top:2px dashed var(--border2);display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+    <span style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">&#128196; décompte TVA pédagogique — corrigé</span>
+    <span style="font-size:11px;color:var(--text3)">Ci-dessous: la vue pédagogique structurée avec annotations</span>
+  </div>`;
+
+  document.getElementById('resWrap').innerHTML=resultCard+sep+renderFullFormPanel(v,c);
+  renderForm();renderTabs();renderSB();
+  setTimeout(()=>document.getElementById('resWrap').scrollIntoView({behavior:'smooth',block:'start'}),120);
+}
+
+/* ============================================================ SOLUTION / RESET */
+function sol(){
+  if(!confirm('Afficher la solution?\nCe cas sera enregistré avec 0%.\nEssayez d\'abord par vous-même.'))return;
+  Object.entries(CASES[S.cur].F).forEach(([k,fd])=>{if(fd.e)S.uv[k]=fd.a;});
+  S.validated=false;S.scores[S.cur]=0;persist();
+  document.getElementById('resWrap').innerHTML='';
+  renderForm();renderTabs();renderSB();
+  setTimeout(()=>{
+    document.querySelectorAll('input.fi.ue').forEach(el=>{
+      el.style.background='#f0fff4';el.style.borderColor='#1a6b2e';
+    });
+  },60);
+}
+
+function rst(){
+  S.uv={};S.validated=false;
+  document.getElementById('resWrap').innerHTML='';
+  renderForm();renderSB();
+}
+
+/* ============================================================ INIT */
+renderTabs();renderSB();renderForm();
+</script>
+</body>
+</html>
