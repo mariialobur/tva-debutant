@@ -1,0 +1,26 @@
+{
+  "name": "Simulateur du décompte TVA suisse",
+  "short_name": "TVA Suisse",
+  "description": "Simulateur pédagogique indépendant du décompte TVA suisse selon la méthode effective.",
+  "lang": "fr",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f3ef",
+  "theme_color": "#14191d",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
