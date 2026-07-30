@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#14191d">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simulateur du décompte TVA suisse — méthode effective">
-<meta property="og:description" content="12 cas pratiques pour apprendre les chiffres du décompte TVA suisse selon la méthode effective.">
-<meta property="og:url" content="https://mariialobur.github.io/tva-debutant/">
 <meta name="robots" content="index,follow">
-<meta name="description" content="Simulateur pédagogique indépendant du décompte TVA suisse selon la méthode effective, basé sur la structure du prototype officiel de l'AFC.">
+<meta name="description" content="Parcours pédagogique indépendant pour apprendre le décompte TVA suisse selon la méthode effective, du niveau débutant aux situations particulières.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Outils TVA suisse — Mariia Lobur">
+<meta property="og:title" content="Parcours pratique du décompte TVA suisse — méthode effective">
+<meta property="og:description" content="12 cas pratiques avec qualification TVA, rubriques du décompte, contrôles de cohérence et progression locale.">
+<meta property="og:url" content="https://mariialobur.github.io/tva-debutant/">
+<meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://mariialobur.github.io/tva-debutant/">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -18,93 +20,292 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="apple-mobile-web-app-title" content="TVA Suisse">
-<title>Simulateur du décompte TVA suisse — méthode effective | Mariia Lobur</title>
+<title>Parcours pratique du décompte TVA suisse — méthode effective | Mariia Lobur</title>
 <style>
 :root{
-  --ink:#17202a;--muted:#5d6873;--soft:#eef3f5;--paper:#fff;--canvas:#f4f3ef;
-  --line:#d8dde0;--line2:#bcc5ca;--blue:#145f82;--blue2:#0e4965;--bluebg:#eaf4f8;
-  --green:#176c3a;--greenbg:#edf9f1;--amber:#845300;--amberbg:#fff7e7;
-  --red:#9b382e;--redbg:#fff0ed;--dark:#14191d;--mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
-  --radius:10px;--shadow:0 8px 28px rgba(23,32,42,.08)
+  --ink:#17202a;--muted:#56636d;--soft:#eef3f5;--paper:#fff;--canvas:#f3f2ee;
+  --line:#d7dde0;--line2:#aebac0;--blue:#145f82;--blue2:#0d4864;--bluebg:#eaf4f8;
+  --green:#176c3a;--greenbg:#edf9f1;--amber:#795000;--amberbg:#fff7e7;
+  --red:#94382f;--redbg:#fff0ed;--dark:#14191d;--dark2:#222a30;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --radius:11px;--shadow:0 8px 28px rgba(23,32,42,.08)
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.45}
-button,input{font:inherit}a{color:var(--blue2)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.5}
+button,input,select{font:inherit}
+a{color:var(--blue2)}
+a:hover{text-decoration-thickness:2px}
 .top{background:var(--dark);color:#fff;padding:15px 22px;display:flex;gap:18px;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.brand{display:flex;gap:12px;align-items:center}.flag{font-size:28px}.brand h1{font-size:17px;margin:0;font-weight:750}.brand p{margin:3px 0 0;font-size:11px;color:#cbd4d9}.status{text-align:right;font-size:11px;color:#ced6da}.status strong{display:block;color:#fff;font-size:14px;margin-top:2px}
-.disclaimer{background:#fff6dc;border-bottom:1px solid #ecd59c;padding:9px 22px;color:#674600;font-size:12px}.disclaimer strong{color:#493100}
-.learnbar{background:#fff;border-bottom:1px solid var(--line);padding:10px 22px;display:grid;grid-template-columns:auto repeat(4,minmax(145px,1fr));gap:8px;align-items:stretch}
-.learn-title{font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);font-size:10px;display:flex;align-items:center}.learn-step{background:#f8fafb;border:1px solid var(--line);border-radius:9px;padding:7px 9px;font-size:11px;color:var(--muted);display:flex;gap:7px}.learn-step b{display:flex;align-items:center;justify-content:center;flex:0 0 19px;height:19px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px}
-.tabs{display:flex;gap:0;overflow:auto;background:#f8f9f9;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.tab{appearance:none;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);padding:11px 13px;white-space:nowrap;cursor:pointer;font-size:11px}.tab:hover{background:#fff}.tab.active{color:var(--blue);font-weight:750;border-bottom-color:var(--blue);background:#fff}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;background:#c7cdd1}.dot.done{background:var(--green)}
-.layout{display:grid;grid-template-columns:minmax(270px,330px) minmax(0,1fr);max-width:1500px;margin:0 auto}.side{background:#fff;border-right:1px solid var(--line);padding:18px 16px;min-height:calc(100vh - 170px);display:flex;flex-direction:column;gap:14px}.work{padding:18px;min-width:0}.case-title{font-size:18px;font-weight:800;margin:0}.meta{font-size:11px;color:var(--muted);margin-top:4px}.level{display:inline-flex;margin-top:8px;border-radius:999px;padding:3px 9px;font-weight:700;font-size:10px;background:var(--bluebg);color:var(--blue)}
-.task{padding:11px 12px;border-radius:9px;background:#eef6ff;border:1px solid #c4dcf0;color:#164f72;font-size:12px}.task strong,.block-title{display:block;text-transform:uppercase;letter-spacing:.055em;font-size:10px;font-weight:800;margin-bottom:5px}.facts{border-top:1px solid var(--line)}.fact{padding:8px 0;border-bottom:1px solid var(--line)}.fact-row{display:flex;justify-content:space-between;gap:10px}.fact-name{font-size:12px}.amount{font-family:var(--mono);font-weight:800;white-space:nowrap}.fact-note{font-size:10px;color:var(--muted);margin-top:2px}.tag{display:inline-block;background:var(--soft);border-radius:4px;padding:1px 5px;font-size:9px;font-weight:750;margin-left:4px;color:#4b5961}
-.legal{background:#f7f7f5;border-left:4px solid var(--blue);padding:9px 10px;border-radius:0 7px 7px 0;color:var(--muted);font-size:10.5px}.checklist{background:#fafafa;border:1px solid var(--line);border-radius:9px;padding:10px 11px;color:var(--muted);font-size:11px}.checklist div{margin-top:5px}.actions{display:grid;gap:7px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}.btn{border:1px solid var(--line2);border-radius:8px;background:#fff;padding:9px 12px;cursor:pointer;font-weight:650;color:var(--ink)}.btn:hover{background:#f7f9fa}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{background:var(--blue2)}.btn.small{font-size:11px;padding:7px}.progress{font-size:11px;color:var(--muted)}.bar{height:7px;background:#e6eaec;border-radius:10px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:var(--green);width:0}
-.modebar{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}.mode-title strong{display:block;font-size:13px}.mode-title span{color:var(--muted);font-size:11px}.mode-buttons{display:flex;gap:6px}.mode{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:750;cursor:pointer;color:var(--muted)}.mode.active{background:var(--blue);border-color:var(--blue);color:#fff}
-.info{background:var(--bluebg);border:1px solid #bed8e3;color:#164e67;border-radius:var(--radius);padding:11px 13px;margin-bottom:12px;font-size:12px}.info strong{font-weight:800}
-.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:13px}.card-head{background:var(--blue);color:#fff;padding:11px 15px}.card-head h2{font-size:14px;margin:0}.card-head p{font-size:10px;margin:3px 0 0;color:#d9ebf2}.columns{display:grid;grid-template-columns:55px minmax(260px,1fr) 170px 130px;background:#edf0f1;border-bottom:1px solid var(--line);font-size:9px;text-transform:uppercase;letter-spacing:.05em;font-weight:800;color:#6a747b}.columns div{padding:6px 10px}.columns div:nth-child(3),.columns div:nth-child(4){text-align:right}.section{background:#314957;color:#fff;padding:7px 13px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.section.s2{background:#815100}.section.s3{background:#176c3a}.section.s4{background:#4d5964}
-.row{display:grid;grid-template-columns:55px minmax(260px,1fr) 170px 130px;min-height:48px;border-bottom:1px solid var(--line);align-items:stretch}.row:last-child{border-bottom:0}.code{background:#eef0f1;border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:800 10px var(--mono);color:#68737a}.label{padding:8px 11px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}.label-main{font-size:12px;font-weight:650}.label-sub{font-size:9.5px;color:#77828a;margin-top:2px}.input-cell{padding:6px 8px;border-right:1px solid var(--line);display:flex;align-items:center}.tax-cell{padding:6px 10px;display:flex;align-items:center;justify-content:flex-end;font:12px var(--mono);color:#4a5961}.money{width:100%;border:1.5px solid #b7c0c5;border-radius:7px;padding:7px 8px;text-align:right;font-family:var(--mono);background:#fff;color:var(--ink)}.money:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,95,130,.14)}.money.pending{background:#fffbe9;border-color:#c9a743}.money.correct{background:var(--greenbg);border-color:#4b9d69}.money.wrong{background:var(--redbg);border-color:#c97b70}.readonly{background:#f4f5f5;color:#5d6870;font-family:var(--mono);justify-content:flex-end}.row.computed{background:#f7f8f8}.row.total{background:#eaf4f8;font-weight:800}.row.total .code{background:var(--blue);color:#fff}.row.input-total{background:#edf9f1}.row.input-total .code{background:var(--green);color:#fff}.row.tax-total{background:#fff6e8}.row.tax-total .code{background:#815100;color:#fff}.row.pay{background:#fff0ed;border-top:2px solid var(--red)}.row.credit{background:#edf9f1;border-top:2px solid var(--green)}.row.pay .code{background:var(--red);color:#fff}.row.credit .code{background:var(--green);color:#fff}.hint{font-size:9.5px;color:var(--amber);background:var(--amberbg);border-radius:5px;padding:3px 6px;margin-top:4px}.note{padding:9px 13px;background:#f4f9fb;border-top:1px solid #c8dfe8;font-size:10.5px;color:#355f71}
-.precheck{border:1px solid #bed8e3;background:#f6fbfd;border-radius:9px;padding:10px 12px;color:#245b73;font-size:11px;margin-bottom:12px}.precheck.warn{border-color:#ead29c;background:var(--amberbg);color:#765000}.precheck.ok{border-color:#b9ddc7;background:var(--greenbg);color:#276a40}.precheck ul{margin:6px 0 0;padding-left:18px}
-.result{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-top:13px}.result-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}.score{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:850;font-size:15px}.result-title{font-weight:800}.result-sub{font-size:11px;color:var(--muted);margin-top:2px}.feedback{padding:10px 0;border-bottom:1px solid var(--line)}.feedback:last-child{border-bottom:0}.fb-top{display:flex;justify-content:space-between;gap:10px}.fb-name{font-weight:700;font-size:12px}.fb-values{font:10.5px var(--mono);color:var(--muted);text-align:right}.fb-explain{margin-top:5px;background:#f7f8f8;border-left:3px solid var(--blue);padding:7px 9px;color:var(--muted);font-size:11px}.okmark{color:var(--green)}.badmark{color:var(--red)}
-.sources{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;color:var(--muted);font-size:10.5px}.sources strong{display:block;color:var(--ink);margin-bottom:5px}.sources a{display:inline-block;margin:2px 10px 2px 0}
-.footer{text-align:center;color:#7a858b;font-size:10px;padding:18px}
-@media(max-width:900px){.learnbar{grid-template-columns:1fr 1fr}.learn-title{grid-column:1/-1}.layout{grid-template-columns:1fr}.side{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.actions{grid-template-columns:repeat(3,1fr)}.work{padding:12px}}
-@media(max-width:650px){.top{padding:12px}.status{text-align:left}.disclaimer{padding:8px 12px}.learnbar{padding:8px 12px;grid-template-columns:1fr}.columns{display:none}.row{display:grid;grid-template-columns:48px 1fr}.code{grid-column:1;grid-row:1 / span 3;min-height:100%;border-bottom:0}.label{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.input-cell{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.tax-cell{grid-column:2;justify-content:flex-start}.modebar{align-items:flex-start;flex-direction:column}.mode-buttons{width:100%}.mode{flex:1}.actions{grid-template-columns:1fr}.side{padding:14px}.work{padding:9px}.row{margin:6px;border:1px solid var(--line);border-radius:8px;overflow:hidden}.section{margin-top:8px}.card{box-shadow:none}}
-
+.brand{display:flex;gap:12px;align-items:center}
+.flag{font-size:28px}
+.brand h1{font-size:18px;margin:0;font-weight:780}
+.brand p{margin:3px 0 0;font-size:12px;color:#cbd4d9}
+.status{text-align:right;font-size:12px;color:#ced6da}
+.status strong{display:block;color:#fff;font-size:15px;margin-top:2px}
+.project-nav{background:var(--dark2);display:flex;gap:8px;align-items:center;padding:9px 22px;border-top:1px solid rgba(255,255,255,.08);overflow:auto}
+.project-nav a{color:#e8f0f3;text-decoration:none;border:1px solid #52616a;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:700;white-space:nowrap}
+.project-nav a:hover{background:#fff;color:var(--dark)}
+.project-nav a.active{background:#fff;color:var(--dark);border-color:#fff}
+.project-nav a.linkedin{margin-left:auto}
+.disclaimer{background:#fff6dc;border-bottom:1px solid #ecd59c;padding:10px 22px;color:#624300;font-size:13px}
+.disclaimer strong{color:#423000}
+.learnbar{background:#fff;border-bottom:1px solid var(--line);padding:11px 22px;display:grid;grid-template-columns:auto repeat(4,minmax(145px,1fr));gap:8px;align-items:stretch}
+.learn-title{font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);font-size:11px;display:flex;align-items:center}
+.learn-step{background:#f8fafb;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12px;color:var(--muted);display:flex;gap:8px}
+.learn-step b{display:flex;align-items:center;justify-content:center;flex:0 0 21px;height:21px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px}
+.tabs{display:flex;gap:0;overflow:auto;background:#f8f9f9;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.tab{appearance:none;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);padding:12px 14px;white-space:nowrap;cursor:pointer;font-size:12px}
+.tab:hover{background:#fff}
+.tab.active{color:var(--blue);font-weight:750;border-bottom-color:var(--blue);background:#fff}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#c7cdd1}
+.dot.done{background:var(--green)}
+.dot.partial{background:#d79724}
+.dot.assisted{background:var(--blue)}
+.case-select-wrap{display:none;background:#fff;border-bottom:1px solid var(--line);padding:9px 12px}
+.case-select-wrap label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:5px}
+.case-select{width:100%;border:1px solid var(--line2);border-radius:8px;background:#fff;color:var(--ink);padding:10px;font-weight:700}
+.limits{max-width:1500px;margin:12px auto 0;padding:0 18px}
+.limits-inner{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:12px}
+.limits-inner strong{color:var(--ink)}
+.layout{display:grid;grid-template-columns:minmax(285px,350px) minmax(0,1fr);max-width:1500px;margin:0 auto}
+.side{background:#fff;border-right:1px solid var(--line);padding:19px 17px;min-height:calc(100vh - 190px);display:flex;flex-direction:column;gap:15px}
+.work{padding:18px;min-width:0}
+.case-title{font-size:19px;font-weight:800;margin:0}
+.meta{font-size:12px;color:var(--muted);margin-top:4px}
+.level{display:inline-flex;margin-top:8px;border-radius:999px;padding:4px 10px;font-weight:700;font-size:11px;background:var(--bluebg);color:var(--blue)}
+.level-group{display:inline-flex;margin:8px 0 0 5px;border-radius:999px;padding:4px 10px;font-weight:700;font-size:11px;background:#f1f2f2;color:#536069}
+.task{padding:12px 13px;border-radius:9px;background:#eef6ff;border:1px solid #c4dcf0;color:#164f72;font-size:13px}
+.task strong,.block-title{display:block;text-transform:uppercase;letter-spacing:.055em;font-size:11px;font-weight:800;margin-bottom:6px}
+.facts{border-top:1px solid var(--line)}
+.fact{padding:9px 0;border-bottom:1px solid var(--line)}
+.fact-row{display:flex;justify-content:space-between;gap:10px}
+.fact-name{font-size:13px}
+.amount{font-family:var(--mono);font-weight:800;white-space:nowrap}
+.fact-note{font-size:11px;color:var(--muted);margin-top:2px}
+.tag{display:inline-block;background:var(--soft);border-radius:4px;padding:2px 6px;font-size:10px;font-weight:750;margin-left:4px;color:#46545d}
+.legal{background:#f7f7f5;border-left:4px solid var(--blue);padding:10px 11px;border-radius:0 7px 7px 0;color:var(--muted);font-size:12px}
+.case-sources{margin-top:7px}
+.case-sources a{display:inline-block;font-size:11px;margin:2px 8px 2px 0}
+.checklist{background:#fafafa;border:1px solid var(--line);border-radius:9px;padding:11px 12px;color:var(--muted);font-size:12px}
+.checklist div{margin-top:6px}
+.actions{display:grid;gap:8px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line)}
+.btn{border:1px solid var(--line2);border-radius:8px;background:#fff;padding:10px 12px;cursor:pointer;font-weight:680;color:var(--ink);min-height:42px}
+.btn:hover{background:#f7f9fa}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue2)}
+.btn.small{font-size:12px;padding:8px}
+.btn.danger-link{border:0;background:transparent;color:var(--red);text-decoration:underline;font-size:11px;padding:5px;min-height:auto}
+.progress{font-size:12px;color:var(--muted)}
+.bar{height:8px;background:#e6eaec;border-radius:10px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--green);width:0}
+.case-nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.control-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:11px 13px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.control-title strong{display:block;font-size:14px}
+.control-title span{color:var(--muted);font-size:12px}
+.segmented{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.mode{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:750;cursor:pointer;color:var(--muted)}
+.mode.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.info{background:var(--bluebg);border:1px solid #bed8e3;color:#164e67;border-radius:var(--radius);padding:12px 14px;margin-bottom:12px;font-size:13px}
+.info strong{font-weight:800}
+.qualification{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:13px}
+.qualification h2{font-size:15px;margin:0 0 5px}
+.qualification p{font-size:12px;color:var(--muted);margin:0 0 10px}
+.qualification select{width:100%;border:1.5px solid var(--line2);border-radius:8px;padding:10px;background:#fff;color:var(--ink)}
+.qualification select.correct{border-color:#4b9d69;background:var(--greenbg)}
+.qualification select.wrong{border-color:#c97b70;background:var(--redbg)}
+.qual-feedback{margin-top:8px;padding:8px 10px;border-radius:7px;font-size:12px}
+.qual-feedback.ok{background:var(--greenbg);color:#276a40}
+.qual-feedback.bad{background:var(--redbg);color:#7c3029}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:13px}
+.card-head{background:var(--blue);color:#fff;padding:12px 15px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.card-head h2{font-size:15px;margin:0}
+.card-head p{font-size:11px;margin:3px 0 0;color:#d9ebf2}
+.net-badge{flex:0 0 auto;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:5px 9px;font-size:10px;font-weight:800;white-space:nowrap}
+.columns{display:grid;grid-template-columns:58px minmax(260px,1fr) 180px 140px;background:#edf0f1;border-bottom:1px solid var(--line);font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:800;color:#626e75}
+.columns div{padding:7px 10px}
+.columns div:nth-child(3),.columns div:nth-child(4){text-align:right}
+.section{background:#314957;color:#fff;padding:8px 13px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.section.s2{background:#815100}
+.section.s3{background:#176c3a}
+.section.s4{background:#4d5964}
+.row{display:grid;grid-template-columns:58px minmax(260px,1fr) 180px 140px;min-height:51px;border-bottom:1px solid var(--line);align-items:stretch}
+.row:last-child{border-bottom:0}
+.code{background:#eef0f1;border-right:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:800 11px var(--mono);color:#68737a}
+.label{padding:9px 11px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center}
+.label-main{font-size:13px;font-weight:650}
+.label-sub{font-size:10.5px;color:#6c7880;margin-top:2px}
+.input-cell{padding:7px 8px;border-right:1px solid var(--line);display:flex;align-items:center}
+.tax-cell{padding:7px 10px;display:flex;align-items:center;justify-content:flex-end;font:13px var(--mono);color:#44535c}
+.input-wrap{width:100%}
+.money{width:100%;border:1.5px solid #aeb9bf;border-radius:7px;padding:8px 9px;text-align:right;font-family:var(--mono);background:#fff;color:var(--ink)}
+.money:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px rgba(20,95,130,.14)}
+.money.pending{background:#fffbe9;border-color:#c9a743}
+.money.correct{background:var(--greenbg);border-color:#4b9d69}
+.money.wrong{background:var(--redbg);border-color:#c97b70}
+.money.invalid{background:var(--redbg);border-color:var(--red)}
+.field-error{font-size:10px;color:var(--red);margin-top:4px}
+.readonly{background:#f4f5f5;color:#5d6870;font-family:var(--mono);justify-content:flex-end}
+.locked{color:#9aa3a8;justify-content:center}
+.row.computed{background:#f7f8f8}
+.row.total{background:#eaf4f8;font-weight:800}
+.row.total .code{background:var(--blue);color:#fff}
+.row.input-total{background:#edf9f1}
+.row.input-total .code{background:var(--green);color:#fff}
+.row.tax-total{background:#fff6e8}
+.row.tax-total .code{background:#815100;color:#fff}
+.row.pay{background:#fff0ed;border-top:2px solid var(--red)}
+.row.credit{background:#edf9f1;border-top:2px solid var(--green)}
+.row.pay .code{background:var(--red);color:#fff}
+.row.credit .code{background:var(--green);color:#fff}
+.hint{font-size:10.5px;color:var(--amber);background:var(--amberbg);border-radius:5px;padding:5px 7px;margin-top:5px}
+.note{padding:10px 13px;background:#f4f9fb;border-top:1px solid #c8dfe8;font-size:11.5px;color:#355f71}
+.field-sign{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-right:5px;border-radius:50%;background:#eef0f1;color:#56636b;font-family:var(--mono);font-size:10px}
+.attachment{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:4px;background:#edf3f6;color:#28586c;font-size:9px;text-transform:uppercase;letter-spacing:.04em;vertical-align:1px}
+.tax-caption{display:block;font:9px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#707d85;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}
+.precheck{border:1px solid #bed8e3;background:#f6fbfd;border-radius:9px;padding:11px 13px;color:#245b73;font-size:12px;margin-bottom:12px}
+.precheck.warn{border-color:#ead29c;background:var(--amberbg);color:#765000}
+.precheck.ok{border-color:#b9ddc7;background:var(--greenbg);color:#276a40}
+.precheck ul{margin:6px 0 0;padding-left:18px}
+.result{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-top:13px}
+.result-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.score{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:850;font-size:15px;flex:0 0 auto}
+.result-title{font-weight:800}
+.result-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.competencies{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:12px 0}
+.competency{border:1px solid var(--line);border-radius:8px;padding:9px;background:#fafafa}
+.competency span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:800}
+.competency strong{display:block;margin-top:3px;font-size:13px}
+.result-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.summary-box{border:1px solid var(--line);border-radius:9px;padding:10px;background:#fafafa}
+.summary-box.expected{background:var(--bluebg);border-color:#bed8e3}
+.summary-box span{display:block;text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;font-weight:800;color:var(--muted)}
+.summary-box strong{display:block;margin-top:4px;font-size:13px}
+.summary-box small{display:block;margin-top:3px;color:var(--muted);font-family:var(--mono);font-size:10.5px}
+.feedback{padding:11px 0;border-bottom:1px solid var(--line)}
+.feedback:last-child{border-bottom:0}
+.fb-top{display:flex;justify-content:space-between;gap:10px}
+.fb-name{font-weight:700;font-size:13px}
+.fb-values{font:11px var(--mono);color:var(--muted);text-align:right}
+.fb-explain{margin-top:6px;background:#f7f8f8;border-left:3px solid var(--blue);padding:8px 10px;color:var(--muted);font-size:12px}
+.okmark{color:var(--green)}
+.badmark{color:var(--red)}
+.glossary{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:13px;overflow:hidden}
+.glossary summary{cursor:pointer;padding:12px 14px;font-weight:800;color:var(--ink)}
+.glossary summary::marker{color:var(--blue)}
+.glossary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 13px 13px}
+.term{background:#f7f9fa;border-radius:8px;padding:9px 10px;font-size:11.5px;color:var(--muted)}
+.term strong{display:block;color:var(--blue2);margin-bottom:2px}
+.project-links{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:13px 0}
+.project-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.project-card.current{border-color:#9bc3d5;background:#f6fbfd}
+.project-card span{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:9.5px;font-weight:800;color:var(--muted)}
+.project-card strong{display:block;font-size:14px;margin:5px 0}
+.project-card p{font-size:11.5px;color:var(--muted);margin:0 0 9px}
+.project-card a{font-weight:750;font-size:12px}
+.sources{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;color:var(--muted);font-size:11.5px}
+.sources strong{display:block;color:var(--ink);margin-bottom:5px}
+.sources a{display:inline-block;margin:3px 10px 3px 0}
+.footer{text-align:center;color:#6d787f;font-size:11px;padding:20px}
+.updated{display:block;margin-top:4px}
+.mobile-actions{display:none}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid rgba(20,95,130,.35);outline-offset:2px}
 button:disabled{opacity:.45;cursor:not-allowed}
-.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.net-badge{flex:0 0 auto;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:4px 8px;font-size:9px;font-weight:800;white-space:nowrap}
-.case-select-wrap{display:none;background:#fff;border-bottom:1px solid var(--line);padding:8px 12px}.case-select-wrap label{display:block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--blue);margin-bottom:4px}.case-select{width:100%;border:1px solid var(--line2);border-radius:8px;background:#fff;color:var(--ink);padding:9px;font-weight:700}
-.limits{max-width:1500px;margin:12px auto 0;padding:0 18px}.limits-inner{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 13px;display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:11px}.limits-inner strong{color:var(--ink)}
-.field-sign{display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;margin-right:5px;border-radius:50%;background:#eef0f1;color:#56636b;font-family:var(--mono);font-size:10px}.attachment{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:4px;background:#edf3f6;color:#28586c;font-size:8px;text-transform:uppercase;letter-spacing:.04em;vertical-align:1px}
-.input-wrap{width:100%}.tax-cell .input-wrap{width:100%}.tax-cell strong{display:block}.tax-caption{display:block;font:8.5px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#78848b;margin-bottom:2px;text-transform:uppercase;letter-spacing:.04em}.locked{color:#9aa3a8;justify-content:center}
-.case-nav{display:grid;grid-template-columns:1fr 1fr;gap:7px}.link-btn{appearance:none;border:0;background:transparent;color:var(--blue2);text-decoration:underline;cursor:pointer;font-size:10px;padding:5px}
-.result-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.summary-box{border:1px solid var(--line);border-radius:9px;padding:10px;background:#fafafa}.summary-box.expected{background:var(--bluebg);border-color:#bed8e3}.summary-box span{display:block;text-transform:uppercase;letter-spacing:.05em;font-size:8.5px;font-weight:800;color:var(--muted)}.summary-box strong{display:block;margin-top:4px;font-size:12px}.summary-box small{display:block;margin-top:3px;color:var(--muted);font-family:var(--mono);font-size:9.5px}
-.dot.partial{background:#d79724}
-.glossary{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:13px;overflow:hidden}.glossary summary{cursor:pointer;padding:11px 13px;font-weight:800;color:var(--ink)}.glossary summary::marker{color:var(--blue)}.glossary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 13px 13px}.term{background:#f7f9fa;border-radius:8px;padding:8px 9px;font-size:10px;color:var(--muted)}.term strong{display:block;color:var(--blue2);margin-bottom:2px}
-.mobile-actions{display:none}
-.updated{display:block;margin-top:3px}
-@media(min-width:901px){.side{position:sticky;top:42px;align-self:start;height:calc(100vh - 42px);min-height:0;overflow:auto}.side::-webkit-scrollbar{width:7px}.side::-webkit-scrollbar-thumb{background:#d4dadd;border-radius:10px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{scroll-behavior:auto!important;transition:none!important}}
+@media(min-width:901px){.side{position:sticky;top:43px;align-self:start;height:calc(100vh - 43px);min-height:0;overflow:auto}.side::-webkit-scrollbar{width:7px}.side::-webkit-scrollbar-thumb{background:#d4dadd;border-radius:10px}}
+@media(max-width:1050px){.controls{grid-template-columns:1fr}.project-links{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.learnbar{grid-template-columns:1fr 1fr}.learn-title{grid-column:1/-1}.layout{grid-template-columns:1fr}.side{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.actions{grid-template-columns:repeat(3,1fr)}.work{padding:12px}}
 @media(max-width:650px){
- body{padding-bottom:70px}.tabs{display:none}.case-select-wrap{display:block;position:sticky;top:0;z-index:30}.limits{padding:0 9px;margin-top:9px}.limits-inner{font-size:10px}.top{gap:9px}.brand{align-items:flex-start}.flag{font-size:20px}.brand h1{font-size:14px}.brand p{font-size:9px}.status{width:100%;display:flex;justify-content:space-between;align-items:center}.status strong{margin:0}.learn-step{font-size:10px}.side .actions{display:none}.card-head{align-items:flex-start}.net-badge{font-size:8px}.glossary-grid{grid-template-columns:1fr}.result-summary{grid-template-columns:1fr}.mobile-actions{position:fixed;display:grid;grid-template-columns:1.25fr 1fr .75fr;gap:6px;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));backdrop-filter:blur(10px)}.mobile-actions .btn{padding:9px 5px;font-size:10px}.tax-cell{font-size:10px}.tax-caption{font-size:7.5px}.row.acquisition .tax-cell{padding:6px 8px}.row.acquisition .tax-cell .money{text-align:right}.label-main{font-size:11px}.label-sub{font-size:9px}.footer{padding-bottom:10px}
+  body{padding-bottom:75px;font-size:16px}
+  .top{padding:13px 12px;gap:9px}.brand{align-items:flex-start}.flag{font-size:22px}.brand h1{font-size:16px}.brand p{font-size:12px}.status{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left}.status strong{margin:0}
+  .project-nav{padding:8px 12px}.project-nav a{font-size:12px;padding:7px 10px}.project-nav a.linkedin{margin-left:0}
+  .disclaimer{padding:9px 12px;font-size:13px}.learnbar{padding:9px 12px;grid-template-columns:1fr}.learn-step{font-size:13px}
+  .tabs{display:none}.case-select-wrap{display:block;position:sticky;top:0;z-index:30}.limits{padding:0 9px;margin-top:9px}.limits-inner{font-size:12px}
+  .side{padding:15px}.side .actions{display:none}.work{padding:9px}
+  .controls{grid-template-columns:1fr}.control-card{align-items:flex-start;flex-direction:column}.segmented{width:100%;justify-content:flex-start}.mode{flex:1;text-align:center;min-width:90px}
+  .columns{display:none}.row{display:grid;grid-template-columns:50px 1fr;margin:7px;border:1px solid var(--line);border-radius:8px;overflow:hidden}.code{grid-column:1;grid-row:1 / span 3;min-height:100%;border-bottom:0}.label{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.input-cell{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.tax-cell{grid-column:2;justify-content:flex-start;font-size:12px}.label-main{font-size:13px}.label-sub{font-size:11px}.section{margin-top:8px}.card{box-shadow:none}.card-head{align-items:flex-start}.net-badge{font-size:9px}
+  .qualification p,.result-sub,.fb-explain,.info,.precheck,.legal,.checklist{font-size:13px}.money{font-size:16px;min-height:44px}
+  .glossary-grid{grid-template-columns:1fr}.result-summary,.competencies,.project-links{grid-template-columns:1fr}.fb-top{flex-direction:column}.fb-values{text-align:left}
+  .mobile-actions{position:fixed;display:grid;grid-template-columns:1.25fr 1fr .8fr;gap:6px;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));backdrop-filter:blur(10px)}.mobile-actions .btn{padding:10px 5px;font-size:12px;min-height:45px}
+  .footer{padding-bottom:12px;font-size:11px}
 }
-
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Simulateur du décompte TVA suisse — méthode effective","applicationCategory":"EducationalApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Mariia Lobur","url":"https://www.linkedin.com/in/mariia-lobur/"},"isAccessibleForFree":true,"inLanguage":"fr-CH","dateModified":"2026-07-29"}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Parcours pratique du décompte TVA suisse — méthode effective","applicationCategory":"EducationalApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Mariia Lobur","url":"https://www.linkedin.com/in/mariia-lobur/"},"isAccessibleForFree":true,"inLanguage":"fr-CH","dateModified":"2026-07-30","url":"https://mariialobur.github.io/tva-debutant/"}
 </script>
 </head>
 <body>
 <header class="top">
-  <div class="brand"><div class="flag">🇨🇭</div><div><h1>Simulateur du décompte TVA suisse</h1><p>Méthode effective · structure du prototype officiel AFC · montants nets hors TVA dans les exercices</p></div></div>
-  <div class="status">Progression globale<strong id="globalProgress">0 / 0 cas</strong></div>
+  <div class="brand"><div class="flag" aria-hidden="true">🇨🇭</div><div><h1>Parcours pratique du décompte TVA suisse</h1><p>Méthode effective · du niveau débutant aux situations particulières · montants nets hors TVA</p></div></div>
+  <div class="status">Progression autonome<strong id="globalProgress">0 / 12 cas</strong></div>
 </header>
-<div class="disclaimer"><strong>Prototype pédagogique indépendant.</strong> Ce site n’est ni un service de l’AFC, ni un formulaire officiel, ni un avis fiscal. Le dépôt réel s’effectue dans « Décompte TVA pro » sur le Portail AFC, selon les instructions et formulaires en vigueur.</div>
-<section class="learnbar">
-  <div class="learn-title">Parcours</div>
-  <div class="learn-step"><b>1</b><span>Identifier la nature TVA de chaque mouvement.</span></div>
+<nav class="project-nav" aria-label="Outils et profil">
+  <a class="active" href="https://mariialobur.github.io/tva-debutant/" aria-current="page">Méthode effective</a>
+  <a href="https://mariialobur.github.io/tva-tdfn/" target="_blank" rel="noopener">Entraînement TDFN ↗</a>
+  <a class="linkedin" href="https://www.linkedin.com/in/mariia-lobur/" target="_blank" rel="noopener">Mariia Lobur sur LinkedIn ↗</a>
+</nav>
+<div class="disclaimer"><strong>Projet pédagogique indépendant.</strong> Cet outil n’est ni un service de l’AFC, ni un formulaire officiel, ni un avis fiscal. Le dépôt réel s’effectue dans « Décompte TVA pro » sur le Portail AFC, selon les règles et formulaires en vigueur.</div>
+<section class="learnbar" aria-label="Parcours d'apprentissage">
+  <div class="learn-title">Méthode de travail</div>
+  <div class="learn-step"><b>1</b><span>Qualifier la nature TVA de l’opération.</span></div>
   <div class="learn-step"><b>2</b><span>Reporter les montants dans les chiffres officiels.</span></div>
   <div class="learn-step"><b>3</b><span>Contrôler 289, 299, 379, 399 et 479.</span></div>
-  <div class="learn-step"><b>4</b><span>Distinguer le montant à payer 500 du crédit 510.</span></div>
+  <div class="learn-step"><b>4</b><span>Interpréter le montant à payer 500 ou le crédit 510.</span></div>
 </section>
 <nav class="tabs" id="tabs" aria-label="Cas pratiques"></nav>
-<div class="case-select-wrap"><label for="caseSelect">Choisir un cas pratique</label><select class="case-select" id="caseSelect" onchange="selectCase(this.value)"></select></div>
-<div class="limits"><div class="limits-inner"><span aria-hidden="true">ℹ️</span><div><strong>Périmètre du simulateur.</strong> Exercices selon la méthode effective, avec saisie nette hors TVA et, sauf indication contraire, sur la base des contre-prestations convenues. Le simulateur reproduit les principaux chiffres du prototype AFC. Ne sont pas simulés: saisie brute TVA comprise, anciens taux, option d’arrondi, analyse exhaustive de toutes les qualifications sectorielles, téléversement effectif des justificatifs et transmission officielle.</div></div></div>
+<div class="case-select-wrap"><label for="caseSelect">Choisir un cas pratique</label><select class="case-select" id="caseSelect"></select></div>
+<div class="limits"><div class="limits-inner"><span aria-hidden="true">ℹ️</span><div><strong>Périmètre.</strong> Exercices selon la méthode effective, avec saisie des montants nets hors TVA et, sauf indication contraire, sur la base des contre-prestations convenues. Ne sont pas simulés: saisie brute TVA comprise, anciens taux, option d’arrondi, analyse sectorielle exhaustive, téléversement réel des pièces et transmission officielle.</div></div></div>
 <main class="layout" id="mainContent">
   <aside class="side" id="sidebar"></aside>
   <section class="work">
-    <div class="modebar">
-      <div class="mode-title"><strong>Vue de travail</strong><span>La vue étendue affiche tous les chiffres principaux du prototype actuel; les champs étrangers au cas restent verrouillés.</span></div>
-      <div class="mode-buttons"><button class="mode active" id="guidedBtn" type="button" aria-pressed="true">Vue guidée</button><button class="mode" id="extendedBtn" type="button" aria-pressed="false">Vue étendue</button></div>
+    <div class="controls">
+      <div class="control-card">
+        <div class="control-title"><strong>Mode pédagogique</strong><span>Les aides et la valeur du résultat varient selon le mode choisi.</span></div>
+        <div class="segmented" role="group" aria-label="Mode pédagogique">
+          <button class="mode" id="learnBtn" type="button">Apprentissage</button>
+          <button class="mode" id="practiceBtn" type="button">Entraînement</button>
+          <button class="mode" id="evaluateBtn" type="button">Évaluation</button>
+        </div>
+      </div>
+      <div class="control-card">
+        <div class="control-title"><strong>Vue du formulaire</strong><span>La vue étendue affiche les principaux chiffres, même lorsqu’ils sont verrouillés.</span></div>
+        <div class="segmented" role="group" aria-label="Vue du formulaire">
+          <button class="mode" id="guidedBtn" type="button">Vue guidée</button>
+          <button class="mode" id="extendedBtn" type="button">Vue étendue</button>
+        </div>
+      </div>
     </div>
     <div id="caseInfo" class="info"></div>
+    <div id="qualification"></div>
     <div id="precheck" aria-live="polite"></div>
     <div id="form"></div>
     <div id="result" aria-live="polite" tabindex="-1"></div>
-<details class="glossary"><summary>Glossaire TVA rapide</summary><div class="glossary-grid"><div class="term"><strong>Contre-prestation</strong>Ce que l’entreprise reçoit en échange d’une prestation.</div><div class="term"><strong>Exonérée</strong>Opération non imposée, avec maintien possible du droit à l’impôt préalable, notamment sous conditions pour les exportations.</div><div class="term"><strong>Exclue</strong>Prestation de l’art. 21 LTVA; sans option, elle ne donne en principe pas droit à la déduction de l’impôt préalable lié.</div><div class="term"><strong>Impôt préalable (IP)</strong>TVA déductible sur les acquisitions, sous réserve des conditions légales.</div><div class="term"><strong>Méthode effective</strong>L’impôt dû sur les opérations est diminué de l’impôt préalable effectivement déductible.</div><div class="term"><strong>Méthode nette</strong>Les bases sont saisies hors TVA. Il s’agit du mode de présentation des montants, distinct de la méthode effective.</div><div class="term"><strong>Contre-prestations convenues</strong>Le décompte suit en principe la facturation, indépendamment de l’encaissement, sous réserve des règles particulières.</div><div class="term"><strong>Contre-prestations reçues</strong>Mode autorisé par l’AFC dans lequel le décompte suit les encaissements.</div><div class="term"><strong>Chiffre du décompte</strong>Numéro officiel de la ligne, par exemple 200, 303 ou 400.</div></div></details>
+
+    <details class="glossary">
+      <summary>Glossaire TVA rapide</summary>
+      <div class="glossary-grid">
+        <div class="term"><strong>Contre-prestation</strong>Ce que l’entreprise reçoit en échange d’une prestation.</div>
+        <div class="term"><strong>Exonérée</strong>Opération non imposée avec maintien possible du droit à l’impôt préalable, notamment sous conditions pour les exportations.</div>
+        <div class="term"><strong>Exclue</strong>Prestation de l’art. 21 LTVA; sans option, elle ne donne en principe pas droit à la déduction de l’impôt préalable lié.</div>
+        <div class="term"><strong>Impôt préalable (IP)</strong>TVA déductible sur les acquisitions, sous réserve des conditions légales.</div>
+        <div class="term"><strong>Méthode effective</strong>L’impôt dû sur les opérations est diminué de l’impôt préalable effectivement déductible.</div>
+        <div class="term"><strong>Saisie nette, hors TVA</strong>Les bases des exercices sont saisies sans TVA. Il s’agit d’un mode de présentation, distinct de la méthode de décompte.</div>
+        <div class="term"><strong>Contre-prestations convenues</strong>Le décompte suit en principe la facturation, indépendamment de l’encaissement, sous réserve des règles particulières.</div>
+        <div class="term"><strong>Contre-prestations reçues</strong>Mode autorisé par l’AFC dans lequel le décompte suit les encaissements.</div>
+        <div class="term"><strong>Chiffre du décompte</strong>Numéro officiel d’une rubrique, par exemple 200, 303 ou 400.</div>
+      </div>
+    </details>
+
+    <section class="project-links" aria-label="Autres outils et auteur">
+      <article class="project-card current"><span>Outil actuel</span><strong>Méthode effective</strong><p>Qualification des opérations, impôt dû, impôt préalable et solde du décompte.</p><a href="https://mariialobur.github.io/tva-debutant/">Vous êtes ici</a></article>
+      <article class="project-card"><span>Deuxième entraînement</span><strong>Méthode TDFN</strong><p>Parcours distinct consacré aux taux de la dette fiscale nette et au chiffre d’affaires brut TTC.</p><a href="https://mariialobur.github.io/tva-tdfn/" target="_blank" rel="noopener">Ouvrir le simulateur TDFN ↗</a></article>
+      <article class="project-card"><span>Auteur du projet</span><strong>Mariia Lobur</strong><p>Projet de formation et de démonstration consacré à la comptabilité et à la TVA suisse.</p><a href="https://www.linkedin.com/in/mariia-lobur/" target="_blank" rel="noopener">Voir le profil LinkedIn ↗</a></article>
+    </section>
+
     <div class="sources">
-      <strong>Sources officielles de référence</strong>
+      <strong>Référentiel officiel général</strong>
       <a href="https://www.estv.admin.ch/fr/formulaires-tva" target="_blank" rel="noopener">AFC — Formulaires TVA</a>
       <a href="https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-effektiv-fr.pdf" target="_blank" rel="noopener">Prototype AFC — méthode effective</a>
       <a href="https://www.estv.admin.ch/fr/taux-de-la-tva-suisse" target="_blank" rel="noopener">Taux TVA actuels</a>
@@ -115,12 +316,27 @@ button:disabled{opacity:.45;cursor:not-allowed}
     </div>
   </section>
 </main>
-<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu mis à jour le 29 juillet 2026 sur la base de la rubrique officielle « Formulaires TVA » de l’AFC, du prototype de décompte et de la LTVA.</span></footer>
-<div class="mobile-actions" aria-label="Actions du cas"><button class="btn primary" type="button" onclick="verify()">Vérifier</button><button class="btn" type="button" onclick="solution()">Solution</button><button class="btn small" type="button" onclick="resetCase()">Effacer</button></div>
+<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu et fonctionnement mis à jour le 30 juillet 2026. Les sources officielles et le service AFC en vigueur restent déterminants.</span></footer>
+<div class="mobile-actions" aria-label="Actions du cas">
+  <button class="btn primary" type="button" onclick="verify()">Vérifier</button>
+  <button class="btn" id="mobileSolution" type="button" onclick="solution()">Solution</button>
+  <button class="btn small" type="button" onclick="resetCase()">Effacer</button>
+</div>
+
 <script>
 'use strict';
+
 const RATES={ch303:.081,ch313:.026,ch343:.038};
 const INPUT_FIELDS=['ch200','ch205','ch220','ch221','ch225','ch230','ch235','ch280','ch303','ch313','ch343','ch383base','ch383tax','ch400','ch405','ch410','ch415','ch420','ch900','ch910'];
+
+const SOURCE_LIBRARY={
+  law:{label:'LTVA — Fedlex',url:'https://www.fedlex.admin.ch/eli/cc/2009/615/fr'},
+  form:{label:'Prototype AFC — méthode effective',url:'https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-effektiv-fr.pdf'},
+  rates:{label:'AFC — taux TVA',url:'https://www.estv.admin.ch/fr/taux-de-la-tva-suisse'},
+  acquisitions:{label:'AFC — impôt sur les acquisitions',url:'https://www.estv.admin.ch/fr/impot-sur-les-acquisitions-tva'},
+  transfer:{label:'AFC — formulaire 764',url:'https://www.estv.admin.ch/fr/newnsb/Os-oY1FEYEzWtOce1tKdC'}
+};
+
 const FIELD_META={
  ch200:{code:'200',label:'Total des contre-prestations convenues ou reçues',sub:'Y compris les prestations imposées par option, les transferts par procédure de déclaration, les prestations à l’étranger et le chiffre d’affaires mondial.'},
  ch205:{code:'205',label:'Part du ch. 200 provenant de prestations exclues mais imposées par option',sub:'Information comprise dans le ch. 200. Elle ne s’ajoute pas une seconde fois et n’est pas une déduction.'},
@@ -133,132 +349,201 @@ const FIELD_META={
  ch303:{code:'303',label:'Prestations soumises au taux normal',sub:'Base imposable au taux de 8,1 %.'},
  ch313:{code:'313',label:'Prestations soumises au taux réduit',sub:'Base imposable au taux de 2,6 %.'},
  ch343:{code:'343',label:'Prestations soumises au taux spécial pour l’hébergement',sub:'Base imposable au taux de 3,8 %.'},
- ch383base:{code:'383',label:'Impôt sur les acquisitions',sub:'Saisir la contre-prestation nette et l’impôt dû au taux légal applicable.'},
+ ch383base:{code:'383',label:'Impôt sur les acquisitions — contre-prestation',sub:'Saisir la contre-prestation nette dans la colonne de base.'},
  ch383tax:{code:'383',label:'Impôt sur les acquisitions — impôt',sub:'Montant d’impôt dû; il entre dans le total ch. 399.'},
  ch400:{code:'400',label:'Impôt préalable sur coûts en matériel et prestations de services',sub:'Impôt préalable déductible, sous réserve des conditions et corrections applicables.'},
  ch405:{code:'405',label:'Impôt préalable sur investissements et autres charges d’exploitation',sub:'Classement par nature de la dépense; ce chiffre n’est pas une correction négative.',sign:'+'},
  ch410:{code:'410',label:'Dégrèvement ultérieur de l’impôt préalable',sub:'Montant positif; un relevé détaillé doit être établi et téléversé dans le décompte TVA en ligne.',sign:'+',attachment:true},
- ch415:{code:'415',label:'Corrections de l’impôt préalable',sub:'Double affectation, prestation à soi-même ou autres corrections visées; saisir une valeur positive, le formulaire applique le signe moins.',sign:'−'},
- ch420:{code:'420',label:'Réduction de la déduction de l’impôt préalable',sub:'Saisir une valeur positive; réduction proportionnelle liée notamment aux fonds de l’art. 18, al. 2, let. a à c, selon une méthode appropriée et documentée.',sign:'−'},
+ ch415:{code:'415',label:'Corrections de l’impôt préalable',sub:'Saisir une valeur positive; le formulaire applique le signe moins.',sign:'−'},
+ ch420:{code:'420',label:'Réduction de la déduction de l’impôt préalable',sub:'Saisir une valeur positive; réduction proportionnelle selon une méthode appropriée et documentée.',sign:'−'},
  ch900:{code:'900',label:'Subventions, taxes touristiques et contributions assimilées',sub:'Autres mouvements de fonds selon l’art. 18, al. 2, let. a à c LTVA.'},
  ch910:{code:'910',label:'Dons, dividendes, dédommagements, etc.',sub:'Autres mouvements de fonds selon l’art. 18, al. 2, let. d à l LTVA.'}
 };
+
 const CASES=[
- {id:'A',tab:'Base 8,1 %',title:'Alpina Conseil Sàrl — premier décompte',meta:'Conseil · Lausanne · T1 2026',level:'Débutant',
+ {id:'A',tab:'Base 8,1 %',title:'Alpina Conseil Sàrl — premier décompte',meta:'Conseil · Lausanne · T1 2026',level:'Débutant',group:'Fondamentaux',
  task:'Saisissez le chiffre d’affaires imposable et l’impôt préalable sur les achats courants.',
  info:'Un cas simple permet de comprendre la chaîne <strong>200 → 299 → 303 → 399</strong>, puis la déduction du ch. 400 et le solde au ch. 500.',
  facts:[['Honoraires de conseil',100000,'8,1 %'],['TVA sur achats professionnels courants',3240,'IP']],
- legal:'Art. 18, 25 et 28 ss LTVA.',checks:['Le total du ch. 303 doit correspondre au ch. 299.','Le ch. 400 contient un montant de TVA, pas la base HT.'],
+ legal:'Art. 18, 25 et 28 ss LTVA.',sourceKeys:['law','form','rates'],
+ qualification:{question:'Quelle est la qualification principale du chiffre d’affaires ?',options:['Prestation imposable au taux normal','Prestation exclue sans option','Exportation exonérée','Prestation au taux réduit'],correct:0,explain:'Les honoraires de conseil suisses du cas sont imposables au taux normal.'},
+ checks:['Le total du ch. 303 doit correspondre au ch. 299.','Le ch. 400 contient un montant de TVA, pas la base HT.'],
  fields:['ch200','ch303','ch400'],expected:{ch200:100000,ch303:100000,ch400:3240},
  explain:{ch200:'Le ch. 200 reprend les contre-prestations hors TVA: CHF 100’000.',ch303:'Toute la base est imposable au taux normal: CHF 100’000 × 8,1 % = CHF 8’100.',ch400:'La TVA déductible sur les achats courants est portée au ch. 400: CHF 3’240.'}},
- {id:'B',tab:'Deux taux',title:'Boulangerie du Lac — sur place et à emporter',meta:'Restauration · Vevey · T2 2026',level:'Débutant +',
+
+ {id:'B',tab:'Deux taux',title:'Boulangerie du Lac — sur place et à emporter',meta:'Restauration · Vevey · T2 2026',level:'Débutant +',group:'Fondamentaux',
  task:'Ventilez les ventes entre le taux normal et le taux réduit, puis saisissez l’impôt préalable.',
- info:'La qualification dépend des faits. Dans ce cas, les repas servis sur place sont à <strong>8,1 %</strong> et les denrées alimentaires admissibles à emporter à <strong>2,6 %</strong>. L’entreprise distingue les ventes à emporter des consommations sur place au moyen de mesures organisationnelles et d’un enregistrement séparé en caisse.',
+ info:'Dans ce cas, les repas servis sur place sont à <strong>8,1 %</strong> et les denrées alimentaires admissibles à emporter à <strong>2,6 %</strong>. Les ventes sont enregistrées séparément.',
  facts:[['Repas servis sur place',40000,'8,1 %'],['Denrées alimentaires admissibles à emporter, sans alcool, enregistrées séparément',60000,'2,6 %'],['Impôt préalable déductible',5000,'IP']],
- legal:'Art. 25 LTVA; Info TVA « Calcul de l’impôt et taux de l’impôt » et pratique sectorielle AFC.',checks:['Ch. 303 + ch. 313 = ch. 299.','Le taux spécial 3,8 % ne concerne pas la restauration.','Dans un dossier réel, la séparation entre consommation sur place et vente à emporter doit être objectivement démontrable.'],
+ legal:'Art. 25 LTVA; pratique sectorielle AFC.',sourceKeys:['law','form','rates'],
+ qualification:{question:'Quel traitement correspond aux ventes du cas ?',options:['Toutes les ventes à 8,1 %','Deux bases distinctes à 8,1 % et 2,6 %','Toutes les ventes à 2,6 %','Taux spécial de 3,8 %'],correct:1,explain:'La consommation sur place et la vente à emporter admissible sont ventilées entre 8,1 % et 2,6 %.'},
+ checks:['Ch. 303 + ch. 313 = ch. 299.','Le taux spécial 3,8 % ne concerne pas la restauration.','La séparation doit être objectivement démontrable dans un dossier réel.'],
  fields:['ch200','ch303','ch313','ch400'],expected:{ch200:100000,ch303:40000,ch313:60000,ch400:5000},
- explain:{ch200:'Le chiffre d’affaires total est CHF 100’000.',ch303:'Les repas servis sur place sont portés au ch. 303: CHF 40’000.',ch313:'Les ventes à emporter admissibles et séparément enregistrées sont portées au ch. 313: CHF 60’000.',ch400:'L’impôt préalable déductible est CHF 5’000. Le cas aboutit à un léger crédit au ch. 510.'}},
- {id:'C',tab:'Trois taux',title:'Hôtel des Cimes — trois taux dans un même établissement',meta:'Hôtellerie · Valais · T3 2026',level:'Intermédiaire',
+ explain:{ch200:'Le chiffre d’affaires total est CHF 100’000.',ch303:'Les repas servis sur place sont portés au ch. 303: CHF 40’000.',ch313:'Les ventes à emporter admissibles sont portées au ch. 313: CHF 60’000.',ch400:'L’impôt préalable déductible est CHF 5’000.'}},
+
+ {id:'C',tab:'Trois taux',title:'Hôtel des Cimes — trois taux dans un même établissement',meta:'Hôtellerie · Valais · T3 2026',level:'Intermédiaire',group:'Fondamentaux',
  task:'Répartissez les nuitées, le restaurant et les produits à emporter entre les trois taux.',
- info:'Le taux spécial de <strong>3,8 %</strong> vise l’hébergement avec petit-déjeuner, même si le petit-déjeuner est facturé séparément. Le restaurant reste au taux normal et les denrées à emporter du cas sont au taux réduit.',
- facts:[['Nuitées avec petit-déjeuner lié à l’hébergement',180000,'3,8 %'],['Restaurant avec service',70000,'8,1 %'],['Denrées alimentaires admissibles, emballées à emporter, sans alcool',15000,'2,6 %'],['Impôt préalable déductible',7200,'IP']],
- legal:'Art. 25 LTVA; AFC, taux spécial pour l’hébergement.',checks:['303 + 313 + 343 = 299.','Le petit-déjeuner lié à la nuitée suit le taux spécial de 3,8 %, même s’il est facturé séparément.','Les prestations de restaurant indépendantes ne sont pas englobées dans le taux spécial.'],
+ info:'Le taux spécial de <strong>3,8 %</strong> vise l’hébergement avec petit-déjeuner lié. Le restaurant reste au taux normal et les denrées à emporter du cas sont au taux réduit.',
+ facts:[['Nuitées avec petit-déjeuner lié à l’hébergement',180000,'3,8 %'],['Restaurant avec service',70000,'8,1 %'],['Denrées alimentaires admissibles à emporter, sans alcool',15000,'2,6 %'],['Impôt préalable déductible',7200,'IP']],
+ legal:'Art. 25 LTVA; AFC, taux spécial pour l’hébergement.',sourceKeys:['law','form','rates'],
+ qualification:{question:'Combien de taux légaux sont utilisés dans ce cas ?',options:['Un seul taux','Deux taux','Trois taux','Aucun taux suisse'],correct:2,explain:'Le cas combine le taux normal, le taux réduit et le taux spécial pour l’hébergement.'},
+ checks:['303 + 313 + 343 = 299.','Le petit-déjeuner lié à la nuitée suit le taux spécial de 3,8 %.','Les prestations de restaurant indépendantes restent au taux normal.'],
  fields:['ch200','ch303','ch313','ch343','ch400'],expected:{ch200:265000,ch303:70000,ch313:15000,ch343:180000,ch400:7200},
- explain:{ch200:'Le total des recettes est CHF 265’000.',ch303:'Restaurant: CHF 70’000 × 8,1 % = CHF 5’670.',ch313:'Produits à emporter: CHF 15’000 × 2,6 % = CHF 390.',ch343:'Hébergement avec petit-déjeuner lié: CHF 180’000 × 3,8 % = CHF 6’840.',ch400:'Impôt préalable: CHF 7’200.'}},
- {id:'D',tab:'Rabais ch. 235',title:'Nova Services SA — note de crédit après facturation',meta:'Services · Genève · T4 2026',level:'Intermédiaire',
- task:'Déclarez le chiffre d’affaires brut du décompte, puis la diminution de contre-prestation.',
- info:'Une diminution de contre-prestation est portée au <strong>ch. 235</strong>. Selon l’art. 41 LTVA, l’adaptation intervient au moment de la comptabilisation de la correction ou de l’encaissement effectif de la contre-prestation corrigée. Dans ce cas, la note de crédit est comptabilisée pendant T4 2026.',
- facts:[['Factures émises et déclarées pendant T4 2026 avant correction',120000,'CA'],['Note de crédit comptabilisée pendant T4 2026',10000,'ch. 235'],['Impôt préalable déductible',2000,'IP']],
- legal:'Art. 41 LTVA; structure du prototype AFC.',checks:['Ch. 299 = ch. 200 − ch. 289.','La note de crédit est au ch. 235, pas au ch. 230.','La période de déclaration dépend du moment de la comptabilisation ou de l’encaissement de la correction.'],
+ explain:{ch200:'Le total des recettes est CHF 265’000.',ch303:'Restaurant: CHF 70’000.',ch313:'Produits à emporter: CHF 15’000.',ch343:'Hébergement avec petit-déjeuner lié: CHF 180’000.',ch400:'Impôt préalable: CHF 7’200.'}},
+
+ {id:'D',tab:'Rabais ch. 235',title:'Nova Services SA — note de crédit après facturation',meta:'Services · Genève · T4 2026',level:'Intermédiaire',group:'Fondamentaux',
+ task:'Déclarez le chiffre d’affaires avant correction, puis la diminution de contre-prestation.',
+ info:'Une diminution de contre-prestation est portée au <strong>ch. 235</strong>. Dans ce cas, la note de crédit est comptabilisée pendant T4 2026.',
+ facts:[['Factures émises pendant T4 2026 avant correction',120000,'CA'],['Note de crédit comptabilisée pendant T4 2026',10000,'ch. 235'],['Impôt préalable déductible',2000,'IP']],
+ legal:'Art. 41 LTVA; structure du prototype AFC.',sourceKeys:['law','form'],
+ qualification:{question:'Comment traiter la note de crédit du cas ?',options:['Comme prestation exclue au ch. 230','Comme diminution au ch. 235','Comme don au ch. 910','Comme impôt préalable au ch. 400'],correct:1,explain:'La note de crédit réduit la contre-prestation et est déclarée au ch. 235.'},
+ checks:['Ch. 299 = ch. 200 − ch. 289.','La note de crédit est au ch. 235, pas au ch. 230.','La période dépend du moment de la comptabilisation ou de l’encaissement de la correction.'],
  fields:['ch200','ch235','ch303','ch400'],expected:{ch200:120000,ch235:10000,ch303:110000,ch400:2000},
- explain:{ch200:'Le ch. 200 reprend CHF 120’000 avant la diminution déclarée séparément.',ch235:'La note de crédit comptabilisée pendant la période réduit la contre-prestation de CHF 10’000 au ch. 235.',ch303:'La base taxable résiduelle est CHF 110’000.',ch400:'L’impôt préalable est CHF 2’000.'}},
- {id:'E',tab:'Exclu + ch. 415',title:'Cabinet Dr Weber — activités mixtes',meta:'Santé · Zurich · T2 2026',level:'Intermédiaire +',
- task:'Séparez les prestations exclues et imposables, puis corrigez l’impôt préalable sur les coûts communs utilisés pour les deux activités.',
- info:'Les prestations exclues sans option sont au <strong>ch. 230</strong>. L’impôt préalable directement attribuable à l’activité médicale exclue n’est pas compris dans les ch. 400 et 405. Les montants du cas concernent des coûts communs; la part non déductible résultant de la double affectation est corrigée au <strong>ch. 415</strong>.',
- facts:[['Recettes totales',250000,'CA'],['Prestations médicales remplissant les conditions d’exclusion',90000,'Art. 21'],['Prestations administratives imposables',160000,'8,1 %'],['IP sur coûts communs en matériel et services',12000,'ch. 400'],['IP sur investissements communs et autres charges',3000,'ch. 405'],['Total IP sur coûts communs avant correction',15000,'calcul'],['Part d’utilisation sans droit à déduction selon la clé documentée du cas',40,'40 %'],['Correction de double affectation: CHF 15’000 × 40 %',6000,'ch. 415']],
- legal:'Art. 21 et art. 29 à 31 LTVA, en particulier art. 30 sur la double affectation.',checks:['Les prestations exclues vont au ch. 230.','L’IP directement attribuable aux prestations exclues n’est pas revendiqué aux ch. 400 ou 405.','Le ch. 405 classe l’IP par nature; il ne remplace pas le ch. 415.','La correction des coûts communs à double affectation doit être proportionnelle à l’utilisation et documentée; le taux de 40 % est une donnée propre au cas, pas une règle générale.'],
+ explain:{ch200:'Le ch. 200 reprend CHF 120’000 avant la diminution.',ch235:'La note de crédit réduit la contre-prestation de CHF 10’000.',ch303:'La base taxable résiduelle est CHF 110’000.',ch400:'L’impôt préalable est CHF 2’000.'}},
+
+ {id:'E',tab:'Exclu + ch. 415',title:'Cabinet Dr Weber — activités mixtes',meta:'Santé · Zurich · T2 2026',level:'Intermédiaire +',group:'Déductions et corrections',
+ task:'Séparez les prestations exclues et imposables, puis corrigez l’impôt préalable sur les coûts communs.',
+ info:'Les prestations exclues sans option sont au <strong>ch. 230</strong>. La part non déductible de l’impôt préalable sur les coûts communs est corrigée au <strong>ch. 415</strong>.',
+ facts:[['Recettes totales',250000,'CA'],['Prestations médicales remplissant les conditions d’exclusion',90000,'Art. 21'],['Prestations administratives imposables',160000,'8,1 %'],['IP sur coûts communs en matériel et services',12000,'ch. 400'],['IP sur investissements communs et autres charges',3000,'ch. 405'],['Part sans droit à déduction selon la clé documentée',40,'40 %'],['Correction de double affectation',6000,'ch. 415']],
+ legal:'Art. 21 et art. 29 à 31 LTVA, notamment art. 30.',sourceKeys:['law','form'],
+ qualification:{question:'Quel mécanisme corrige la part non déductible des coûts communs ?',options:['Réduction au ch. 420','Correction au ch. 415','Dégrèvement au ch. 410','Diminution au ch. 235'],correct:1,explain:'La double affectation des coûts communs est corrigée au ch. 415 dans ce cas.'},
+ checks:['Les prestations exclues vont au ch. 230.','L’IP directement attribuable aux prestations exclues n’est pas revendiqué.','Le ch. 405 classe l’IP par nature; il ne remplace pas le ch. 415.','Le taux de 40 % est une donnée du cas, pas une règle générale.'],
  fields:['ch200','ch230','ch303','ch400','ch405','ch415'],expected:{ch200:250000,ch230:90000,ch303:160000,ch400:12000,ch405:3000,ch415:6000},
- explain:{ch200:'Toutes les contre-prestations du cas sont comprises dans CHF 250’000.',ch230:'Les prestations médicales remplissant les conditions de l’art. 21, sans option, sont déduites au ch. 230: CHF 90’000.',ch303:'La base imposable restante est CHF 160’000.',ch400:'CHF 12’000 d’IP ont été comptabilisés sur des coûts communs en matériel et services.',ch405:'CHF 3’000 d’IP concernent des investissements communs et autres charges.',ch415:'L’IP commun totalise CHF 15’000. La part sans droit à déduction est fixée à 40 % dans les données du cas: CHF 15’000 × 40 % = CHF 6’000 au ch. 415.'}},
- {id:'F',tab:'Export ch. 220',title:'Helvetic Machines SA — exportation de biens',meta:'Industrie · Neuchâtel · T1 2026',level:'Intermédiaire',
+ explain:{ch200:'Toutes les contre-prestations sont comprises dans CHF 250’000.',ch230:'Les prestations médicales exclues sont déduites au ch. 230: CHF 90’000.',ch303:'La base imposable restante est CHF 160’000.',ch400:'CHF 12’000 d’IP sur coûts communs en matériel et services.',ch405:'CHF 3’000 d’IP sur investissements communs et autres charges.',ch415:'CHF 15’000 × 40 % = CHF 6’000 de correction.'}},
+
+ {id:'F',tab:'Export ch. 220',title:'Helvetic Machines SA — exportation de biens',meta:'Industrie · Neuchâtel · T1 2026',level:'Intermédiaire',group:'Déductions et corrections',
  task:'Déclarez le chiffre d’affaires total, l’exportation exonérée et les ventes suisses imposables.',
- info:'Les exportations et autres prestations exonérées sont portées au <strong>ch. 220</strong>. Elles sont déduites du ch. 200 pour obtenir le ch. 299, tout en conservant en principe le droit à l’impôt préalable lorsque les conditions sont remplies.',
+ info:'Les exportations et autres prestations exonérées sont portées au <strong>ch. 220</strong>. Elles sont déduites du ch. 200 pour obtenir le ch. 299, avec maintien en principe du droit à l’impôt préalable lorsque les conditions sont remplies.',
  facts:[['Exportations documentées',100000,'ch. 220'],['Ventes en Suisse',50000,'8,1 %'],['Impôt préalable déductible',6500,'IP']],
- legal:'Art. 23 et 28 ss LTVA.',checks:['Une exportation n’est pas une prestation fournie à l’étranger au ch. 221 par défaut.','Le droit à l’IP est conservé sous réserve des preuves et conditions.'],
+ legal:'Art. 23 et 28 ss LTVA.',sourceKeys:['law','form'],
+ qualification:{question:'Comment qualifier l’exportation documentée ?',options:['Exclue sans droit à déduction','Exonérée avec maintien possible du droit à déduction','Fournie à l’étranger au ch. 221 dans tous les cas','Imposable au taux réduit'],correct:1,explain:'L’exportation documentée est exonérée et se déclare au ch. 220.'},
+ checks:['Une exportation n’est pas une prestation fournie à l’étranger au ch. 221 par défaut.','Le droit à l’IP est conservé sous réserve des preuves et conditions.'],
  fields:['ch200','ch220','ch303','ch400'],expected:{ch200:150000,ch220:100000,ch303:50000,ch400:6500},
- explain:{ch200:'Le chiffre d’affaires mondial du cas est CHF 150’000.',ch220:'Les exportations documentées sont portées au ch. 220: CHF 100’000.',ch303:'Les ventes suisses imposables représentent CHF 50’000.',ch400:'Impôt préalable déductible: CHF 6’500, ce qui crée un solde en faveur de l’assujetti.'}},
- {id:'G',tab:'Étranger + acquisitions',title:'Digital Romandie Sàrl — client français et fournisseur étranger',meta:'Services numériques · Vaud · T3 2026',level:'Avancé',
+ explain:{ch200:'Le chiffre d’affaires mondial du cas est CHF 150’000.',ch220:'Les exportations documentées sont portées au ch. 220: CHF 100’000.',ch303:'Les ventes suisses imposables représentent CHF 50’000.',ch400:'Impôt préalable déductible: CHF 6’500.'}},
+
+ {id:'G',tab:'Étranger + acquisitions',title:'Digital Romandie Sàrl — client français et fournisseur étranger',meta:'Services numériques · Vaud · T3 2026',level:'Avancé',group:'Déductions et corrections',
  task:'Traitez la prestation dont le lieu est à l’étranger et l’impôt sur les acquisitions.',
- info:'Une prestation dont le lieu est à l’étranger est déclarée au <strong>ch. 221</strong>. Dans ce cas, le conseil acheté relève de l’art. 8, al. 1, LTVA, est fourni par une entreprise établie à l’étranger et non inscrite au registre suisse de la TVA, et n’est ni exclu ni exonéré. L’impôt sur les acquisitions est déclaré au <strong>ch. 383</strong>; il peut être déduit dans la même période dans la mesure où l’affectation ouvre le droit à déduction.',
- facts:[['Honoraires à des clients suisses',80000,'8,1 %'],['Service B2B relevant, dans ce cas, du principe du lieu du destinataire en France',120000,'ch. 221'],['Conseil acquis auprès d’une entreprise étrangère non inscrite au registre suisse de la TVA',20000,'acquisition'],['Impôt sur les acquisitions au taux normal',1620,'ch. 383'],['IP sur coûts courants, y compris l’impôt sur les acquisitions intégralement déductible dans ce cas',4620,'ch. 400'],['IP sur investissement',1500,'ch. 405']],
- legal:'Art. 8, al. 1, art. 28, al. 1, let. b, et art. 45 à 48 LTVA.',checks:['Le ch. 221 réduit le ch. 200 pour déterminer le ch. 299.','Le fournisseur étranger du cas n’est pas inscrit au registre suisse de la TVA.','Le ch. 383 alimente le total d’impôt ch. 399.','La reprise simultanée dans l’IP suppose une affectation donnant droit à déduction; les prestations exclues ou exonérées ne sont pas soumises à l’impôt sur les acquisitions.'],
+ info:'La prestation dont le lieu est à l’étranger est déclarée au <strong>ch. 221</strong>. Le conseil acheté à l’étranger est soumis, selon les hypothèses du cas, à l’impôt sur les acquisitions au <strong>ch. 383</strong>.',
+ facts:[['Honoraires à des clients suisses',80000,'8,1 %'],['Service B2B dont le lieu est en France dans le cas',120000,'ch. 221'],['Conseil acquis auprès d’une entreprise étrangère non inscrite au registre suisse',20000,'acquisition'],['Impôt sur les acquisitions au taux normal',1620,'ch. 383'],['IP sur coûts courants, acquisition comprise et déductible dans le cas',4620,'ch. 400'],['IP sur investissement',1500,'ch. 405']],
+ legal:'Art. 8, 45 ss et 28 ss LTVA.',sourceKeys:['law','form','acquisitions','rates'],
+ qualification:{question:'Quel traitement principal s’applique au conseil acheté à l’étranger ?',options:['Il augmente le ch. 200','Il est déclaré au ch. 383 comme acquisition','Il est déclaré comme don au ch. 910','Il est toujours sans TVA en Suisse'],correct:1,explain:'Le conseil acheté relève de l’impôt sur les acquisitions selon les hypothèses du cas.'},
+ checks:['Le service au client français du cas va au ch. 221.','Au ch. 383, la base et l’impôt doivent être renseignés.','La déduction simultanée dépend de l’affectation ouvrant le droit à déduction.'],
  fields:['ch200','ch221','ch303','ch383base','ch383tax','ch400','ch405'],expected:{ch200:200000,ch221:120000,ch303:80000,ch383base:20000,ch383tax:1620,ch400:4620,ch405:1500},
- explain:{ch200:'Le chiffre d’affaires total est CHF 200’000.',ch221:'Le service B2B dont le lieu est situé à l’étranger dans les données du cas est porté au ch. 221: CHF 120’000.',ch303:'La base suisse imposable est CHF 80’000.',ch383base:'La base de l’acquisition est CHF 20’000.',ch383tax:'L’impôt sur les acquisitions est CHF 1’620 au taux de 8,1 %.',ch400:'Le ch. 400 comprend CHF 4’620 d’IP déductible, dont CHF 1’620 d’impôt sur les acquisitions déductible dans la même période selon les données du cas.',ch405:'IP sur investissement: CHF 1’500.'}},
- {id:'H',tab:'Subvention ch. 900',title:'CultureLab — subvention et prestations commerciales',meta:'Association · Fribourg · T3 2026',level:'Avancé',
+ explain:{ch200:'Le chiffre d’affaires total est CHF 200’000.',ch221:'La prestation dont le lieu est à l’étranger est portée au ch. 221: CHF 120’000.',ch303:'La base suisse imposable est CHF 80’000.',ch383base:'La base de l’acquisition est CHF 20’000.',ch383tax:'L’impôt sur les acquisitions est CHF 1’620.',ch400:'Le ch. 400 comprend CHF 4’620 d’IP déductible selon les données du cas.',ch405:'IP sur investissement: CHF 1’500.'}},
+
+ {id:'H',tab:'Subvention ch. 900',title:'CultureLab — subvention et prestations commerciales',meta:'Association · Fribourg · T3 2026',level:'Avancé',group:'Déductions et corrections',
  task:'Déclarez les recettes imposables, la subvention et la réduction d’impôt préalable.',
- info:'Une subvention ne fait pas partie de la contre-prestation et est portée au <strong>ch. 900</strong>. Depuis le 1er janvier 2025, lorsque la collectivité publique indique expressément au destinataire que les fonds constituent une subvention ou une autre contribution de droit public, ils sont réputés tels au sens de l’art. 18, al. 2, let. a, LTVA. Les fonds visés aux let. a à c entraînent une réduction proportionnelle de l’impôt préalable au <strong>ch. 420</strong>.',
- facts:[['Prestations de communication et de production fournies à des entreprises',70000,'8,1 %'],['Contribution communale expressément qualifiée de subvention',30000,'ch. 900'],['Impôt préalable commun avant réduction',6000,'ch. 400'],['Part financée par les fonds concernés selon la clé documentée du cas',20,'20 %'],['Réduction: CHF 6’000 × 20 %',1200,'ch. 420']],
- legal:'Art. 18, al. 2, let. a à c, et al. 3, ainsi qu’art. 33, al. 2 LTVA.',checks:['La subvention n’est pas ajoutée au ch. 200.','La qualification expresse par la collectivité publique produit l’effet prévu à l’art. 18, al. 3 LTVA.','Le ch. 420 réduit l’IP en proportion des fonds concernés; le taux de 20 % est une donnée propre à ce cas, pas une règle universelle.','Un sponsoring comportant une prestation publicitaire doit être analysé comme un possible échange de prestations.'],
+ info:'Une subvention ne fait pas partie de la contre-prestation et est portée au <strong>ch. 900</strong>. Les fonds concernés entraînent, dans ce cas, une réduction proportionnelle de l’impôt préalable au <strong>ch. 420</strong>.',
+ facts:[['Prestations commerciales',70000,'8,1 %'],['Contribution communale expressément qualifiée de subvention',30000,'ch. 900'],['Impôt préalable commun avant réduction',6000,'ch. 400'],['Part financée selon la clé documentée du cas',20,'20 %'],['Réduction',1200,'ch. 420']],
+ legal:'Art. 18, al. 2, let. a à c, al. 3, et art. 33, al. 2 LTVA.',sourceKeys:['law','form'],
+ qualification:{question:'La subvention doit-elle être incluse au ch. 200 ?',options:['Oui, toujours','Non; elle est déclarée séparément au ch. 900','Oui, mais au taux de 2,6 %','Non; elle est portée au ch. 910'],correct:1,explain:'La subvention du cas n’est pas une contre-prestation et est déclarée au ch. 900.'},
+ checks:['La subvention n’est pas ajoutée au ch. 200.','Le ch. 420 réduit l’IP selon la clé documentée.','Le taux de 20 % est propre au cas.','Un sponsoring avec prestation publicitaire exige une autre analyse.'],
  fields:['ch200','ch303','ch400','ch420','ch900'],expected:{ch200:70000,ch303:70000,ch400:6000,ch420:1200,ch900:30000},
- explain:{ch200:'Les prestations commerciales de communication et de production constituent CHF 70’000 de contre-prestations.',ch303:'Ces prestations commerciales sont imposables au taux normal dans les données du cas: CHF 70’000.',ch400:'L’IP commun avant réduction est CHF 6’000.',ch420:'La clé documentée propre au cas retient 20 % de fonds concernés: CHF 6’000 × 20 % = CHF 1’200.',ch900:'La subvention de CHF 30’000 est déclarée séparément au ch. 900.'}},
- {id:'I',tab:'Option ch. 205',title:'ImmoPro SA — location commerciale imposée par option',meta:'Immobilier · Bâle · T4 2026',level:'Avancé',
+ explain:{ch200:'Les prestations commerciales constituent CHF 70’000 de contre-prestations.',ch303:'Ces prestations sont imposables au taux normal.',ch400:'L’IP commun avant réduction est CHF 6’000.',ch420:'CHF 6’000 × 20 % = CHF 1’200.',ch900:'La subvention de CHF 30’000 est déclarée séparément.'}},
+
+ {id:'I',tab:'Option ch. 205',title:'ImmoPro SA — location commerciale imposée par option',meta:'Immobilier · Bâle · T4 2026',level:'Avancé',group:'Situations particulières',
  task:'Montrez correctement la part du chiffre d’affaires imposée par option sans la compter deux fois.',
- info:'Le <strong>ch. 205 est une information comprise dans le ch. 200</strong>. Il ne s’ajoute pas au ch. 200 et ne fait pas partie des déductions 289. Dans le cas, l’option a été valablement exercée pour des locaux commerciaux; les restrictions de l’art. 22 LTVA doivent toujours être vérifiées dans un dossier réel.',
+ info:'Le <strong>ch. 205 est une information comprise dans le ch. 200</strong>. Il ne s’ajoute pas au ch. 200 et ne fait pas partie des déductions 289.',
  facts:[['Honoraires de gestion imposables',150000,'8,1 %'],['Location de locaux commerciaux imposée par option',50000,'ch. 205'],['IP sur coûts courants',10000,'ch. 400'],['IP sur investissements',2000,'ch. 405']],
- legal:'Art. 21 et 22 LTVA; conditions et restrictions de l’option à vérifier selon la prestation et l’affectation.',checks:['Ch. 205 ≤ ch. 200.','La base ch. 303 reste CHF 200’000.','Ne pas calculer ch. 299 comme 200 + 205.','L’option ne se déduit pas du seul fait que le bail porte le mot « commercial »; ses conditions doivent être établies.'],
+ legal:'Art. 21 et 22 LTVA; conditions de l’option à vérifier.',sourceKeys:['law','form'],
+ qualification:{question:'Quelle relation existe entre les ch. 200 et 205 ?',options:['Le ch. 205 s’ajoute au ch. 200','Le ch. 205 est compris dans le ch. 200','Le ch. 205 est déduit du ch. 200','Les deux chiffres sont indépendants'],correct:1,explain:'Le ch. 205 informe sur une part déjà comprise dans le ch. 200.'},
+ checks:['Ch. 205 ≤ ch. 200.','La base ch. 303 reste CHF 200’000.','Ne pas calculer ch. 299 comme 200 + 205.','Les conditions de l’option doivent être établies.'],
  fields:['ch200','ch205','ch303','ch400','ch405'],expected:{ch200:200000,ch205:50000,ch303:200000,ch400:10000,ch405:2000},
- explain:{ch200:'Les contre-prestations totales sont CHF 200’000, location avec option incluse.',ch205:'CHF 50’000 représentent la part du ch. 200 provenant d’une prestation exclue par nature mais imposée par option.',ch303:'Aucune déduction de chiffre d’affaires n’est opérée: la base imposable est CHF 200’000.',ch400:'IP sur coûts courants: CHF 10’000.',ch405:'IP sur investissements: CHF 2’000.'}},
- {id:'J',tab:'Procédure ch. 225',title:'Transmission PME SA — transfert par procédure de déclaration',meta:'Restructuration · Berne · T2 2026',level:'Avancé',
+ explain:{ch200:'Les contre-prestations totales sont CHF 200’000, location avec option incluse.',ch205:'CHF 50’000 représentent la part du ch. 200 imposée par option.',ch303:'La base imposable est CHF 200’000.',ch400:'IP sur coûts courants: CHF 10’000.',ch405:'IP sur investissements: CHF 2’000.'}},
+
+ {id:'J',tab:'Procédure ch. 225',title:'Transmission PME SA — transfert par procédure de déclaration',meta:'Restructuration · Berne · T2 2026',level:'Avancé',group:'Situations particulières',
  task:'Déclarez le transfert soumis à la procédure de déclaration et le chiffre d’affaires ordinaire.',
- info:'Dans ce cas, une société assujettie cède un fonds de commerce à une autre société suisse assujettie dans le cadre d’une restructuration, et l’impôt calculé au taux légal sur le prix de vente dépasse CHF 10’000. Les conditions de l’application obligatoire de l’art. 38 LTVA sont donc supposées remplies. Le transfert est inclus au ch. 200, puis déduit au <strong>ch. 225</strong>. Le formulaire 764 doit être complété et téléversé dans le décompte TVA en ligne.',
- facts:[['Total des contre-prestations',400000,'ch. 200'],['Cession du fonds de commerce à un autre assujetti; impôt théorique supérieur à CHF 10’000',250000,'ch. 225'],['Prestations ordinaires imposables',150000,'8,1 %'],['IP sur coûts courants',7000,'ch. 400'],['IP sur investissements',2000,'ch. 405']],
- legal:'Art. 38 LTVA; formulaire AFC n° 764 dans sa version en vigueur.',checks:['Ch. 225 est distinct du ch. 230.','Le transfert porte sur un patrimoine ou une part de patrimoine à un autre assujetti dans une opération visée par l’art. 38.','Le seuil de CHF 10’000 ou le lien étroit doit être examiné pour l’application obligatoire.','Le formulaire 764 doit être utilisé et téléversé; les exigences de signature diffèrent entre application obligatoire et facultative.'],
+ info:'Les conditions de l’art. 38 LTVA sont supposées remplies dans ce cas. Le transfert est inclus au ch. 200, puis déduit au <strong>ch. 225</strong>. Le formulaire 764 doit être téléversé.',
+ facts:[['Total des contre-prestations',400000,'ch. 200'],['Cession du fonds de commerce',250000,'ch. 225'],['Prestations ordinaires imposables',150000,'8,1 %'],['IP sur coûts courants',7000,'ch. 400'],['IP sur investissements',2000,'ch. 405']],
+ legal:'Art. 38 LTVA; formulaire AFC n° 764.',sourceKeys:['law','form','transfer'],
+ qualification:{question:'Où déclarer le transfert soumis à la procédure de déclaration ?',options:['Uniquement au ch. 225','Au ch. 200 puis au ch. 225','Au ch. 230','Au ch. 910'],correct:1,explain:'Le transfert est compris dans le total du ch. 200, puis déduit au ch. 225.'},
+ checks:['Ch. 225 est distinct du ch. 230.','Les conditions de l’art. 38 doivent être examinées.','Le formulaire 764 doit être utilisé et téléversé.'],
  fields:['ch200','ch225','ch303','ch400','ch405'],expected:{ch200:400000,ch225:250000,ch303:150000,ch400:7000,ch405:2000},
- explain:{ch200:'Le total déclaré est CHF 400’000.',ch225:'La cession remplissant les conditions de la procédure de déclaration est portée au ch. 225 pour CHF 250’000.',ch303:'La base ordinaire imposable restante est CHF 150’000.',ch400:'IP sur coûts courants: CHF 7’000.',ch405:'IP sur investissements: CHF 2’000.'}},
- {id:'K',tab:'Dégrèvement ch. 410',title:'Atelier Horizon — changement d’affectation favorable',meta:'Artisanat · Jura · T4 2026',level:'Avancé',
+ explain:{ch200:'Le total déclaré est CHF 400’000.',ch225:'La cession est portée au ch. 225 pour CHF 250’000.',ch303:'La base ordinaire imposable restante est CHF 150’000.',ch400:'IP sur coûts courants: CHF 7’000.',ch405:'IP sur investissements: CHF 2’000.'}},
+
+ {id:'K',tab:'Dégrèvement ch. 410',title:'Atelier Horizon — changement d’affectation favorable',meta:'Artisanat · Jura · T4 2026',level:'Avancé',group:'Situations particulières',
  task:'Calculez puis saisissez le dégrèvement ultérieur comme un montant positif au ch. 410.',
- info:'Le <strong>ch. 410 augmente</strong> l’impôt préalable net. La machine du cas a d’abord été utilisée exclusivement pendant trois années écoulées pour une activité exclue ne donnant pas droit à déduction. À partir de T4 2026, elle est durablement affectée à une activité entrepreneuriale imposable. Pour un bien mobilier déjà utilisé, l’art. 32, al. 2, LTVA retient la valeur résiduelle et réduit linéairement l’impôt préalable d’un cinquième par année écoulée. Dans ce cas: CHF 5’000 × 40 % = CHF 2’000. Un relevé détaillé doit être établi et téléversé dans le décompte.',
- facts:[['Prestations imposables',100000,'8,1 %'],['IP sur coûts courants',3000,'ch. 400'],['IP sur investissements de la période',1000,'ch. 405'],['TVA non déduite à l’origine: machine utilisée trois années pour une activité exclue',5000,'calcul'],['Affectation durable à l’activité imposable dès T4 2026',0,'condition'],['Dégrèvement après trois années écoulées: valeur résiduelle 40 %',2000,'ch. 410']],
- legal:'Art. 32, al. 1 et 2 LTVA; prototype AFC, annexe détaillée au ch. 410.',checks:['Ch. 410 est additionné dans le calcul du ch. 479.','Pour un bien mobilier, la réduction linéaire est d’un cinquième par année écoulée.','CHF 5’000 × 2/5 = CHF 2’000 après trois années écoulées.','Le relevé détaillé doit être téléversé dans le décompte TVA en ligne.'],
+ info:'Le <strong>ch. 410 augmente</strong> l’impôt préalable net. Après trois années écoulées, la valeur résiduelle du bien mobilier du cas est de 2/5: CHF 5’000 × 40 % = CHF 2’000.',
+ facts:[['Prestations imposables',100000,'8,1 %'],['IP sur coûts courants',3000,'ch. 400'],['IP sur investissements de la période',1000,'ch. 405'],['TVA non déduite à l’origine sur la machine',5000,'calcul'],['Dégrèvement après trois années écoulées',2000,'ch. 410']],
+ legal:'Art. 32, al. 1 et 2 LTVA; annexe détaillée au ch. 410.',sourceKeys:['law','form'],
+ qualification:{question:'Quel effet le ch. 410 produit-il sur le ch. 479 ?',options:['Il diminue l’IP net','Il augmente l’IP net','Il réduit le chiffre d’affaires','Il augmente le ch. 200'],correct:1,explain:'Le dégrèvement ultérieur est ajouté dans le calcul de l’impôt préalable net.'},
+ checks:['Ch. 410 est additionné dans le calcul du ch. 479.','Pour un bien mobilier, la réduction est d’un cinquième par année écoulée.','Le relevé détaillé doit être téléversé.'],
  fields:['ch200','ch303','ch400','ch405','ch410'],expected:{ch200:100000,ch303:100000,ch400:3000,ch405:1000,ch410:2000},
- explain:{ch200:'Chiffre d’affaires: CHF 100’000.',ch303:'Base imposable au taux normal: CHF 100’000.',ch400:'IP sur coûts de la période: CHF 3’000.',ch405:'IP sur investissements de la période: CHF 1’000.',ch410:'Les conditions du droit à déduction sont remplies ultérieurement lors de l’affectation durable à l’activité imposable. Après trois années écoulées, la valeur résiduelle est de 2/5: CHF 5’000 × 2/5 = CHF 2’000.'}},
- {id:'L',tab:'Don ch. 910',title:'Fondation Atelier Ouvert — don sans prestation',meta:'Fondation · Suisse romande · T1 2026',level:'Intermédiaire +',
+ explain:{ch200:'Chiffre d’affaires: CHF 100’000.',ch303:'Base imposable: CHF 100’000.',ch400:'IP sur coûts: CHF 3’000.',ch405:'IP sur investissements: CHF 1’000.',ch410:'CHF 5’000 × 2/5 = CHF 2’000.'}},
+
+ {id:'L',tab:'Don ch. 910',title:'Fondation Atelier Ouvert — don sans prestation',meta:'Fondation · Suisse romande · T1 2026',level:'Intermédiaire +',group:'Situations particulières',
  task:'Distinguez un don sans contre-prestation d’une subvention et du chiffre d’affaires.',
- info:'Dans ce cas, le don est déclaré au <strong>ch. 910</strong>. Il n’est pas ajouté au ch. 200 et ne provoque pas, à lui seul, une réduction au ch. 420. Cette absence de réduction ne signifie toutefois pas que tout impôt préalable est automatiquement déductible: l’affectation entrepreneuriale et le lien avec des prestations donnant droit à déduction doivent être examinés séparément.',
- facts:[['Vente d’objets artisanaux fabriqués par la fondation',50000,'8,1 %'],['Don privé sans contre-prestation',20000,'ch. 910'],['Impôt préalable lié aux ventes imposables et déductible dans ce cas',2500,'ch. 400']],
- legal:'Art. 18, al. 2, let. d, art. 28 et art. 33, al. 1 LTVA.',checks:['Ne pas confondre ch. 900 et ch. 910.','Le don sans prestation n’entraîne pas en lui-même de réduction ch. 420.','Le droit à déduction de l’IP doit néanmoins être établi selon l’affectation des dépenses.','Un paiement assorti d’une prestation identifiable pourrait constituer une contre-prestation.'],
+ info:'Le don est déclaré au <strong>ch. 910</strong>. Il n’est pas ajouté au ch. 200 et ne provoque pas, à lui seul, une réduction au ch. 420.',
+ facts:[['Vente d’objets artisanaux',50000,'8,1 %'],['Don privé sans contre-prestation',20000,'ch. 910'],['Impôt préalable lié aux ventes imposables',2500,'ch. 400']],
+ legal:'Art. 18, al. 2, let. d, art. 28 et art. 33, al. 1 LTVA.',sourceKeys:['law','form'],
+ qualification:{question:'Où déclarer le don privé sans contre-prestation ?',options:['Au ch. 200','Au ch. 900','Au ch. 910','Au ch. 420'],correct:2,explain:'Le don sans contre-prestation est déclaré au ch. 910 dans ce cas.'},
+ checks:['Ne pas confondre ch. 900 et ch. 910.','Le don n’entraîne pas en lui-même de réduction ch. 420.','Le droit à déduction doit néanmoins être établi selon l’affectation.'],
  fields:['ch200','ch303','ch400','ch910'],expected:{ch200:50000,ch303:50000,ch400:2500,ch910:20000},
- explain:{ch200:'La vente d’objets artisanaux constitue CHF 50’000 de contre-prestations.',ch303:'Les ventes d’objets du cas sont imposables au taux normal: CHF 50’000.',ch400:'CHF 2’500 d’IP sont liés aux ventes imposables et sont déductibles dans les données du cas.',ch910:'Le don privé sans contre-prestation est porté au ch. 910: CHF 20’000.'}}
+ explain:{ch200:'La vente d’objets constitue CHF 50’000 de contre-prestations.',ch303:'Les ventes sont imposables au taux normal.',ch400:'CHF 2’500 d’IP sont déductibles selon les données du cas.',ch910:'Le don privé est porté au ch. 910: CHF 20’000.'}}
 ];
 
-const SCORE_KEY='tvaEffectiveScoresV3';
-const PREF_KEY='tvaEffectivePrefsV3';
-const state={caseIndex:0,mode:'guided',values:{},validated:false,solutionShown:false,scores:loadScores()};
-loadPrefs();
+const STORE_KEY='tvaEffectiveTrainerV4';
+const defaultStore={caseIndex:0,view:'guided',learningMode:'learn',records:{},drafts:{}};
 
 function safeGet(key){try{return localStorage.getItem(key)}catch{return null}}
-function safeSet(key,value){try{localStorage.setItem(key,value)}catch{/* private or sandbox context */}}
-function loadScores(){
+function safeSet(key,value){try{localStorage.setItem(key,value)}catch{}}
+function loadStore(){
  try{
-  const parsed=JSON.parse(safeGet(SCORE_KEY)||safeGet('tvaEffectiveScoresV2')||'{}');
-  return parsed&&typeof parsed==='object'?parsed:{};
- }catch{return {}}
+   const parsed=JSON.parse(safeGet(STORE_KEY)||'{}');
+   return {...defaultStore,...parsed,records:parsed.records||{},drafts:parsed.drafts||{}};
+ }catch{return {...defaultStore}}
 }
-function saveScores(){safeSet(SCORE_KEY,JSON.stringify(state.scores))}
-function loadPrefs(){
- try{const p=JSON.parse(safeGet(PREF_KEY)||'{}');if(Number.isInteger(p.caseIndex)&&p.caseIndex>=0&&p.caseIndex<CASES.length)state.caseIndex=p.caseIndex;if(p.mode==='guided'||p.mode==='extended')state.mode=p.mode}catch{}
+const store=loadStore();
+const state={
+ caseIndex:Number.isInteger(store.caseIndex)&&store.caseIndex>=0&&store.caseIndex<CASES.length?store.caseIndex:0,
+ view:['guided','extended'].includes(store.view)?store.view:'guided',
+ learningMode:['learn','practice','evaluate'].includes(store.learningMode)?store.learningMode:'learn',
+ values:{},qualification:'',
+ validated:false,solutionShown:false,assistedCurrent:false
+};
+
+function saveStore(){
+ store.caseIndex=state.caseIndex;store.view=state.view;store.learningMode=state.learningMode;
+ safeSet(STORE_KEY,JSON.stringify(store));
 }
-function savePrefs(){safeSet(PREF_KEY,JSON.stringify({caseIndex:state.caseIndex,mode:state.mode}))}
-function n(v){
- const cleaned=String(v??'').replace(/CHF/gi,'').replace(/[\s  ]/g,'').replace(/[’']/g,'').replace(',','.');
- const x=Number(cleaned);return Number.isFinite(x)?x:0;
-}
-function round2(v){return Math.round((n(v)+Number.EPSILON)*100)/100}
-function money(v){return new Intl.NumberFormat('fr-CH',{style:'currency',currency:'CHF',minimumFractionDigits:2,maximumFractionDigits:2}).format(round2(v))}
-function numberText(v){return new Intl.NumberFormat('fr-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(round2(v))}
-function raw(v){return n(v).toLocaleString('fr-CH',{maximumFractionDigits:2})}
 function current(){return CASES[state.caseIndex]}
+function currentRecord(){
+ const id=current().id;
+ if(!store.records[id])store.records[id]={attempts:0,bestScore:0,firstScore:null,solutionViewed:false,mastered:false};
+ return store.records[id];
+}
+function currentDraft(){
+ return store.drafts[current().id]||{values:{},qualification:'',assisted:false};
+}
+function saveDraft(){
+ store.drafts[current().id]={values:{...state.values},qualification:state.qualification,assisted:Boolean(state.assistedCurrent)};
+ saveStore();
+}
+function loadDraft(){
+ const d=currentDraft();
+ state.values={...(d.values||{})};state.qualification=d.qualification??'';
+ state.validated=false;state.solutionShown=false;state.assistedCurrent=Boolean(d.assisted);
+}
+function parseAmount(v){
+ const text=String(v??'').trim();
+ if(text==='')return null;
+ const cleaned=text.replace(/CHF/gi,'').replace(/[\s\u00A0\u202F]/g,'').replace(/[’']/g,'').replace(',','.');
+ if(!/^\d+(?:\.\d{1,2})?$/.test(cleaned))return NaN;
+ const x=Number(cleaned);
+ return Number.isFinite(x)?x:NaN;
+}
+function n(v){
+ const x=parseAmount(v);
+ return Number.isFinite(x)?x:0;
+}
+function validValue(k){return parseAmount(state.values[k])!==null&&Number.isFinite(parseAmount(state.values[k]))}
+function hasValue(k){return parseAmount(state.values[k])!==null}
 function val(k){return n(state.values[k])}
-function hasValue(k){return state.values[k]!==undefined&&String(state.values[k]).trim()!==''}
+function round2(v){return Math.round((Number(v)+Number.EPSILON)*100)/100}
+function money(v){return new Intl.NumberFormat('fr-CH',{style:'currency',currency:'CHF',minimumFractionDigits:2,maximumFractionDigits:2}).format(round2(v||0))}
+function numberText(v){return new Intl.NumberFormat('fr-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(round2(v||0))}
+function raw(v){return new Intl.NumberFormat('fr-CH',{maximumFractionDigits:2}).format(round2(v||0))}
+
 function computeFrom(values={}){
  const get=k=>n(values[k]);
  const ch289=round2(get('ch220')+get('ch221')+get('ch225')+get('ch230')+get('ch235')+get('ch280'));
@@ -271,127 +556,253 @@ function computeFrom(values={}){
  return{ch289,ch299,t303,t313,t343,ch379,ch399,ch479,ch500:Math.max(balance,0),ch510:Math.max(-balance,0)};
 }
 function compute(){return computeFrom(state.values)}
-function expectedCompute(c=current()){return computeFrom(c.expected)}
-function inputStatus(k){if(!state.validated)return'pending';return Math.abs(val(k)-n(current().expected[k]))<=.01?'correct':'wrong'}
+function expectedCompute(){return computeFrom(current().expected)}
 function editable(k){return current().fields.includes(k)}
-function hintFor(k){
- if(!state.validated||Math.abs(val(k)-n(current().expected[k]))<=.01)return'';
- return `<div class="hint">Indice: ${current().explain[k]||'Reprenez les données du cas.'}</div>`;
+function inputStatus(k){
+ if(!state.validated)return'pending';
+ if(!validValue(k))return'invalid';
+ return Math.abs(val(k)-n(current().expected[k]))<=.01?'correct':'wrong';
+}
+function showHint(k){
+ if(!state.validated||inputStatus(k)==='correct')return false;
+ const record=currentRecord();
+ if(state.learningMode==='learn')return true;
+ if(state.learningMode==='practice')return record.attempts>=2;
+ return false;
 }
 function inputControl(k,label){
- const value=hasValue(k)?numberText(state.values[k]):'';
- return `<div class="input-wrap"><label class="sr-only" for="${k}">${label}</label><input class="money ${inputStatus(k)}" type="text" inputmode="decimal" autocomplete="off" id="${k}" value="${value}" placeholder="0.00" aria-label="${label}" oninput="setValue('${k}',this.value,this)" onblur="formatField('${k}',this)">${hintFor(k)}</div>`;
+ const parsed=parseAmount(state.values[k]);
+ const value=parsed!==null&&Number.isFinite(parsed)?numberText(parsed):(state.values[k]||'');
+ const invalid=hasValue(k)&&!validValue(k);
+ return `<div class="input-wrap"><label class="sr-only" for="${k}">${label}</label><input class="money ${inputStatus(k)} ${invalid?'invalid':''}" type="text" inputmode="decimal" autocomplete="off" id="${k}" value="${escapeAttr(value)}" placeholder="0.00" aria-label="${label}" oninput="setValue('${k}',this.value,this)" onblur="formatField('${k}',this)">${invalid?'<div class="field-error">Format non reconnu. Exemple: 12’500.00 ou 12500,00.</div>':''}${showHint(k)?`<div class="hint">Indice: ${current().explain[k]||'Reprenez les données du cas.'}</div>`:''}</div>`;
 }
+function escapeAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function lockedCell(cls='input-cell'){return `<div class="${cls} readonly locked" aria-label="Non utilisé dans ce cas">—</div>`}
 function fieldInputCell(k){return editable(k)?`<div class="input-cell">${inputControl(k,`Chiffre ${FIELD_META[k].code} — ${FIELD_META[k].label}`)}</div>`:lockedCell()}
 function fieldRow(k,tax=''){
- const m=FIELD_META[k];if(state.mode==='guided'&&!editable(k))return'';
+ const m=FIELD_META[k];if(state.view==='guided'&&!editable(k))return'';
  const badge=m.attachment?'<span class="attachment">Justificatif</span>':'';
  const sign=m.sign?`<span class="field-sign" aria-hidden="true">${m.sign}</span>`:'';
  return `<div class="row" id="row-${k}"><div class="code">${m.code}</div><div class="label"><div class="label-main">${sign}${m.label} ${badge}</div><div class="label-sub">${m.sub}</div></div>${fieldInputCell(k)}<div class="tax-cell" id="tax-${k}">${tax}</div></div>`;
 }
-function rateRow(k,taxValue){return fieldRow(k,`<span class="tax-caption">TVA calculée</span><strong>${money(taxValue)}</strong>`)}
+function rateRow(k,taxValue){return fieldRow(k,`<span><span class="tax-caption">TVA calculée</span><strong>${money(taxValue)}</strong></span>`)}
 function acquisitionRow(){
- const used=editable('ch383base')||editable('ch383tax');if(state.mode==='guided'&&!used)return'';
+ const used=editable('ch383base')||editable('ch383tax');if(state.view==='guided'&&!used)return'';
  const base=editable('ch383base')?`<div class="input-cell">${inputControl('ch383base','Chiffre 383 — contre-prestation nette')}</div>`:lockedCell();
- const tax=editable('ch383tax')?`<div class="tax-cell tax-input">${inputControl('ch383tax','Chiffre 383 — impôt sur les acquisitions')}</div>`:`<div class="tax-cell readonly locked">—</div>`;
- return `<div class="row acquisition" id="row-ch383"><div class="code">383</div><div class="label"><div class="label-main">Impôt sur les acquisitions</div><div class="label-sub">Contre-prestation nette dans la colonne de base; impôt dû dans la colonne d’impôt.</div></div>${base}${tax}</div>`;
+ const tax=editable('ch383tax')?`<div class="tax-cell">${inputControl('ch383tax','Chiffre 383 — impôt sur les acquisitions')}</div>`:`<div class="tax-cell readonly locked">—</div>`;
+ return `<div class="row" id="row-ch383"><div class="code">383</div><div class="label"><div class="label-main">Impôt sur les acquisitions</div><div class="label-sub">Contre-prestation nette dans la colonne de base; impôt dû dans la colonne d’impôt.</div></div>${base}${tax}</div>`;
 }
 function computedRow(code,label,sub,baseValue=null,taxValue=null,cls='computed'){
  const base=baseValue===null?'—':money(baseValue),tax=taxValue===null?'':money(taxValue);
  return `<div class="row ${cls}" id="row-${code}"><div class="code">${code}</div><div class="label"><div class="label-main">${label}</div><div class="label-sub">${sub}</div></div><div class="input-cell readonly" id="value-${code}">${base}</div><div class="tax-cell" id="taxvalue-${code}">${tax}</div></div>`;
 }
-function renderForm(){const v=compute();
- const section1=`<div class="section">I. Chiffre d’affaires</div>
- ${fieldRow('ch200')}${fieldRow('ch205')}
- <div class="section s2">Déductions du chiffre d’affaires</div>
- ${fieldRow('ch220')}${fieldRow('ch221')}${fieldRow('ch225')}${fieldRow('ch230')}${fieldRow('ch235')}${fieldRow('ch280')}
- ${computedRow('289','Total des déductions','Somme des ch. 220, 221, 225, 230, 235 et 280.',v.ch289,null,'total')}
- ${computedRow('299','Total du chiffre d’affaires imposable','Ch. 200 moins ch. 289. Le ch. 205 n’est ni ajouté ni déduit.',v.ch299,null,'total')}`;
- const section2=`<div class="section s2">II. Calcul de l’impôt</div>
- ${rateRow('ch303',v.t303)}${rateRow('ch313',v.t313)}${rateRow('ch343',v.t343)}
- ${computedRow('379','Total du chiffre d’affaires imposable','Somme des bases aux taux actuels; correspond au ch. 299 dans ces exercices sans anciens taux.',v.ch379,null,'tax-total')}
- ${acquisitionRow()}
- ${computedRow('399','Total de l’impôt dû','Impôt des ch. 303, 313, 343 et 383.',null,v.ch399,'tax-total')}`;
- const section3=`<div class="section s3">Impôt préalable</div>
- ${fieldRow('ch400')}${fieldRow('ch405')}${fieldRow('ch410')}${fieldRow('ch415')}${fieldRow('ch420')}
- ${computedRow('479','Total de l’impôt préalable','400 + 405 + 410 − 415 − 420.',v.ch479,null,'input-total')}
- ${computedRow('500','Montant à payer à l’AFC','Lorsque le ch. 399 dépasse le ch. 479. L’option d’arrondi du portail n’est pas simulée.',null,v.ch500,v.ch500>0?'pay':'computed')}
- ${computedRow('510','Solde en faveur de l’assujetti','Lorsque le ch. 479 dépasse le ch. 399.',null,v.ch510,v.ch510>0?'credit':'computed')}`;
+function renderForm(){
+ const v=compute();
+ const section1=`<div class="section">I. Chiffre d’affaires</div>${fieldRow('ch200')}${fieldRow('ch205')}<div class="section s2">Déductions du chiffre d’affaires</div>${fieldRow('ch220')}${fieldRow('ch221')}${fieldRow('ch225')}${fieldRow('ch230')}${fieldRow('ch235')}${fieldRow('ch280')}${computedRow('289','Total des déductions','Somme des ch. 220, 221, 225, 230, 235 et 280.',v.ch289,null,'total')}${computedRow('299','Total du chiffre d’affaires imposable','Ch. 200 moins ch. 289. Le ch. 205 n’est ni ajouté ni déduit.',v.ch299,null,'total')}`;
+ const section2=`<div class="section s2">II. Calcul de l’impôt</div>${rateRow('ch303',v.t303)}${rateRow('ch313',v.t313)}${rateRow('ch343',v.t343)}${computedRow('379','Total du chiffre d’affaires imposable','Somme des bases aux taux actuels.',v.ch379,null,'tax-total')}${acquisitionRow()}${computedRow('399','Total de l’impôt dû','Impôt des ch. 303, 313, 343 et 383.',null,v.ch399,'tax-total')}`;
+ const section3=`<div class="section s3">Impôt préalable</div>${fieldRow('ch400')}${fieldRow('ch405')}${fieldRow('ch410')}${fieldRow('ch415')}${fieldRow('ch420')}${computedRow('479','Total de l’impôt préalable','400 + 405 + 410 − 415 − 420.',v.ch479,null,'input-total')}${computedRow('500','Montant à payer à l’AFC','Lorsque le ch. 399 dépasse le ch. 479.',null,v.ch500,v.ch500>0?'pay':'computed')}${computedRow('510','Solde en faveur de l’assujetti','Lorsque le ch. 479 dépasse le ch. 399.',null,v.ch510,v.ch510>0?'credit':'computed')}`;
  const section4=`<div class="section s4">III. Autres mouvements de fonds</div>${fieldRow('ch900')}${fieldRow('ch910')}`;
- document.getElementById('form').innerHTML=`<div class="card"><div class="card-head"><div><h2>Vue pédagogique du décompte — méthode effective</h2><p>Montants nets hors TVA dans les exercices. Les anciens taux, l’arrondi et les pièces jointes ne sont pas reproduits fonctionnellement.</p></div><span class="net-badge">Net (excl. TVA)</span></div><div class="columns"><div>Ch.</div><div>Description</div><div>Montant / base CHF</div><div>Impôt CHF</div></div>${section1}${section2}${section3}${section4}<div class="note"><strong>Contrôles clés:</strong> 299 = 200 − 289 · 379 = 299 dans les exercices sans anciens taux · 399 = impôt dû · 479 = impôt préalable net · un seul des ch. 500 ou 510 peut être positif.</div></div>`;
+ document.getElementById('form').innerHTML=`<div class="card"><div class="card-head"><div><h2>Vue pédagogique du décompte — méthode effective</h2><p>Saisie nette hors TVA. Les anciens taux, l’arrondi et les pièces jointes ne sont pas reproduits fonctionnellement.</p></div><span class="net-badge">Hors TVA</span></div><div class="columns"><div>Ch.</div><div>Description</div><div>Montant / base CHF</div><div>Impôt CHF</div></div>${section1}${section2}${section3}${section4}<div class="note"><strong>Contrôles clés:</strong> 299 = 200 − 289 · 379 = 299 dans ces exercices · 399 = impôt dû · 479 = impôt préalable net · un seul des ch. 500 ou 510 peut être positif.</div></div>`;
  renderPrecheck();
 }
-function updateText(id,text){const el=document.getElementById(id);if(el)el.textContent=text}
-function updateComputed(){const v=compute();
- updateText('value-289',money(v.ch289));updateText('value-299',money(v.ch299));updateText('value-379',money(v.ch379));updateText('taxvalue-399',money(v.ch399));updateText('value-479',money(v.ch479));updateText('taxvalue-500',money(v.ch500));updateText('taxvalue-510',money(v.ch510));
- const rateMap={ch303:v.t303,ch313:v.t313,ch343:v.t343};Object.entries(rateMap).forEach(([k,value])=>{const el=document.getElementById(`tax-${k}`);if(el)el.innerHTML=`<span class="tax-caption">TVA calculée</span><strong>${money(value)}</strong>`});
- const r500=document.getElementById('row-500'),r510=document.getElementById('row-510');if(r500)r500.className=`row ${v.ch500>0?'pay':'computed'}`;if(r510)r510.className=`row ${v.ch510>0?'credit':'computed'}`;
- renderPrecheck();
+function renderQualification(){
+ const c=current();
+ const selected=state.qualification===''?'':Number(state.qualification);
+ let feedback='';
+ if(state.validated&&state.qualification!==''){
+   const good=selected===c.qualification.correct;
+   feedback=`<div class="qual-feedback ${good?'ok':'bad'}">${good?'✓':'✕'} ${c.qualification.explain}</div>`;
+ }
+ document.getElementById('qualification').innerHTML=`<section class="qualification"><h2>1. Qualification TVA</h2><p>Répondez avant de compléter les chiffres du décompte. Cette étape représente 30 % du score.</p><label class="sr-only" for="qualificationSelect">${c.qualification.question}</label><select id="qualificationSelect" class="${state.validated?(selected===c.qualification.correct?'correct':'wrong'):''}" onchange="setQualification(this.value)"><option value="">${c.qualification.question}</option>${c.qualification.options.map((o,i)=>`<option value="${i}" ${selected===i?'selected':''}>${o}</option>`).join('')}</select>${feedback}</section>`;
 }
-function clearValidationState(){
- state.validated=false;state.solutionShown=false;
- document.querySelectorAll('.money').forEach(el=>{el.classList.remove('correct','wrong');el.classList.add('pending')});
- document.querySelectorAll('.hint').forEach(el=>el.remove());
-}
-function setValue(k,v,el){state.values[k]=v;if(state.validated||state.solutionShown)clearValidationState();if(el){el.classList.remove('correct','wrong');el.classList.add('pending')}document.getElementById('result').innerHTML='';updateComputed()}
-function formatField(k,el){if(!el.value.trim())return;const value=round2(el.value);state.values[k]=value;el.value=numberText(value);updateComputed()}
 function renderTabs(){
- const tabs=document.getElementById('tabs');tabs.innerHTML=CASES.map((c,i)=>{const score=n(state.scores[c.id]);const dot=score===100?'done':score>0?'partial':'';return `<button type="button" class="tab ${i===state.caseIndex?'active':''}" aria-current="${i===state.caseIndex?'step':'false'}" onclick="selectCase(${i})"><span class="dot ${dot}"></span>CAS ${c.id} · ${c.tab}</button>`}).join('');
- const select=document.getElementById('caseSelect');select.innerHTML=CASES.map((c,i)=>`<option value="${i}" ${i===state.caseIndex?'selected':''}>Cas ${c.id} — ${c.tab}</option>`).join('');
- requestAnimationFrame(()=>{const active=tabs.querySelector('.tab.active');if(active)active.scrollIntoView({inline:'center',block:'nearest'})});
+ const tabs=document.getElementById('tabs');
+ tabs.innerHTML=CASES.map((c,i)=>{
+   const r=store.records[c.id]||{};
+   const cls=r.mastered?'done':r.solutionViewed?'assisted':r.bestScore>0?'partial':'';
+   return `<button type="button" class="tab ${i===state.caseIndex?'active':''}" aria-current="${i===state.caseIndex?'step':'false'}" onclick="selectCase(${i})"><span class="dot ${cls}"></span>CAS ${c.id} · ${c.tab}</button>`;
+ }).join('');
+ const select=document.getElementById('caseSelect');
+ select.innerHTML=CASES.map((c,i)=>`<option value="${i}" ${i===state.caseIndex?'selected':''}>${c.group} — Cas ${c.id}: ${c.tab}</option>`).join('');
+ requestAnimationFrame(()=>tabs.querySelector('.tab.active')?.scrollIntoView({inline:'center',block:'nearest'}));
 }
-function renderSidebar(){const c=current();const done=CASES.filter(x=>n(state.scores[x.id])===100).length;const attempted=CASES.filter(x=>n(state.scores[x.id])>0).length;const percent=Math.round(done/CASES.length*100);
- document.getElementById('sidebar').innerHTML=`<div><h2 class="case-title">${c.title}</h2><div class="meta">${c.meta}</div><span class="level">${c.level}</span></div>
+function sourceLinks(c){
+ return c.sourceKeys.map(k=>SOURCE_LIBRARY[k]).filter(Boolean).map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.label} ↗</a>`).join('');
+}
+function renderSidebar(){
+ const c=current(),r=currentRecord();
+ const mastered=CASES.filter(x=>(store.records[x.id]||{}).mastered).length;
+ const attempted=CASES.filter(x=>(store.records[x.id]||{}).attempts>0).length;
+ const reviewed=CASES.filter(x=>(store.records[x.id]||{}).solutionViewed).length;
+ const percent=Math.round(mastered/CASES.length*100);
+ document.getElementById('sidebar').innerHTML=`<div><h2 class="case-title">${c.title}</h2><div class="meta">${c.meta}</div><span class="level">${c.level}</span><span class="level-group">${c.group}</span></div>
  <div class="task"><strong>Votre mission</strong>${c.task}</div>
- <div><div class="block-title">Données du cas</div><div class="facts">${c.facts.map(f=>`<div class="fact"><div class="fact-row"><div class="fact-name">${f[0]} <span class="tag">${f[2]}</span></div><div class="amount">${money(f[1])}</div></div></div>`).join('')}</div></div>
- <div class="legal"><strong>Base légale indicative:</strong><br>${c.legal}</div>
+ <div><div class="block-title">Données du cas</div><div class="facts">${c.facts.map(f=>`<div class="fact"><div class="fact-row"><div class="fact-name">${f[0]} <span class="tag">${f[2]}</span></div><div class="amount">${f[1]===0?'—':(f[2].includes('%')&&f[1]<100?f[1]+' %':money(f[1]))}</div></div></div>`).join('')}</div></div>
+ <div class="legal"><strong>Base légale indicative</strong><br>${c.legal}<div class="case-sources">${sourceLinks(c)}</div></div>
  <div class="checklist"><span class="block-title">Contrôles métier</span>${c.checks.map(x=>`<div>✓ ${x}</div>`).join('')}</div>
- <div class="progress">Cas maîtrisés à 100 %: <strong>${done}/${CASES.length}</strong> · tentés: ${attempted}<div class="bar"><i style="width:${percent}%"></i></div></div>
+ <div class="progress">Maîtrisés sans aide: <strong>${mastered}/${CASES.length}</strong> · tentés: ${attempted} · solutions consultées: ${reviewed}<div class="bar"><i style="width:${percent}%"></i></div>${r.firstScore!==null?`<div class="fact-note">Première tentative: ${r.firstScore}% · meilleur score autonome: ${r.bestScore||0}%</div>`:''}</div>
  <div class="case-nav"><button class="btn small" type="button" onclick="previousCase()" ${state.caseIndex===0?'disabled':''}>← Précédent</button><button class="btn small" type="button" onclick="nextCase()" ${state.caseIndex===CASES.length-1?'disabled':''}>Suivant →</button></div>
- <div class="actions"><button class="btn primary" type="button" onclick="verify()">Vérifier mes réponses</button><button class="btn" type="button" onclick="solution()">Voir la solution</button><button class="btn small" type="button" onclick="resetCase()">Recommencer ce cas</button><button class="link-btn" type="button" onclick="resetAllProgress()">Effacer toute la progression</button></div>`;
- document.getElementById('globalProgress').textContent=`${done} / ${CASES.length} cas`;
+ <div class="actions"><button class="btn primary" type="button" onclick="verify()">Vérifier mes réponses</button><button class="btn" id="sideSolution" type="button" onclick="solution()" ${state.learningMode==='evaluate'?'disabled':''}>Voir la solution</button><button class="btn small" type="button" onclick="resetCase()">Recommencer ce cas</button><button class="btn danger-link" type="button" onclick="resetAllProgress()">Effacer toute la progression</button></div>`;
+ document.getElementById('globalProgress').textContent=`${mastered} / ${CASES.length} cas`;
+ const mobileSolution=document.getElementById('mobileSolution');
+ if(mobileSolution)mobileSolution.disabled=state.learningMode==='evaluate';
 }
-function renderInfo(){document.getElementById('caseInfo').innerHTML=current().info}
-function consistencyTips(){const c=current(),v=compute(),tips=[];if(!c.fields.some(hasValue))return tips;
- const negatives=c.fields.filter(k=>hasValue(k)&&val(k)<0);if(negatives.length)tips.push('Saisissez les montants en valeur positive; les signes du formulaire sont appliqués automatiquement.');
- if(hasValue('ch205')&&hasValue('ch200')&&val('ch205')>val('ch200'))tips.push('Le ch. 205 ne peut pas dépasser le ch. 200, car il en constitue une partie.');
- if(hasValue('ch200')&&v.ch299<-.01)tips.push('Le total des déductions ch. 289 dépasse le ch. 200.');
- const rateFields=c.fields.filter(k=>['ch303','ch313','ch343'].includes(k));if(hasValue('ch200')&&rateFields.length&&rateFields.every(hasValue)&&Math.abs(v.ch379-v.ch299)>.01)tips.push(`Dans cet exercice, ch. 379 (${raw(v.ch379)}) doit correspondre au ch. 299 (${raw(v.ch299)}).`);
- if(hasValue('ch383base')!==hasValue('ch383tax'))tips.push('Au ch. 383, renseignez à la fois la contre-prestation nette et l’impôt sur les acquisitions.');
- if(hasValue('ch383base')&&hasValue('ch383tax')&&val('ch383base')>0){const ratio=val('ch383tax')/val('ch383base');const matches=Object.values(RATES).some(r=>Math.abs(ratio-r)<.0002);if(!matches)tips.push('Le rapport entre la base et l’impôt du ch. 383 ne correspond à aucun des trois taux actuels; vérifiez le taux applicable et l’arrondi.')}
+function renderInfo(){
+ const modeText={
+  learn:'<strong>Apprentissage.</strong> Les explications apparaissent après une erreur et la solution reste accessible.',
+  practice:'<strong>Entraînement.</strong> Les indices détaillés apparaissent à partir de la deuxième tentative.',
+  evaluate:'<strong>Évaluation.</strong> La solution est désactivée. Le score distingue la qualification TVA et le remplissage du décompte.'
+ }[state.learningMode];
+ document.getElementById('caseInfo').innerHTML=`${modeText}<br>${current().info}`;
+}
+function updateControls(){
+ ['learn','practice','evaluate'].forEach(m=>{
+  const el=document.getElementById(m+'Btn');el.classList.toggle('active',state.learningMode===m);el.setAttribute('aria-pressed',state.learningMode===m);
+ });
+ ['guided','extended'].forEach(v=>{
+  const el=document.getElementById(v+'Btn');el.classList.toggle('active',state.view===v);el.setAttribute('aria-pressed',state.view===v);
+ });
+}
+function consistencyTips(){
+ const c=current(),v=compute(),tips=[];
+ const invalid=c.fields.filter(k=>hasValue(k)&&!validValue(k));
+ if(invalid.length)tips.push('Corrigez les formats non reconnus avant la validation.');
+ const negatives=c.fields.filter(k=>validValue(k)&&val(k)<0);
+ if(negatives.length)tips.push('Saisissez les montants en valeur positive; les signes du formulaire sont appliqués automatiquement.');
+ if(validValue('ch205')&&validValue('ch200')&&val('ch205')>val('ch200'))tips.push('Le ch. 205 ne peut pas dépasser le ch. 200.');
+ if(validValue('ch200')&&v.ch299<-.01)tips.push('Le total des déductions ch. 289 dépasse le ch. 200.');
+ const rateFields=c.fields.filter(k=>['ch303','ch313','ch343'].includes(k));
+ if(validValue('ch200')&&rateFields.length&&rateFields.every(validValue)&&Math.abs(v.ch379-v.ch299)>.01)tips.push(`Dans cet exercice, ch. 379 (${raw(v.ch379)}) doit correspondre au ch. 299 (${raw(v.ch299)}).`);
+ if(validValue('ch383base')!==validValue('ch383tax'))tips.push('Au ch. 383, renseignez à la fois la contre-prestation nette et l’impôt.');
+ if(validValue('ch383base')&&validValue('ch383tax')&&val('ch383base')>0){
+   const ratio=val('ch383tax')/val('ch383base');
+   if(!Object.values(RATES).some(r=>Math.abs(ratio-r)<.0002))tips.push('Le rapport entre la base et l’impôt du ch. 383 ne correspond à aucun des trois taux actuels.');
+ }
  return tips;
 }
-function renderPrecheck(custom=null){const el=document.getElementById('precheck');if(custom){el.innerHTML=custom;return}const tips=consistencyTips(),c=current(),filled=c.fields.filter(hasValue).length;
- if(!filled){el.innerHTML='<div class="precheck"><strong>Contrôle avant validation</strong><br>Commencez par les cases jaunes. Les totaux et l’impôt par taux se recalculent sans interrompre la saisie.</div>';return}
+function renderPrecheck(custom=null){
+ const el=document.getElementById('precheck');if(custom){el.innerHTML=custom;return}
+ const tips=consistencyTips(),c=current(),filled=c.fields.filter(validValue).length;
+ if(!filled&&state.qualification===''){el.innerHTML='<div class="precheck"><strong>Contrôle avant validation</strong><br>Commencez par la qualification TVA, puis complétez les cases jaunes. Les totaux se recalculent automatiquement.</div>';return}
  if(tips.length){el.innerHTML=`<div class="precheck warn"><strong>Points à vérifier</strong><ul>${tips.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;return}
- el.innerHTML=`<div class="precheck ok"><strong>Contrôle rapide</strong><br>${filled}/${c.fields.length} champs requis renseignés. Aucune incohérence arithmétique évidente; la qualification TVA et les justificatifs restent à vérifier.</div>`;
+ el.innerHTML=`<div class="precheck ok"><strong>Contrôle rapide</strong><br>${filled}/${c.fields.length} champs requis valides. Aucune incohérence arithmétique évidente; la qualification et les justificatifs restent déterminants.</div>`;
 }
-function verify(){const c=current(),missing=c.fields.filter(k=>!hasValue(k));if(missing.length){
- const names=missing.map(k=>`ch. ${FIELD_META[k].code}`).join(', ');renderPrecheck(`<div class="precheck warn"><strong>Champs requis manquants</strong><br>Complétez: ${names}.</div>`);document.getElementById(missing[0])?.focus();return;
+function setQualification(value){
+ state.qualification=value;state.validated=false;state.solutionShown=false;
+ if(state.assistedCurrent)state.assistedCurrent=true;
+ document.getElementById('result').innerHTML='';
+ saveDraft();renderQualification();renderPrecheck();
+}
+function updateText(id,text){const el=document.getElementById(id);if(el)el.textContent=text}
+function updateComputed(){
+ const v=compute();
+ updateText('value-289',money(v.ch289));updateText('value-299',money(v.ch299));updateText('value-379',money(v.ch379));
+ updateText('taxvalue-399',money(v.ch399));updateText('value-479',money(v.ch479));updateText('taxvalue-500',money(v.ch500));updateText('taxvalue-510',money(v.ch510));
+ const rateMap={ch303:v.t303,ch313:v.t313,ch343:v.t343};
+ Object.entries(rateMap).forEach(([k,value])=>{const el=document.getElementById(`tax-${k}`);if(el)el.innerHTML=`<span><span class="tax-caption">TVA calculée</span><strong>${money(value)}</strong></span>`});
+ const r500=document.getElementById('row-500'),r510=document.getElementById('row-510');
+ if(r500)r500.className=`row ${v.ch500>0?'pay':'computed'}`;
+ if(r510)r510.className=`row ${v.ch510>0?'credit':'computed'}`;
+ renderPrecheck();
+}
+function setValue(k,v,el){
+ state.values[k]=v;state.validated=false;state.solutionShown=false;
+ if(el){el.classList.remove('correct','wrong','invalid');el.classList.add('pending')}
+ document.getElementById('result').innerHTML='';
+ saveDraft();renderQualification();updateComputed();
+}
+function formatField(k,el){
+ const parsed=parseAmount(el.value);
+ if(parsed===null){state.values[k]='';saveDraft();renderForm();return}
+ if(!Number.isFinite(parsed)){state.values[k]=el.value;saveDraft();renderForm();return}
+ state.values[k]=round2(parsed);saveDraft();renderForm();
+}
+function verify(){
+ const c=current();
+ if(state.qualification===''){renderPrecheck('<div class="precheck warn"><strong>Qualification manquante</strong><br>Répondez d’abord à la question de qualification TVA.</div>');document.getElementById('qualificationSelect')?.focus();return}
+ const missing=c.fields.filter(k=>!hasValue(k));
+ if(missing.length){renderPrecheck(`<div class="precheck warn"><strong>Champs requis manquants</strong><br>Complétez: ${missing.map(k=>`ch. ${FIELD_META[k].code}`).join(', ')}.</div>`);document.getElementById(missing[0])?.focus();return}
+ const invalid=c.fields.filter(k=>!validValue(k));
+ if(invalid.length){renderPrecheck('<div class="precheck warn"><strong>Format invalide</strong><br>Corrigez les champs signalés en rouge avant de vérifier.</div>');document.getElementById(invalid[0])?.focus();return}
+ state.validated=true;state.solutionShown=false;
+ const qualificationGood=Number(state.qualification)===c.qualification.correct;
+ const items=c.fields.map(k=>({k,good:Math.abs(val(k)-n(c.expected[k]))<=.01,user:val(k),answer:n(c.expected[k])}));
+ const correctFields=items.filter(x=>x.good).length;
+ const declarationScore=Math.round(correctFields/c.fields.length*70);
+ const score=(qualificationGood?30:0)+declarationScore;
+ const record=currentRecord();
+ if(!state.assistedCurrent){
+   record.attempts=(record.attempts||0)+1;
+   if(record.firstScore===null||record.firstScore===undefined)record.firstScore=score;
+   record.bestScore=Math.max(record.bestScore||0,score);
+   if(score===100)record.mastered=true;
+ }else{
+   record.solutionViewed=true;
  }
- state.validated=true;state.solutionShown=false;let ok=0;const items=c.fields.map(k=>{const good=Math.abs(val(k)-n(c.expected[k]))<=.01;if(good)ok++;return{k,good,user:val(k),answer:n(c.expected[k])}});const score=Math.round(ok/c.fields.length*100);state.scores[c.id]=Math.max(n(state.scores[c.id]),score);saveScores();renderTabs();renderSidebar();renderForm();renderResult(score,items,false)
+ saveStore();renderAll(false);renderResult(score,items,false,qualificationGood,state.assistedCurrent);
 }
-function balanceText(r){if(r.ch500>0)return `${money(r.ch500)} à payer au ch. 500`;if(r.ch510>0)return `${money(r.ch510)} en faveur de l’assujetti au ch. 510`;return 'Solde nul'}
-function renderResult(score,items,isSolution=false){const user=compute(),expected=expectedCompute();const color=isSolution?'var(--blue)':score===100?'var(--green)':score>=60?'var(--amber)':'var(--red)';const bg=isSolution?'var(--bluebg)':score===100?'var(--greenbg)':score>=60?'var(--amberbg)':'var(--redbg)';
- const title=isSolution?'Solution affichée — non comptabilisée dans la progression':score===100?'Cas maîtrisé à 100 %':score>=60?'Bonne base, mais le cas n’est pas encore maîtrisé':'Reprenez les chiffres indiqués';
- document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. Un cas est marqué comme maîtrisé uniquement à 100 %.</div></div></div>
+function balanceText(r){
+ if(r.ch500>0)return `${money(r.ch500)} à payer au ch. 500`;
+ if(r.ch510>0)return `${money(r.ch510)} en faveur de l’assujetti au ch. 510`;
+ return 'Solde nul';
+}
+function renderResult(score,items,isSolution=false,qualificationGood=true,assisted=false){
+ const user=compute(),expected=expectedCompute();
+ const color=isSolution||assisted?'var(--blue)':score===100?'var(--green)':score>=60?'var(--amber)':'var(--red)';
+ const bg=isSolution||assisted?'var(--bluebg)':score===100?'var(--greenbg)':score>=60?'var(--amberbg)':'var(--redbg)';
+ let title;
+ if(isSolution)title='Solution affichée — aucun score enregistré';
+ else if(assisted)title='Tentative assistée — non comptabilisée dans la progression autonome';
+ else if(score===100)title='Cas maîtrisé sans aide';
+ else if(score>=60)title='Bonne base, mais le cas reste à consolider';
+ else title='Reprenez la qualification et les rubriques indiquées';
+ const showDetails=state.learningMode!=='evaluate'||isSolution||score<100;
+ document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. La qualification vaut 30 % et le décompte 70 %.</div></div></div>
+ <div class="competencies"><div class="competency"><span>Qualification TVA</span><strong class="${qualificationGood?'okmark':'badmark'}">${qualificationGood?'Maîtrisée':'À revoir'} · ${qualificationGood?30:0}/30</strong></div><div class="competency"><span>Rubriques et calculs</span><strong>${Math.round(items.filter(x=>x.good).length/items.length*70)}/70</strong></div></div>
  <div class="result-summary"><div class="summary-box"><span>Votre résultat</span><strong>${balanceText(user)}</strong><small>399 ${money(user.ch399)} · 479 ${money(user.ch479)}</small></div><div class="summary-box expected"><span>Résultat attendu</span><strong>${balanceText(expected)}</strong><small>399 ${money(expected.ch399)} · 479 ${money(expected.ch479)}</small></div></div>
- ${items.map(x=>`<div class="feedback"><div class="fb-top"><div class="fb-name ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code} — ${FIELD_META[x.k].label}</div><div class="fb-values">Votre réponse: ${money(x.user)}<br>Solution: ${money(x.answer)}</div></div><div class="fb-explain">${current().explain[x.k]||''}</div></div>`).join('')}</div>`;
- const resultEl=document.getElementById('result');resultEl.focus({preventScroll:true});resultEl.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})
+ ${showDetails?items.map(x=>`<div class="feedback"><div class="fb-top"><div class="fb-name ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code} — ${FIELD_META[x.k].label}</div><div class="fb-values">Votre réponse: ${money(x.user)}<br>Solution: ${money(x.answer)}</div></div><div class="fb-explain">${current().explain[x.k]||''}</div></div>`).join(''):''}</div>`;
+ const resultEl=document.getElementById('result');resultEl.focus({preventScroll:true});resultEl.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
 }
-function solution(){const c=current();state.values={...c.expected};state.validated=true;state.solutionShown=true;renderForm();const items=c.fields.map(k=>({k,good:true,user:n(c.expected[k]),answer:n(c.expected[k])}));renderResult(100,items,true)}
-function resetCase(){state.values={};state.validated=false;state.solutionShown=false;document.getElementById('result').innerHTML='';renderForm();document.getElementById('form').scrollIntoView({block:'start'})}
-function resetAllProgress(){if(!confirm('Effacer les scores enregistrés pour les 12 cas ?'))return;state.scores={};saveScores();renderTabs();renderSidebar()}
-function selectCase(i){state.caseIndex=Number(i);state.values={};state.validated=false;state.solutionShown=false;savePrefs();document.getElementById('result').innerHTML='';renderAll();window.scrollTo({top:0,behavior:'auto'})}
+function solution(){
+ if(state.learningMode==='evaluate')return;
+ const c=current(),record=currentRecord();
+ record.solutionViewed=true;state.values={...c.expected};state.qualification=String(c.qualification.correct);
+ state.validated=true;state.solutionShown=true;state.assistedCurrent=true;
+ saveDraft();saveStore();renderAll(false);
+ const items=c.fields.map(k=>({k,good:true,user:n(c.expected[k]),answer:n(c.expected[k])}));
+ renderResult(100,items,true,true,true);
+}
+function resetCase(){
+ const hasDraft=Object.keys(state.values).length>0||state.qualification!=='';
+ if(hasDraft&&!confirm('Effacer les réponses de ce cas et recommencer sans aide ?'))return;
+ state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;
+ delete store.drafts[current().id];saveStore();document.getElementById('result').innerHTML='';renderAll(false);document.getElementById('qualification')?.scrollIntoView({block:'start'});
+}
+function resetAllProgress(){
+ if(!confirm('Effacer les scores, les solutions consultées et les brouillons des 12 cas ?'))return;
+ store.records={};store.drafts={};state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;saveStore();renderAll(false);
+}
+function selectCase(i){
+ saveDraft();state.caseIndex=Number(i);saveStore();loadDraft();document.getElementById('result').innerHTML='';renderAll(false);window.scrollTo({top:0,behavior:'auto'});
+}
 function previousCase(){if(state.caseIndex>0)selectCase(state.caseIndex-1)}
 function nextCase(){if(state.caseIndex<CASES.length-1)selectCase(state.caseIndex+1)}
-function setMode(mode){state.mode=mode;savePrefs();document.getElementById('guidedBtn').classList.toggle('active',mode==='guided');document.getElementById('extendedBtn').classList.toggle('active',mode==='extended');document.getElementById('guidedBtn').setAttribute('aria-pressed',mode==='guided');document.getElementById('extendedBtn').setAttribute('aria-pressed',mode==='extended');renderForm()}
-function renderAll(){renderTabs();renderSidebar();renderInfo();renderForm();setMode(state.mode)}
-document.getElementById('guidedBtn').addEventListener('click',()=>setMode('guided'));
-document.getElementById('extendedBtn').addEventListener('click',()=>setMode('extended'));
-renderAll();
+function setView(view){state.view=view;saveStore();renderForm();updateControls()}
+function setLearningMode(mode){
+ state.learningMode=mode;state.validated=false;saveStore();document.getElementById('result').innerHTML='';renderAll(false);
+}
+function renderAll(load=true){
+ if(load)loadDraft();
+ renderTabs();renderSidebar();renderInfo();renderQualification();renderForm();updateControls();
+}
 
+document.getElementById('caseSelect').addEventListener('change',e=>selectCase(e.target.value));
+document.getElementById('learnBtn').addEventListener('click',()=>setLearningMode('learn'));
+document.getElementById('practiceBtn').addEventListener('click',()=>setLearningMode('practice'));
+document.getElementById('evaluateBtn').addEventListener('click',()=>setLearningMode('evaluate'));
+document.getElementById('guidedBtn').addEventListener('click',()=>setView('guided'));
+document.getElementById('extendedBtn').addEventListener('click',()=>setView('extended'));
+renderAll(true);
 </script>
 </body>
 </html>
