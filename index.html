@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-CH">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#14191d">
 <meta name="robots" content="index,follow">
+<meta name="author" content="Mariia Lobur">
+<meta property="og:locale" content="fr_CH">
 <meta name="description" content="Parcours pédagogique indépendant pour apprendre le décompte TVA suisse selon la méthode effective, du niveau débutant aux situations particulières.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Outils TVA suisse — Mariia Lobur">
@@ -191,6 +193,23 @@ a:hover{text-decoration-thickness:2px}
 .fb-explain{margin-top:6px;background:#f7f8f8;border-left:3px solid var(--blue);padding:8px 10px;color:var(--muted);font-size:12px}
 .okmark{color:var(--green)}
 .badmark{color:var(--red)}
+.guidance-locked{background:#f7f8f8;border:1px dashed var(--line2);border-radius:9px;padding:11px 12px;color:var(--muted);font-size:12px}
+.evaluation-seal{margin:11px 0;padding:10px 12px;border-radius:8px;background:#f4f5f5;border:1px solid var(--line);color:var(--muted);font-size:12px}
+.evaluation-map{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin:12px 0}
+.evaluation-item{border:1px solid var(--line);border-radius:7px;padding:8px 9px;background:#fafafa;font-size:12px;font-weight:700}
+.result-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+.result-actions .btn{min-height:40px}
+.result-actions .btn.preview{background:#263e4c;border-color:#263e4c;color:#fff}.result-actions .btn.preview:hover{background:#182a34}
+.afc-preview{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:13px;overflow:hidden}
+.afc-preview-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:14px 16px;background:#263e4c;color:#fff}
+.afc-preview-head h2{margin:0;font-size:16px}.afc-preview-head p{margin:4px 0 0;color:#dce8ed;font-size:11px}
+.afc-preview-body{padding:13px 15px}.afc-preview-grid{display:grid;grid-template-columns:62px minmax(220px,1fr) 170px 150px;border:1px solid var(--line);border-bottom:0}
+.afc-preview-grid>div{padding:8px 10px;border-bottom:1px solid var(--line)}
+.afc-preview-grid .head{background:#edf0f1;text-transform:uppercase;letter-spacing:.05em;font-size:9px;font-weight:800;color:var(--muted)}
+.afc-preview-grid .pcode{font:800 11px var(--mono);background:#f4f5f5;text-align:center}
+.afc-preview-grid .plabel{font-size:12px}.afc-preview-grid .pvalue{font:12px var(--mono);text-align:right}.afc-preview-grid .pvalue:empty{color:transparent}
+.afc-preview-grid .ptotal{font-weight:800;background:#eef6fa}.afc-preview-note{margin:10px 0 0;color:var(--muted);font-size:11px}
+
 .glossary{background:#fff;border:1px solid var(--line);border-radius:var(--radius);margin-bottom:13px;overflow:hidden}
 .glossary summary{cursor:pointer;padding:12px 14px;font-weight:800;color:var(--ink)}
 .glossary summary::marker{color:var(--blue)}
@@ -209,7 +228,7 @@ a:hover{text-decoration-thickness:2px}
 .sources a{display:inline-block;margin:3px 10px 3px 0}
 .footer{text-align:center;color:#6d787f;font-size:11px;padding:20px}
 .updated{display:block;margin-top:4px}
-.mobile-actions{display:none}
+.mobile-actions{display:none}.mobile-actions.two-actions{grid-template-columns:1.35fr 1fr}
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid rgba(20,95,130,.35);outline-offset:2px}
 button:disabled{opacity:.45;cursor:not-allowed}
@@ -226,20 +245,20 @@ button:disabled{opacity:.45;cursor:not-allowed}
   .controls{grid-template-columns:1fr}.control-card{align-items:flex-start;flex-direction:column}.segmented{width:100%;justify-content:flex-start}.mode{flex:1;text-align:center;min-width:90px}
   .columns{display:none}.row{display:grid;grid-template-columns:50px 1fr;margin:7px;border:1px solid var(--line);border-radius:8px;overflow:hidden}.code{grid-column:1;grid-row:1 / span 3;min-height:100%;border-bottom:0}.label{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.input-cell{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.tax-cell{grid-column:2;justify-content:flex-start;font-size:12px}.label-main{font-size:13px}.label-sub{font-size:11px}.section{margin-top:8px}.card{box-shadow:none}.card-head{align-items:flex-start}.net-badge{font-size:9px}
   .qualification p,.result-sub,.fb-explain,.info,.precheck,.legal,.checklist{font-size:13px}.money{font-size:16px;min-height:44px}
-  .glossary-grid{grid-template-columns:1fr}.result-summary,.competencies,.project-links{grid-template-columns:1fr}.fb-top{flex-direction:column}.fb-values{text-align:left}
+  .glossary-grid{grid-template-columns:1fr}.result-summary,.competencies,.project-links,.evaluation-map{grid-template-columns:1fr}.fb-top{flex-direction:column}.fb-values{text-align:left}.result-actions{display:grid;grid-template-columns:1fr}.afc-preview-grid{grid-template-columns:48px 1fr}.afc-preview-grid .head:nth-child(3),.afc-preview-grid .head:nth-child(4){display:none}.afc-preview-grid .pcode{grid-column:1;grid-row:span 3;display:flex;align-items:center;justify-content:center}.afc-preview-grid .plabel{grid-column:2}.afc-preview-grid .pvalue{grid-column:2;text-align:left;padding-top:4px;padding-bottom:4px}.afc-preview-grid .pvalue:not(:empty)::before{content:attr(data-label) ": ";font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
   .mobile-actions{position:fixed;display:grid;grid-template-columns:1.25fr 1fr .8fr;gap:6px;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));backdrop-filter:blur(10px)}.mobile-actions .btn{padding:10px 5px;font-size:12px;min-height:45px}
   .footer{padding-bottom:12px;font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Parcours pratique du décompte TVA suisse — méthode effective","applicationCategory":"EducationalApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Mariia Lobur","url":"https://www.linkedin.com/in/mariia-lobur/"},"isAccessibleForFree":true,"inLanguage":"fr-CH","dateModified":"2026-07-30","url":"https://mariialobur.github.io/tva-debutant/"}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Parcours pratique du décompte TVA suisse — méthode effective","applicationCategory":"EducationalApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Mariia Lobur","url":"https://www.linkedin.com/in/mariia-lobur/"},"isAccessibleForFree":true,"inLanguage":"fr-CH","dateModified":"2026-08-03","url":"https://mariialobur.github.io/tva-debutant/"}
 </script>
 </head>
 <body>
 <header class="top">
   <div class="brand"><div class="flag" aria-hidden="true">🇨🇭</div><div><h1>Parcours pratique du décompte TVA suisse</h1><p>Méthode effective · du niveau débutant aux situations particulières · montants nets hors TVA</p></div></div>
-  <div class="status">Progression autonome<strong id="globalProgress">0 / 12 cas</strong></div>
+  <div class="status">Cas validés en évaluation<strong id="globalProgress">0 / 12 cas</strong></div>
 </header>
 <nav class="project-nav" aria-label="Outils et profil">
   <a class="active" href="https://mariialobur.github.io/tva-debutant/" aria-current="page">Méthode effective</a>
@@ -282,6 +301,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
     <div id="precheck" aria-live="polite"></div>
     <div id="form"></div>
     <div id="result" aria-live="polite" tabindex="-1"></div>
+    <div id="afcPreview" aria-live="polite" tabindex="-1"></div>
 
     <details class="glossary">
       <summary>Glossaire TVA rapide</summary>
@@ -316,11 +336,11 @@ button:disabled{opacity:.45;cursor:not-allowed}
     </div>
   </section>
 </main>
-<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu et fonctionnement mis à jour le 30 juillet 2026. Les sources officielles et le service AFC en vigueur restent déterminants.</span></footer>
+<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu et fonctionnement mis à jour le 3 août 2026. Les sources officielles et le service AFC en vigueur restent déterminants.</span></footer>
 <div class="mobile-actions" aria-label="Actions du cas">
-  <button class="btn primary" type="button" onclick="verify()">Vérifier</button>
-  <button class="btn" id="mobileSolution" type="button" onclick="solution()">Solution</button>
-  <button class="btn small" type="button" onclick="resetCase()">Effacer</button>
+  <button class="btn primary" id="mobileVerify" type="button" onclick="verify()">Vérifier</button>
+  <button class="btn" id="mobileSolution" type="button" onclick="mobileSecondaryAction()">Solution</button>
+  <button class="btn small" id="mobileReset" type="button" onclick="resetCase()">Effacer</button>
 </div>
 
 <script>
@@ -405,6 +425,7 @@ const CASES=[
  task:'Séparez les prestations exclues et imposables, puis corrigez l’impôt préalable sur les coûts communs.',
  info:'Les prestations exclues sans option sont au <strong>ch. 230</strong>. La part non déductible de l’impôt préalable sur les coûts communs est corrigée au <strong>ch. 415</strong>.',
  facts:[['Recettes totales',250000,'CA'],['Prestations médicales remplissant les conditions d’exclusion',90000,'Art. 21'],['Prestations administratives imposables',160000,'8,1 %'],['IP sur coûts communs en matériel et services',12000,'ch. 400'],['IP sur investissements communs et autres charges',3000,'ch. 405'],['Part sans droit à déduction selon la clé documentée',40,'40 %'],['Correction de double affectation',6000,'ch. 415']],
+ hiddenOutsideLearn:[6],
  legal:'Art. 21 et art. 29 à 31 LTVA, notamment art. 30.',sourceKeys:['law','form'],
  qualification:{question:'Quel mécanisme corrige la part non déductible des coûts communs ?',options:['Réduction au ch. 420','Correction au ch. 415','Dégrèvement au ch. 410','Diminution au ch. 235'],correct:1,explain:'La double affectation des coûts communs est corrigée au ch. 415 dans ce cas.'},
  checks:['Les prestations exclues vont au ch. 230.','L’IP directement attribuable aux prestations exclues n’est pas revendiqué.','Le ch. 405 classe l’IP par nature; il ne remplace pas le ch. 415.','Le taux de 40 % est une donnée du cas, pas une règle générale.'],
@@ -425,6 +446,7 @@ const CASES=[
  task:'Traitez la prestation dont le lieu est à l’étranger et l’impôt sur les acquisitions.',
  info:'La prestation dont le lieu est à l’étranger est déclarée au <strong>ch. 221</strong>. Le conseil acheté à l’étranger est soumis, selon les hypothèses du cas, à l’impôt sur les acquisitions au <strong>ch. 383</strong>.',
  facts:[['Honoraires à des clients suisses',80000,'8,1 %'],['Service B2B dont le lieu est en France dans le cas',120000,'ch. 221'],['Conseil acquis auprès d’une entreprise étrangère non inscrite au registre suisse',20000,'acquisition'],['Impôt sur les acquisitions au taux normal',1620,'ch. 383'],['IP sur coûts courants, acquisition comprise et déductible dans le cas',4620,'ch. 400'],['IP sur investissement',1500,'ch. 405']],
+ hiddenOutsideLearn:[3],
  legal:'Art. 8, 45 ss et 28 ss LTVA.',sourceKeys:['law','form','acquisitions','rates'],
  qualification:{question:'Quel traitement principal s’applique au conseil acheté à l’étranger ?',options:['Il augmente le ch. 200','Il est déclaré au ch. 383 comme acquisition','Il est déclaré comme don au ch. 910','Il est toujours sans TVA en Suisse'],correct:1,explain:'Le conseil acheté relève de l’impôt sur les acquisitions selon les hypothèses du cas.'},
  checks:['Le service au client français du cas va au ch. 221.','Au ch. 383, la base et l’impôt doivent être renseignés.','La déduction simultanée dépend de l’affectation ouvrant le droit à déduction.'],
@@ -432,9 +454,10 @@ const CASES=[
  explain:{ch200:'Le chiffre d’affaires total est CHF 200’000.',ch221:'La prestation dont le lieu est à l’étranger est portée au ch. 221: CHF 120’000.',ch303:'La base suisse imposable est CHF 80’000.',ch383base:'La base de l’acquisition est CHF 20’000.',ch383tax:'L’impôt sur les acquisitions est CHF 1’620.',ch400:'Le ch. 400 comprend CHF 4’620 d’IP déductible selon les données du cas.',ch405:'IP sur investissement: CHF 1’500.'}},
 
  {id:'H',tab:'Subvention ch. 900',title:'CultureLab — subvention et prestations commerciales',meta:'Association · Fribourg · T3 2026',level:'Avancé',group:'Déductions et corrections',
- task:'Déclarez les recettes imposables, la subvention et la réduction d’impôt préalable.',
+ task:'Analysez la contribution communale, puis traitez son effet sur le chiffre d’affaires et l’impôt préalable.',
  info:'Une subvention ne fait pas partie de la contre-prestation et est portée au <strong>ch. 900</strong>. Les fonds concernés entraînent, dans ce cas, une réduction proportionnelle de l’impôt préalable au <strong>ch. 420</strong>.',
- facts:[['Prestations commerciales',70000,'8,1 %'],['Contribution communale expressément qualifiée de subvention',30000,'ch. 900'],['Impôt préalable commun avant réduction',6000,'ch. 400'],['Part financée selon la clé documentée du cas',20,'20 %'],['Réduction',1200,'ch. 420']],
+ facts:[['Prestations commerciales',70000,'8,1 %'],['Contribution communale destinée au financement général du projet, sans prestation individualisée en faveur de la commune selon les données du cas',30000,'ch. 900'],['Impôt préalable commun avant réduction',6000,'ch. 400'],['Part financée selon la clé documentée du cas',20,'20 %'],['Réduction',1200,'ch. 420']],
+ hiddenOutsideLearn:[4],
  legal:'Art. 18, al. 2, let. a à c, al. 3, et art. 33, al. 2 LTVA.',sourceKeys:['law','form'],
  qualification:{question:'La subvention doit-elle être incluse au ch. 200 ?',options:['Oui, toujours','Non; elle est déclarée séparément au ch. 900','Oui, mais au taux de 2,6 %','Non; elle est portée au ch. 910'],correct:1,explain:'La subvention du cas n’est pas une contre-prestation et est déclarée au ch. 900.'},
  checks:['La subvention n’est pas ajoutée au ch. 200.','Le ch. 420 réduit l’IP selon la clé documentée.','Le taux de 20 % est propre au cas.','Un sponsoring avec prestation publicitaire exige une autre analyse.'],
@@ -452,9 +475,9 @@ const CASES=[
  explain:{ch200:'Les contre-prestations totales sont CHF 200’000, location avec option incluse.',ch205:'CHF 50’000 représentent la part du ch. 200 imposée par option.',ch303:'La base imposable est CHF 200’000.',ch400:'IP sur coûts courants: CHF 10’000.',ch405:'IP sur investissements: CHF 2’000.'}},
 
  {id:'J',tab:'Procédure ch. 225',title:'Transmission PME SA — transfert par procédure de déclaration',meta:'Restructuration · Berne · T2 2026',level:'Avancé',group:'Situations particulières',
- task:'Déclarez le transfert soumis à la procédure de déclaration et le chiffre d’affaires ordinaire.',
+ task:'Déterminez le traitement du transfert lorsque les conditions de l’art. 38 LTVA sont supposées remplies, puis déclarez le chiffre d’affaires ordinaire.',
  info:'Les conditions de l’art. 38 LTVA sont supposées remplies dans ce cas. Le transfert est inclus au ch. 200, puis déduit au <strong>ch. 225</strong>. Le formulaire 764 doit être téléversé.',
- facts:[['Total des contre-prestations',400000,'ch. 200'],['Cession du fonds de commerce',250000,'ch. 225'],['Prestations ordinaires imposables',150000,'8,1 %'],['IP sur coûts courants',7000,'ch. 400'],['IP sur investissements',2000,'ch. 405']],
+ facts:[['Total des contre-prestations',400000,'ch. 200'],['Cession du fonds de commerce répondant, selon les hypothèses du cas, aux conditions de l’art. 38 LTVA',250000,'ch. 225'],['Prestations ordinaires imposables',150000,'8,1 %'],['IP sur coûts courants',7000,'ch. 400'],['IP sur investissements',2000,'ch. 405']],
  legal:'Art. 38 LTVA; formulaire AFC n° 764.',sourceKeys:['law','form','transfer'],
  qualification:{question:'Où déclarer le transfert soumis à la procédure de déclaration ?',options:['Uniquement au ch. 225','Au ch. 200 puis au ch. 225','Au ch. 230','Au ch. 910'],correct:1,explain:'Le transfert est compris dans le total du ch. 200, puis déduit au ch. 225.'},
  checks:['Ch. 225 est distinct du ch. 230.','Les conditions de l’art. 38 doivent être examinées.','Le formulaire 764 doit être utilisé et téléversé.'],
@@ -462,9 +485,10 @@ const CASES=[
  explain:{ch200:'Le total déclaré est CHF 400’000.',ch225:'La cession est portée au ch. 225 pour CHF 250’000.',ch303:'La base ordinaire imposable restante est CHF 150’000.',ch400:'IP sur coûts courants: CHF 7’000.',ch405:'IP sur investissements: CHF 2’000.'}},
 
  {id:'K',tab:'Dégrèvement ch. 410',title:'Atelier Horizon — changement d’affectation favorable',meta:'Artisanat · Jura · T4 2026',level:'Avancé',group:'Situations particulières',
- task:'Calculez puis saisissez le dégrèvement ultérieur comme un montant positif au ch. 410.',
+ task:'Calculez le traitement TVA du changement d’affectation favorable de la machine et reportez-le dans le décompte.',
  info:'Le <strong>ch. 410 augmente</strong> l’impôt préalable net. Après trois années écoulées, la valeur résiduelle du bien mobilier du cas est de 2/5: CHF 5’000 × 40 % = CHF 2’000.',
- facts:[['Prestations imposables',100000,'8,1 %'],['IP sur coûts courants',3000,'ch. 400'],['IP sur investissements de la période',1000,'ch. 405'],['TVA non déduite à l’origine sur la machine',5000,'calcul'],['Dégrèvement après trois années écoulées',2000,'ch. 410']],
+ facts:[['Prestations imposables',100000,'8,1 %'],['IP sur coûts courants',3000,'ch. 400'],['IP sur investissements de la période',1000,'ch. 405'],['TVA non déduite à l’origine sur la machine',5000,'calcul'],['Changement d’affectation favorable après trois années écoulées',2000,'ch. 410']],
+ hiddenOutsideLearn:[4],
  legal:'Art. 32, al. 1 et 2 LTVA; annexe détaillée au ch. 410.',sourceKeys:['law','form'],
  qualification:{question:'Quel effet le ch. 410 produit-il sur le ch. 479 ?',options:['Il diminue l’IP net','Il augmente l’IP net','Il réduit le chiffre d’affaires','Il augmente le ch. 200'],correct:1,explain:'Le dégrèvement ultérieur est ajouté dans le calcul de l’impôt préalable net.'},
  checks:['Ch. 410 est additionné dans le calcul du ch. 479.','Pour un bien mobilier, la réduction est d’un cinquième par année écoulée.','Le relevé détaillé doit être téléversé.'],
@@ -482,15 +506,42 @@ const CASES=[
  explain:{ch200:'La vente d’objets constitue CHF 50’000 de contre-prestations.',ch303:'Les ventes sont imposables au taux normal.',ch400:'CHF 2’500 d’IP sont déductibles selon les données du cas.',ch910:'Le don privé est porté au ch. 910: CHF 20’000.'}}
 ];
 
-const STORE_KEY='tvaEffectiveTrainerV4';
+const STORE_KEY='tvaEffectiveTrainerV6';
+const LEGACY_STORE_KEYS=['tvaEffectiveTrainerV5','tvaEffectiveTrainerV4'];
 const defaultStore={caseIndex:0,view:'guided',learningMode:'learn',records:{},drafts:{}};
 
 function safeGet(key){try{return localStorage.getItem(key)}catch{return null}}
 function safeSet(key,value){try{localStorage.setItem(key,value)}catch{}}
+function normalizeDrafts(drafts={}){
+ const normalized={};
+ Object.entries(drafts||{}).forEach(([caseId,draft])=>{
+   if(!draft||typeof draft!=='object')return;
+   if(draft.learn||draft.practice||draft.evaluate)normalized[caseId]={...draft};
+   else normalized[caseId]={learn:{...draft}};
+ });
+ return normalized;
+}
+function normalizeRecords(records={}){
+ const normalized={};
+ Object.entries(records||{}).forEach(([caseId,record])=>{
+   const r={...record};
+   r.learningAttempts=Number(r.learningAttempts)||0;
+   r.practiceAttempts=Number(r.practiceAttempts)||0;
+   r.evaluationAttempts=Number(r.evaluationAttempts)||0;
+   r.bestLearningScore=Number(r.bestLearningScore)||0;
+   r.bestPracticeScore=Number(r.bestPracticeScore)||0;
+   r.bestEvaluationScore=Number(r.bestEvaluationScore)||0;
+   r.mastered=r.bestEvaluationScore===100;
+   normalized[caseId]=r;
+ });
+ return normalized;
+}
 function loadStore(){
  try{
-   const parsed=JSON.parse(safeGet(STORE_KEY)||'{}');
-   return {...defaultStore,...parsed,records:parsed.records||{},drafts:parsed.drafts||{}};
+   const legacyRaw=LEGACY_STORE_KEYS.map(safeGet).find(Boolean);
+   const raw=safeGet(STORE_KEY)||legacyRaw||'{}';
+   const parsed=JSON.parse(raw);
+   return {...defaultStore,...parsed,records:normalizeRecords(parsed.records||{}),drafts:normalizeDrafts(parsed.drafts||{})};
  }catch{return {...defaultStore}}
 }
 const store=loadStore();
@@ -498,8 +549,8 @@ const state={
  caseIndex:Number.isInteger(store.caseIndex)&&store.caseIndex>=0&&store.caseIndex<CASES.length?store.caseIndex:0,
  view:['guided','extended'].includes(store.view)?store.view:'guided',
  learningMode:['learn','practice','evaluate'].includes(store.learningMode)?store.learningMode:'learn',
- values:{},qualification:'',
- validated:false,solutionShown:false,assistedCurrent:false
+ values:{},qualification:'',validated:false,solutionShown:false,assistedCurrent:false,
+ evaluationSubmitted:false,evaluationCorrectionShown:false,lastEvaluationScore:null
 };
 
 function saveStore(){
@@ -509,26 +560,35 @@ function saveStore(){
 function current(){return CASES[state.caseIndex]}
 function currentRecord(){
  const id=current().id;
- if(!store.records[id])store.records[id]={attempts:0,bestScore:0,firstScore:null,solutionViewed:false,mastered:false};
+ if(!store.records[id])store.records[id]={attempts:0,bestScore:0,firstScore:null,solutionViewed:false,mastered:false,learningAttempts:0,practiceAttempts:0,evaluationAttempts:0,bestLearningScore:0,bestPracticeScore:0,bestEvaluationScore:0};
  return store.records[id];
 }
+function caseDrafts(){
+ const id=current().id;
+ if(!store.drafts[id])store.drafts[id]={};
+ return store.drafts[id];
+}
 function currentDraft(){
- return store.drafts[current().id]||{values:{},qualification:'',assisted:false};
+ return caseDrafts()[state.learningMode]||{values:{},qualification:'',assisted:false,submitted:false,correctionShown:false,lastScore:null};
 }
 function saveDraft(){
- store.drafts[current().id]={values:{...state.values},qualification:state.qualification,assisted:Boolean(state.assistedCurrent)};
+ caseDrafts()[state.learningMode]={values:{...state.values},qualification:state.qualification,assisted:state.learningMode==='evaluate'?false:Boolean(state.assistedCurrent),submitted:Boolean(state.evaluationSubmitted),correctionShown:Boolean(state.evaluationCorrectionShown),lastScore:state.lastEvaluationScore};
  saveStore();
 }
 function loadDraft(){
  const d=currentDraft();
  state.values={...(d.values||{})};state.qualification=d.qualification??'';
- state.validated=false;state.solutionShown=false;state.assistedCurrent=Boolean(d.assisted);
+ state.validated=state.learningMode==='evaluate'&&Boolean(d.submitted);state.solutionShown=false;
+ state.assistedCurrent=state.learningMode==='evaluate'?false:Boolean(d.assisted);
+ state.evaluationSubmitted=state.learningMode==='evaluate'&&Boolean(d.submitted);
+ state.evaluationCorrectionShown=state.learningMode==='evaluate'&&Boolean(d.correctionShown);
+ state.lastEvaluationScore=state.learningMode==='evaluate'&&Number.isFinite(Number(d.lastScore))?Number(d.lastScore):null;
 }
 function parseAmount(v){
  const text=String(v??'').trim();
  if(text==='')return null;
  const cleaned=text.replace(/CHF/gi,'').replace(/[\s\u00A0\u202F]/g,'').replace(/[’']/g,'').replace(',','.');
- if(!/^\d+(?:\.\d{1,2})?$/.test(cleaned))return NaN;
+ if(!/^-?\d+(?:\.\d{1,2})?$/.test(cleaned))return NaN;
  const x=Number(cleaned);
  return Number.isFinite(x)?x:NaN;
 }
@@ -557,6 +617,26 @@ function computeFrom(values={}){
 }
 function compute(){return computeFrom(state.values)}
 function expectedCompute(){return computeFrom(current().expected)}
+const SCORE_GROUPS=[
+ {id:'turnover',label:'Chiffre d’affaires et déductions',weight:25,fields:['ch200','ch205','ch220','ch221','ch225','ch230','ch235','ch280']},
+ {id:'taxDue',label:'Bases imposables et impôt dû',weight:25,fields:['ch303','ch313','ch343','ch383base','ch383tax']},
+ {id:'inputTax',label:'Impôt préalable et corrections',weight:15,fields:['ch400','ch405','ch410','ch415','ch420']},
+ {id:'funds',label:'Autres mouvements de fonds',weight:5,fields:['ch900','ch910']}
+];
+function scoreBreakdown(items,qualificationGood){
+ const active=SCORE_GROUPS.map(group=>{
+   const relevant=items.filter(item=>group.fields.includes(item.k));
+   return relevant.length?{...group,relevant,correct:relevant.filter(item=>item.good).length}:null;
+ }).filter(Boolean);
+ const activeWeight=active.reduce((sum,group)=>sum+group.weight,0)||1;
+ const groups=active.map(group=>{
+   const allocated=group.weight/activeWeight*70;
+   const earned=allocated*(group.correct/group.relevant.length);
+   return {...group,allocated,earned};
+ });
+ const declaration=groups.reduce((sum,group)=>sum+group.earned,0);
+ return {score:Math.round((qualificationGood?30:0)+declaration),qualification:qualificationGood?30:0,declaration:Math.round(declaration),groups};
+}
 function editable(k){return current().fields.includes(k)}
 function inputStatus(k){
  if(!state.validated)return'pending';
@@ -567,14 +647,14 @@ function showHint(k){
  if(!state.validated||inputStatus(k)==='correct')return false;
  const record=currentRecord();
  if(state.learningMode==='learn')return true;
- if(state.learningMode==='practice')return record.attempts>=2;
+ if(state.learningMode==='practice')return (record.practiceAttempts||0)>=2;
  return false;
 }
 function inputControl(k,label){
  const parsed=parseAmount(state.values[k]);
  const value=parsed!==null&&Number.isFinite(parsed)?numberText(parsed):(state.values[k]||'');
- const invalid=hasValue(k)&&!validValue(k);
- return `<div class="input-wrap"><label class="sr-only" for="${k}">${label}</label><input class="money ${inputStatus(k)} ${invalid?'invalid':''}" type="text" inputmode="decimal" autocomplete="off" id="${k}" value="${escapeAttr(value)}" placeholder="0.00" aria-label="${label}" oninput="setValue('${k}',this.value,this)" onblur="formatField('${k}',this)">${invalid?'<div class="field-error">Format non reconnu. Exemple: 12’500.00 ou 12500,00.</div>':''}${showHint(k)?`<div class="hint">Indice: ${current().explain[k]||'Reprenez les données du cas.'}</div>`:''}</div>`;
+ const invalid=hasValue(k)&&!validValue(k),lockedEvaluation=state.learningMode==='evaluate'&&state.evaluationSubmitted;
+ return `<div class="input-wrap"><label class="sr-only" for="${k}">${label}</label><input class="money ${inputStatus(k)} ${invalid?'invalid':''}" type="text" inputmode="decimal" autocomplete="off" id="${k}" value="${escapeAttr(value)}" placeholder="0.00" aria-label="${label}" oninput="setValue('${k}',this.value,this)" onblur="formatField('${k}',this)" ${lockedEvaluation?'disabled':''}>${invalid?'<div class="field-error">Format non reconnu. Exemple: 12’500.00 ou 12500,00.</div>':''}${showHint(k)?`<div class="hint">Indice: ${current().explain[k]||'Reprenez les données du cas.'}</div>`:''}</div>`;
 }
 function escapeAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function lockedCell(cls='input-cell'){return `<div class="${cls} readonly locked" aria-label="Non utilisé dans ce cas">—</div>`}
@@ -608,18 +688,21 @@ function renderForm(){
 function renderQualification(){
  const c=current();
  const selected=state.qualification===''?'':Number(state.qualification);
+ const lockedEvaluation=state.learningMode==='evaluate'&&state.evaluationSubmitted;
  let feedback='';
  if(state.validated&&state.qualification!==''){
    const good=selected===c.qualification.correct;
-   feedback=`<div class="qual-feedback ${good?'ok':'bad'}">${good?'✓':'✕'} ${c.qualification.explain}</div>`;
+   const explanation=state.learningMode==='evaluate'&&!state.evaluationCorrectionShown?(good?'Qualification correcte.':'Qualification incorrecte.'):c.qualification.explain;
+   feedback=`<div class="qual-feedback ${good?'ok':'bad'}">${good?'✓':'✕'} ${explanation}</div>`;
  }
- document.getElementById('qualification').innerHTML=`<section class="qualification"><h2>1. Qualification TVA</h2><p>Répondez avant de compléter les chiffres du décompte. Cette étape représente 30 % du score.</p><label class="sr-only" for="qualificationSelect">${c.qualification.question}</label><select id="qualificationSelect" class="${state.validated?(selected===c.qualification.correct?'correct':'wrong'):''}" onchange="setQualification(this.value)"><option value="">${c.qualification.question}</option>${c.qualification.options.map((o,i)=>`<option value="${i}" ${selected===i?'selected':''}>${o}</option>`).join('')}</select>${feedback}</section>`;
+ document.getElementById('qualification').innerHTML=`<section class="qualification"><h2>1. Qualification TVA</h2><p>Répondez avant de compléter les chiffres du décompte. Cette étape représente 30 % du score.</p><label class="sr-only" for="qualificationSelect">${c.qualification.question}</label><select id="qualificationSelect" class="${state.validated?(selected===c.qualification.correct?'correct':'wrong'):''}" onchange="setQualification(this.value)" ${lockedEvaluation?'disabled':''}><option value="">${c.qualification.question}</option>${c.qualification.options.map((o,i)=>`<option value="${i}" ${selected===i?'selected':''}>${o}</option>`).join('')}</select>${feedback}</section>`;
 }
 function renderTabs(){
  const tabs=document.getElementById('tabs');
  tabs.innerHTML=CASES.map((c,i)=>{
    const r=store.records[c.id]||{};
-   const cls=r.mastered?'done':r.solutionViewed?'assisted':r.bestScore>0?'partial':'';
+   const hasAutonomous=(r.learningAttempts||0)+(r.practiceAttempts||0)+(r.evaluationAttempts||0)>0;
+   const cls=r.mastered?'done':hasAutonomous?'partial':r.solutionViewed?'assisted':'';
    return `<button type="button" class="tab ${i===state.caseIndex?'active':''}" aria-current="${i===state.caseIndex?'step':'false'}" onclick="selectCase(${i})"><span class="dot ${cls}"></span>CAS ${c.id} · ${c.tab}</button>`;
  }).join('');
  const select=document.getElementById('caseSelect');
@@ -629,31 +712,59 @@ function renderTabs(){
 function sourceLinks(c){
  return c.sourceKeys.map(k=>SOURCE_LIBRARY[k]).filter(Boolean).map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.label} ↗</a>`).join('');
 }
+function renderFacts(c){
+ const hidden=new Set(state.learningMode==='learn'?[]:(c.hiddenOutsideLearn||[]));
+ return c.facts.map((f,index)=>{
+   if(hidden.has(index))return'';
+   const tag=state.learningMode==='learn'?` <span class="tag">${f[2]}</span>`:'';
+   const amount=f[1]===0?'—':(String(f[2]).includes('%')&&f[1]<100?f[1]+' %':money(f[1]));
+   return `<div class="fact"><div class="fact-row"><div class="fact-name">${f[0]}${tag}</div><div class="amount">${amount}</div></div></div>`;
+ }).join('');
+}
+function guidanceIsAvailable(r){
+ if(state.learningMode==='learn')return true;
+ if(state.learningMode==='practice')return state.validated||(r.practiceAttempts||0)>0;
+ return state.evaluationCorrectionShown;
+}
 function renderSidebar(){
  const c=current(),r=currentRecord();
- const mastered=CASES.filter(x=>(store.records[x.id]||{}).mastered).length;
+ const mastered=CASES.filter(x=>(store.records[x.id]||{}).bestEvaluationScore===100).length;
  const attempted=CASES.filter(x=>(store.records[x.id]||{}).attempts>0).length;
  const reviewed=CASES.filter(x=>(store.records[x.id]||{}).solutionViewed).length;
- const percent=Math.round(mastered/CASES.length*100);
+ const percent=Math.round(mastered/CASES.length*100),guidance=guidanceIsAvailable(r);
+ const guidanceHtml=guidance?`<div class="legal"><strong>Base légale indicative</strong><br>${c.legal}<div class="case-sources">${sourceLinks(c)}</div></div><div class="checklist"><span class="block-title">Contrôles métier</span>${c.checks.map(x=>`<div>✓ ${x}</div>`).join('')}</div>`:`<div class="guidance-locked"><strong>Aides masquées.</strong><br>${state.learningMode==='evaluate'?'La base légale, les contrôles métier et le corrigé seront disponibles après la remise et l’ouverture volontaire du corrigé.':'Validez une première tentative pour afficher les rappels juridiques et les contrôles métier.'}</div>`;
+ const evaluationLocked=state.learningMode==='evaluate'&&state.evaluationSubmitted;
  document.getElementById('sidebar').innerHTML=`<div><h2 class="case-title">${c.title}</h2><div class="meta">${c.meta}</div><span class="level">${c.level}</span><span class="level-group">${c.group}</span></div>
  <div class="task"><strong>Votre mission</strong>${c.task}</div>
- <div><div class="block-title">Données du cas</div><div class="facts">${c.facts.map(f=>`<div class="fact"><div class="fact-row"><div class="fact-name">${f[0]} <span class="tag">${f[2]}</span></div><div class="amount">${f[1]===0?'—':(f[2].includes('%')&&f[1]<100?f[1]+' %':money(f[1]))}</div></div></div>`).join('')}</div></div>
- <div class="legal"><strong>Base légale indicative</strong><br>${c.legal}<div class="case-sources">${sourceLinks(c)}</div></div>
- <div class="checklist"><span class="block-title">Contrôles métier</span>${c.checks.map(x=>`<div>✓ ${x}</div>`).join('')}</div>
- <div class="progress">Maîtrisés sans aide: <strong>${mastered}/${CASES.length}</strong> · tentés: ${attempted} · solutions consultées: ${reviewed}<div class="bar"><i style="width:${percent}%"></i></div>${r.firstScore!==null?`<div class="fact-note">Première tentative: ${r.firstScore}% · meilleur score autonome: ${r.bestScore||0}%</div>`:''}</div>
+ <div><div class="block-title">Données du cas</div><div class="facts">${renderFacts(c)}</div></div>
+ ${guidanceHtml}
+ <div class="progress">Validés en évaluation: <strong>${mastered}/${CASES.length}</strong> · tentés: ${attempted} · corrigés consultés: ${reviewed}<div class="bar"><i style="width:${percent}%"></i></div>${r.firstScore!==null&&r.firstScore!==undefined?`<div class="fact-note">Première tentative: ${r.firstScore}%${r.bestLearningScore?` · apprentissage: ${r.bestLearningScore}%`:''}${r.bestPracticeScore?` · entraînement: ${r.bestPracticeScore}%`:''}${r.evaluationAttempts?` · évaluation: ${r.bestEvaluationScore||0}%`:''}</div>`:''}</div>
  <div class="case-nav"><button class="btn small" type="button" onclick="previousCase()" ${state.caseIndex===0?'disabled':''}>← Précédent</button><button class="btn small" type="button" onclick="nextCase()" ${state.caseIndex===CASES.length-1?'disabled':''}>Suivant →</button></div>
- <div class="actions"><button class="btn primary" type="button" onclick="verify()">Vérifier mes réponses</button><button class="btn" id="sideSolution" type="button" onclick="solution()" ${state.learningMode==='evaluate'?'disabled':''}>Voir la solution</button><button class="btn small" type="button" onclick="resetCase()">Recommencer ce cas</button><button class="btn danger-link" type="button" onclick="resetAllProgress()">Effacer toute la progression</button></div>`;
+ <div class="actions"><button class="btn primary" type="button" onclick="verify()" ${evaluationLocked?'disabled':''}>${evaluationLocked?'Évaluation remise':'Vérifier mes réponses'}</button>${state.learningMode==='evaluate'?(state.evaluationSubmitted&&!state.evaluationCorrectionShown?'<button class="btn" type="button" onclick="revealEvaluationCorrection()">Ouvrir le corrigé</button>':state.evaluationCorrectionShown?'<button class="btn" type="button" disabled>Corrigé consulté</button>':''):'<button class="btn" id="sideSolution" type="button" onclick="solution()">Voir la solution</button>'}<button class="btn small" type="button" onclick="resetCase()">${state.learningMode==='evaluate'?'Nouvelle évaluation':'Recommencer ce cas'}</button><button class="btn danger-link" type="button" onclick="resetAllProgress()">Effacer toute la progression</button></div>`;
  document.getElementById('globalProgress').textContent=`${mastered} / ${CASES.length} cas`;
- const mobileSolution=document.getElementById('mobileSolution');
- if(mobileSolution)mobileSolution.disabled=state.learningMode==='evaluate';
+ const mobileSolution=document.getElementById('mobileSolution'),mobileVerify=document.getElementById('mobileVerify'),mobileReset=document.getElementById('mobileReset');
+ const mobileActions=document.querySelector('.mobile-actions');
+ if(mobileSolution){
+   if(state.learningMode!=='evaluate'){mobileSolution.hidden=false;mobileSolution.disabled=false;mobileSolution.textContent='Solution'}
+   else if(!state.evaluationSubmitted){mobileSolution.hidden=true;mobileSolution.disabled=true}
+   else{mobileSolution.hidden=false;mobileSolution.textContent=state.evaluationCorrectionShown?'Corrigé vu':'Corrigé';mobileSolution.disabled=state.evaluationCorrectionShown}
+ }
+ if(mobileActions)mobileActions.classList.toggle('two-actions',Boolean(mobileSolution?.hidden));
+ if(mobileVerify){mobileVerify.disabled=evaluationLocked;mobileVerify.textContent=evaluationLocked?'Remise':'Vérifier'}
+ if(mobileReset)mobileReset.textContent=state.learningMode==='evaluate'?'Nouveau':'Effacer';
 }
 function renderInfo(){
- const modeText={
-  learn:'<strong>Apprentissage.</strong> Les explications apparaissent après une erreur et la solution reste accessible.',
-  practice:'<strong>Entraînement.</strong> Les indices détaillés apparaissent à partir de la deuxième tentative.',
-  evaluate:'<strong>Évaluation.</strong> La solution est désactivée. Le score distingue la qualification TVA et le remplissage du décompte.'
- }[state.learningMode];
- document.getElementById('caseInfo').innerHTML=`${modeText}<br>${current().info}`;
+ const r=currentRecord();
+ if(state.learningMode==='learn'){
+   document.getElementById('caseInfo').innerHTML=`<strong>Apprentissage.</strong> Les rubriques, les explications et les contrôles métier accompagnent la résolution.<br>${current().info}`;
+   return;
+ }
+ if(state.learningMode==='practice'){
+   const afterAttempt=(r.practiceAttempts||0)>0;
+   document.getElementById('caseInfo').innerHTML=`<strong>Entraînement.</strong> Les numéros de rubriques et les résultats calculés sont masqués dans les données. Les rappels apparaissent après une première validation.${afterAttempt?`<br>${current().info}`:'<br>Analysez les faits, qualifiez les opérations et choisissez vous-même les chiffres du décompte.'}`;
+   return;
+ }
+ document.getElementById('caseInfo').innerHTML=`<strong>Évaluation indépendante.</strong> Une copie propre et séparée des autres modes est utilisée. Aucun indice, contrôle de cohérence ou corrigé n’est affiché avant la remise.${state.evaluationSubmitted?'<br><strong>Remise enregistrée:</strong> les réponses sont verrouillées. Le corrigé reste une action volontaire qui termine la consultation autonome.':''}`;
 }
 function updateControls(){
  ['learn','practice','evaluate'].forEach(m=>{
@@ -682,15 +793,21 @@ function consistencyTips(){
 }
 function renderPrecheck(custom=null){
  const el=document.getElementById('precheck');if(custom){el.innerHTML=custom;return}
- const tips=consistencyTips(),c=current(),filled=c.fields.filter(validValue).length;
+ const c=current(),filled=c.fields.filter(validValue).length;
+ if(state.learningMode==='evaluate'){
+   if(state.evaluationSubmitted){el.innerHTML='<div class="precheck ok"><strong>Évaluation remise</strong><br>Les réponses sont verrouillées. Consultez le résultat ci-dessous ou ouvrez volontairement le corrigé.</div>';return}
+   el.innerHTML=`<div class="precheck"><strong>Évaluation en cours</strong><br>${filled}/${c.fields.length} champs requis complétés. Les contrôles de cohérence sont volontairement masqués avant la remise.</div>`;return;
+ }
+ const tips=consistencyTips();
  if(!filled&&state.qualification===''){el.innerHTML='<div class="precheck"><strong>Contrôle avant validation</strong><br>Commencez par la qualification TVA, puis complétez les cases jaunes. Les totaux se recalculent automatiquement.</div>';return}
  if(tips.length){el.innerHTML=`<div class="precheck warn"><strong>Points à vérifier</strong><ul>${tips.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;return}
  el.innerHTML=`<div class="precheck ok"><strong>Contrôle rapide</strong><br>${filled}/${c.fields.length} champs requis valides. Aucune incohérence arithmétique évidente; la qualification et les justificatifs restent déterminants.</div>`;
 }
+function clearPreview(){const el=document.getElementById('afcPreview');if(el)el.innerHTML=''}
 function setQualification(value){
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted)return;
  state.qualification=value;state.validated=false;state.solutionShown=false;
- if(state.assistedCurrent)state.assistedCurrent=true;
- document.getElementById('result').innerHTML='';
+ document.getElementById('result').innerHTML='';clearPreview();
  saveDraft();renderQualification();renderPrecheck();
 }
 function updateText(id,text){const el=document.getElementById(id);if(el)el.textContent=text}
@@ -706,94 +823,182 @@ function updateComputed(){
  renderPrecheck();
 }
 function setValue(k,v,el){
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted)return;
  state.values[k]=v;state.validated=false;state.solutionShown=false;
- if(el){el.classList.remove('correct','wrong','invalid');el.classList.add('pending')}
- document.getElementById('result').innerHTML='';
+ if(el){el.classList.remove('correct','wrong','invalid');el.classList.add('pending');el.parentElement?.querySelector('.field-error')?.remove()}
+ document.getElementById('result').innerHTML='';clearPreview();
  saveDraft();renderQualification();updateComputed();
 }
 function formatField(k,el){
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted)return;
  const parsed=parseAmount(el.value);
- if(parsed===null){state.values[k]='';saveDraft();renderForm();return}
- if(!Number.isFinite(parsed)){state.values[k]=el.value;saveDraft();renderForm();return}
- state.values[k]=round2(parsed);saveDraft();renderForm();
+ const existingError=el.parentElement?.querySelector('.field-error');if(existingError)existingError.remove();
+ if(parsed===null){state.values[k]='';el.value='';el.classList.remove('invalid');saveDraft();updateComputed();return}
+ if(!Number.isFinite(parsed)){
+   state.values[k]=el.value;el.classList.add('invalid');
+   el.insertAdjacentHTML('afterend','<div class="field-error">Format non reconnu. Exemple: 12’500.00 ou 12500,00.</div>');
+   saveDraft();updateComputed();return;
+ }
+ state.values[k]=round2(parsed);el.value=numberText(parsed);el.classList.remove('invalid');saveDraft();updateComputed();
 }
 function verify(){
  const c=current();
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted)return;
  if(state.qualification===''){renderPrecheck('<div class="precheck warn"><strong>Qualification manquante</strong><br>Répondez d’abord à la question de qualification TVA.</div>');document.getElementById('qualificationSelect')?.focus();return}
  const missing=c.fields.filter(k=>!hasValue(k));
  if(missing.length){renderPrecheck(`<div class="precheck warn"><strong>Champs requis manquants</strong><br>Complétez: ${missing.map(k=>`ch. ${FIELD_META[k].code}`).join(', ')}.</div>`);document.getElementById(missing[0])?.focus();return}
  const invalid=c.fields.filter(k=>!validValue(k));
  if(invalid.length){renderPrecheck('<div class="precheck warn"><strong>Format invalide</strong><br>Corrigez les champs signalés en rouge avant de vérifier.</div>');document.getElementById(invalid[0])?.focus();return}
- state.validated=true;state.solutionShown=false;
+ state.validated=true;state.solutionShown=false;clearPreview();
  const qualificationGood=Number(state.qualification)===c.qualification.correct;
  const items=c.fields.map(k=>({k,good:Math.abs(val(k)-n(c.expected[k]))<=.01,user:val(k),answer:n(c.expected[k])}));
- const correctFields=items.filter(x=>x.good).length;
- const declarationScore=Math.round(correctFields/c.fields.length*70);
- const score=(qualificationGood?30:0)+declarationScore;
+ const scoring=scoreBreakdown(items,qualificationGood);
+ const score=scoring.score;
  const record=currentRecord();
  if(!state.assistedCurrent){
    record.attempts=(record.attempts||0)+1;
+   const counter={learn:'learningAttempts',practice:'practiceAttempts',evaluate:'evaluationAttempts'}[state.learningMode];
+   record[counter]=(record[counter]||0)+1;
    if(record.firstScore===null||record.firstScore===undefined)record.firstScore=score;
    record.bestScore=Math.max(record.bestScore||0,score);
-   if(score===100)record.mastered=true;
- }else{
-   record.solutionViewed=true;
+   if(state.learningMode==='learn')record.bestLearningScore=Math.max(record.bestLearningScore||0,score);
+   if(state.learningMode==='practice')record.bestPracticeScore=Math.max(record.bestPracticeScore||0,score);
+   if(state.learningMode==='evaluate')record.bestEvaluationScore=Math.max(record.bestEvaluationScore||0,score);
+   record.mastered=(record.bestEvaluationScore||0)===100;
+ }else record.solutionViewed=true;
+ if(state.learningMode==='evaluate'){
+   state.evaluationSubmitted=true;state.evaluationCorrectionShown=false;state.lastEvaluationScore=score;
  }
- saveStore();renderAll(false);renderResult(score,items,false,qualificationGood,state.assistedCurrent);
+ saveDraft();saveStore();renderAll(false,false);renderResult(score,items,false,qualificationGood,state.assistedCurrent,true);
 }
 function balanceText(r){
  if(r.ch500>0)return `${money(r.ch500)} à payer au ch. 500`;
  if(r.ch510>0)return `${money(r.ch510)} en faveur de l’assujetti au ch. 510`;
  return 'Solde nul';
 }
-function renderResult(score,items,isSolution=false,qualificationGood=true,assisted=false){
- const user=compute(),expected=expectedCompute();
+function resultActionButtons(items,isSolution){
+ const hasErrors=items.some(x=>!x.good)||Number(state.qualification)!==current().qualification.correct;
+ const buttons=[];
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted&&!state.evaluationCorrectionShown)buttons.push('<button class="btn" type="button" onclick="revealEvaluationCorrection()">Voir le corrigé et terminer</button>');
+ if(state.learningMode!=='evaluate'&&hasErrors&&!isSolution)buttons.push('<button class="btn" type="button" onclick="reviewErrors()">Revoir mes erreurs</button>');
+ const correctionAvailable=isSolution||state.learningMode!=='evaluate'||state.evaluationCorrectionShown;
+ const previewCorrected=hasErrors&&correctionAvailable;
+ buttons.push(`<button class="btn preview" type="button" onclick="toggleAfcPreview(${previewCorrected?'true':'false'})">${previewCorrected?'Aperçu du corrigé':hasErrors?'Aperçu de ma saisie':'Aperçu type AFC'}</button>`);
+ if(state.learningMode==='evaluate'&&state.evaluationSubmitted)buttons.push('<button class="btn" type="button" onclick="startNewEvaluation()">Nouvelle évaluation</button>');
+ if(state.caseIndex<CASES.length-1)buttons.push('<button class="btn primary" type="button" onclick="nextCase()">Cas suivant →</button>');
+ return `<div class="result-actions">${buttons.join('')}</div>`;
+}
+function renderResult(score,items,isSolution=false,qualificationGood=true,assisted=false,scroll=true){
+ const user=compute(),expected=expectedCompute(),scoring=scoreBreakdown(items,qualificationGood);
+ const sealedEvaluation=state.learningMode==='evaluate'&&!state.evaluationCorrectionShown&&!isSolution;
  const color=isSolution||assisted?'var(--blue)':score===100?'var(--green)':score>=60?'var(--amber)':'var(--red)';
  const bg=isSolution||assisted?'var(--bluebg)':score===100?'var(--greenbg)':score>=60?'var(--amberbg)':'var(--redbg)';
  let title;
  if(isSolution)title='Solution affichée — aucun score enregistré';
  else if(assisted)title='Tentative assistée — non comptabilisée dans la progression autonome';
+ else if(state.learningMode==='evaluate')title='Évaluation remise — réponses verrouillées';
  else if(score===100)title='Cas maîtrisé sans aide';
  else if(score>=60)title='Bonne base, mais le cas reste à consolider';
  else title='Reprenez la qualification et les rubriques indiquées';
- const showDetails=state.learningMode!=='evaluate'||isSolution||score<100;
- document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. La qualification vaut 30 % et le décompte 70 %.</div></div></div>
- <div class="competencies"><div class="competency"><span>Qualification TVA</span><strong class="${qualificationGood?'okmark':'badmark'}">${qualificationGood?'Maîtrisée':'À revoir'} · ${qualificationGood?30:0}/30</strong></div><div class="competency"><span>Rubriques et calculs</span><strong>${Math.round(items.filter(x=>x.good).length/items.length*70)}/70</strong></div></div>
- <div class="result-summary"><div class="summary-box"><span>Votre résultat</span><strong>${balanceText(user)}</strong><small>399 ${money(user.ch399)} · 479 ${money(user.ch479)}</small></div><div class="summary-box expected"><span>Résultat attendu</span><strong>${balanceText(expected)}</strong><small>399 ${money(expected.ch399)} · 479 ${money(expected.ch479)}</small></div></div>
- ${showDetails?items.map(x=>`<div class="feedback"><div class="fb-top"><div class="fb-name ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code} — ${FIELD_META[x.k].label}</div><div class="fb-values">Votre réponse: ${money(x.user)}<br>Solution: ${money(x.answer)}</div></div><div class="fb-explain">${current().explain[x.k]||''}</div></div>`).join(''):''}</div>`;
- const resultEl=document.getElementById('result');resultEl.focus({preventScroll:true});resultEl.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ const expectedBox=sealedEvaluation?'<div class="summary-box expected"><span>Résultat attendu</span><strong>Masqué jusqu’au corrigé</strong><small>La remise reste une évaluation indépendante.</small></div>':`<div class="summary-box expected"><span>Résultat attendu</span><strong>${balanceText(expected)}</strong><small>399 ${money(expected.ch399)} · 479 ${money(expected.ch479)}</small></div>`;
+ const detailHtml=sealedEvaluation?`<div class="evaluation-seal"><strong>Correction non affichée.</strong> Le score et la carte des rubriques indiquent les points maîtrisés sans révéler les montants attendus.</div><div class="evaluation-map">${items.map(x=>`<div class="evaluation-item ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code}</div>`).join('')}</div>`:items.map(x=>`<div class="feedback"><div class="fb-top"><div class="fb-name ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code} — ${FIELD_META[x.k].label}</div><div class="fb-values">Votre réponse: ${money(x.user)}<br>Solution: ${money(x.answer)}</div></div><div class="fb-explain">${current().explain[x.k]||''}</div></div>`).join('');
+ document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. Le score pondère la qualification et les principaux blocs du décompte.${sealedEvaluation?' Le corrigé n’est pas ouvert.':''}</div></div></div>
+ <div class="competencies"><div class="competency"><span>Qualification TVA</span><strong class="${qualificationGood?'okmark':'badmark'}">${qualificationGood?'Maîtrisée':'À revoir'} · ${scoring.qualification}/30</strong></div>${scoring.groups.map(group=>`<div class="competency"><span>${group.label}</span><strong>${Math.round(group.earned)}/${Math.round(group.allocated)}</strong></div>`).join('')}</div>
+ <div class="result-summary"><div class="summary-box"><span>Votre résultat</span><strong>${balanceText(user)}</strong><small>399 ${money(user.ch399)} · 479 ${money(user.ch479)}</small></div>${expectedBox}</div>
+ ${detailHtml}${resultActionButtons(items,isSolution)}</div>`;
+ if(scroll){const resultEl=document.getElementById('result');resultEl.focus({preventScroll:true});resultEl.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})}
 }
 function solution(){
  if(state.learningMode==='evaluate')return;
  const c=current(),record=currentRecord();
  record.solutionViewed=true;state.values={...c.expected};state.qualification=String(c.qualification.correct);
- state.validated=true;state.solutionShown=true;state.assistedCurrent=true;
- saveDraft();saveStore();renderAll(false);
+ state.validated=true;state.solutionShown=true;state.assistedCurrent=true;clearPreview();
+ saveDraft();saveStore();renderAll(false,false);
  const items=c.fields.map(k=>({k,good:true,user:n(c.expected[k]),answer:n(c.expected[k])}));
- renderResult(100,items,true,true,true);
+ renderResult(100,items,true,true,true,true);
+}
+function mobileSecondaryAction(){
+ if(state.learningMode!=='evaluate'){solution();return}
+ if(state.evaluationSubmitted&&!state.evaluationCorrectionShown)revealEvaluationCorrection();
+}
+function evaluationItems(){
+ const c=current();return c.fields.map(k=>({k,good:Math.abs(val(k)-n(c.expected[k]))<=.01,user:val(k),answer:n(c.expected[k])}));
+}
+function renderSavedEvaluationResult(scroll=false){
+ if(!state.evaluationSubmitted||state.lastEvaluationScore===null)return;
+ renderResult(state.lastEvaluationScore,evaluationItems(),false,Number(state.qualification)===current().qualification.correct,false,scroll);
+}
+function revealEvaluationCorrection(){
+ if(state.learningMode!=='evaluate'||!state.evaluationSubmitted)return;
+ state.evaluationCorrectionShown=true;currentRecord().solutionViewed=true;saveDraft();saveStore();clearPreview();renderAll(false,false);renderSavedEvaluationResult(true);
+}
+function deleteCurrentModeDraft(){
+ const drafts=store.drafts[current().id]||{};delete drafts[state.learningMode];
+ if(Object.keys(drafts).length)store.drafts[current().id]=drafts;else delete store.drafts[current().id];
+}
+function startNewEvaluation(){
+ if(state.learningMode!=='evaluate')return;
+ if((Object.keys(state.values).length||state.evaluationSubmitted)&&!confirm('Commencer une nouvelle évaluation avec une copie entièrement vide ?'))return;
+ deleteCurrentModeDraft();state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;state.evaluationSubmitted=false;state.evaluationCorrectionShown=false;state.lastEvaluationScore=null;saveStore();document.getElementById('result').innerHTML='';clearPreview();renderAll(false,false);document.getElementById('qualification')?.scrollIntoView({block:'start'});
 }
 function resetCase(){
+ if(state.learningMode==='evaluate'){startNewEvaluation();return}
  const hasDraft=Object.keys(state.values).length>0||state.qualification!=='';
- if(hasDraft&&!confirm('Effacer les réponses de ce cas et recommencer sans aide ?'))return;
- state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;
- delete store.drafts[current().id];saveStore();document.getElementById('result').innerHTML='';renderAll(false);document.getElementById('qualification')?.scrollIntoView({block:'start'});
+ if(hasDraft&&!confirm('Effacer les réponses de ce mode et recommencer sans aide ?'))return;
+ state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;state.evaluationSubmitted=false;state.evaluationCorrectionShown=false;state.lastEvaluationScore=null;
+ deleteCurrentModeDraft();saveStore();document.getElementById('result').innerHTML='';clearPreview();renderAll(false,false);document.getElementById('qualification')?.scrollIntoView({block:'start'});
 }
 function resetAllProgress(){
  if(!confirm('Effacer les scores, les solutions consultées et les brouillons des 12 cas ?'))return;
- store.records={};store.drafts={};state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;saveStore();renderAll(false);
+ store.records={};store.drafts={};state.values={};state.qualification='';state.validated=false;state.solutionShown=false;state.assistedCurrent=false;state.evaluationSubmitted=false;state.evaluationCorrectionShown=false;state.lastEvaluationScore=null;saveStore();document.getElementById('result').innerHTML='';clearPreview();renderAll(false,false);
 }
 function selectCase(i){
- saveDraft();state.caseIndex=Number(i);saveStore();loadDraft();document.getElementById('result').innerHTML='';renderAll(false);window.scrollTo({top:0,behavior:'auto'});
+ saveDraft();state.caseIndex=Number(i);saveStore();loadDraft();document.getElementById('result').innerHTML='';clearPreview();renderAll(false,false);if(state.learningMode==='evaluate'&&state.evaluationSubmitted)renderSavedEvaluationResult(false);window.scrollTo({top:0,behavior:'auto'});
 }
 function previousCase(){if(state.caseIndex>0)selectCase(state.caseIndex-1)}
 function nextCase(){if(state.caseIndex<CASES.length-1)selectCase(state.caseIndex+1)}
 function setView(view){state.view=view;saveStore();renderForm();updateControls()}
 function setLearningMode(mode){
- state.learningMode=mode;state.validated=false;saveStore();document.getElementById('result').innerHTML='';renderAll(false);
+ if(state.learningMode===mode)return;
+ saveDraft();state.learningMode=mode;saveStore();loadDraft();document.getElementById('result').innerHTML='';clearPreview();renderAll(false,false);if(state.learningMode==='evaluate'&&state.evaluationSubmitted)renderSavedEvaluationResult(false);
 }
-function renderAll(load=true){
+function reviewErrors(){
+ const wrong=document.querySelector('.money.wrong,.qualification select.wrong');
+ if(wrong){wrong.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});wrong.focus()}
+}
+function previewRow(code,label,base,tax,total=false){
+ return `<div class="pcode ${total?'ptotal':''}">${code}</div><div class="plabel ${total?'ptotal':''}">${label}</div><div class="pvalue pbase ${total?'ptotal':''}" data-label="Montant / base">${base}</div><div class="pvalue ptax ${total?'ptotal':''}" data-label="Impôt">${tax}</div>`;
+}
+function renderAfcPreview(useExpected=false){
+ const values=useExpected?current().expected:state.values;
+ const get=k=>n(values[k]),v=computeFrom(values),c=current(),used=new Set(c.fields),rows=[];
+ const addBaseField=k=>{if(!used.has(k)&&Math.abs(get(k))<.005)return;const m=FIELD_META[k];rows.push(previewRow(m.code,m.label,money(get(k)),'',false))};
+ const addTaxField=k=>{if(!used.has(k)&&Math.abs(get(k))<.005)return;const m=FIELD_META[k];rows.push(previewRow(m.code,m.label,'',money(get(k)),false))};
+ rows.push(previewRow('200',FIELD_META.ch200.label,money(get('ch200')),'',false));
+ ['ch205','ch220','ch221','ch225','ch230','ch235','ch280'].forEach(addBaseField);
+ rows.push(previewRow('289','Total des déductions',money(v.ch289),'',true));
+ rows.push(previewRow('299','Total du chiffre d’affaires imposable',money(v.ch299),'',true));
+ [['ch303',v.t303],['ch313',v.t313],['ch343',v.t343]].forEach(([k,tax])=>{if(used.has(k)||Math.abs(get(k))>.005)rows.push(previewRow(FIELD_META[k].code,FIELD_META[k].label,money(get(k)),money(tax),false))});
+ rows.push(previewRow('379','Total des bases imposables',money(v.ch379),'',true));
+ if(used.has('ch383base')||used.has('ch383tax')||get('ch383base')||get('ch383tax'))rows.push(previewRow('383','Impôt sur les acquisitions',money(get('ch383base')),money(get('ch383tax')),false));
+ rows.push(previewRow('399','Total de l’impôt dû','',money(v.ch399),true));
+ ['ch400','ch405','ch410','ch415','ch420'].forEach(addTaxField);
+ rows.push(previewRow('479','Total de l’impôt préalable','',money(v.ch479),true));
+ rows.push(previewRow('500','Montant à payer à l’AFC','',money(v.ch500),true));
+ rows.push(previewRow('510','Solde en faveur de l’assujetti','',money(v.ch510),true));
+ ['ch900','ch910'].forEach(addBaseField);
+ const sourceLabel=useExpected?'valeurs du corrigé':'valeurs de votre saisie';
+ return `<section class="afc-preview"><div class="afc-preview-head"><div><h2>Aperçu du décompte complété</h2><p>Présentation pédagogique inspirée du prototype AFC · ${sourceLabel} · sans valeur officielle.</p></div><button class="btn small" type="button" onclick="clearPreview()">Fermer</button></div><div class="afc-preview-body"><div class="afc-preview-grid"><div class="head">Ch.</div><div class="head">Rubrique</div><div class="head">Montant / base CHF</div><div class="head">Impôt CHF</div>${rows.join('')}</div><p class="afc-preview-note">Le dépôt réel s’effectue dans « Décompte TVA pro ». Cet aperçu ne reproduit ni la transmission, ni les pièces jointes, ni toutes les options du formulaire officiel.</p></div></section>`;
+}
+function toggleAfcPreview(useExpected=false){
+ const el=document.getElementById('afcPreview');
+ if(el.innerHTML){el.innerHTML='';return}
+ el.innerHTML=renderAfcPreview(useExpected);el.focus({preventScroll:true});el.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+}
+function renderAll(load=true,restoreEvaluation=true){
  if(load)loadDraft();
  renderTabs();renderSidebar();renderInfo();renderQualification();renderForm();updateControls();
+ if(restoreEvaluation&&state.learningMode==='evaluate'&&state.evaluationSubmitted)requestAnimationFrame(()=>renderSavedEvaluationResult(false));
 }
 
 document.getElementById('caseSelect').addEventListener('change',e=>selectCase(e.target.value));
@@ -802,7 +1007,7 @@ document.getElementById('practiceBtn').addEventListener('click',()=>setLearningM
 document.getElementById('evaluateBtn').addEventListener('click',()=>setLearningMode('evaluate'));
 document.getElementById('guidedBtn').addEventListener('click',()=>setView('guided'));
 document.getElementById('extendedBtn').addEventListener('click',()=>setView('extended'));
-renderAll(true);
+renderAll(true,true);
 </script>
 </body>
 </html>
