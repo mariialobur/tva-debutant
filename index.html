@@ -13,7 +13,11 @@
 <meta property="og:title" content="Parcours pratique du décompte TVA suisse — méthode effective">
 <meta property="og:description" content="12 cas pratiques avec qualification TVA, rubriques du décompte, contrôles de cohérence et progression locale.">
 <meta property="og:url" content="https://mariialobur.github.io/tva-debutant/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://mariialobur.github.io/tva-debutant/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Parcours pratique du décompte TVA suisse — méthode effective">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://mariialobur.github.io/tva-debutant/">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -243,7 +247,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   .tabs{display:none}.case-select-wrap{display:block;position:sticky;top:0;z-index:30}.limits{padding:0 9px;margin-top:9px}.limits-inner{font-size:12px}
   .side{padding:15px}.side .actions{display:none}.work{padding:9px}
   .controls{grid-template-columns:1fr}.control-card{align-items:flex-start;flex-direction:column}.segmented{width:100%;justify-content:flex-start}.mode{flex:1;text-align:center;min-width:90px}
-  .columns{display:none}.row{display:grid;grid-template-columns:50px 1fr;margin:7px;border:1px solid var(--line);border-radius:8px;overflow:hidden}.code{grid-column:1;grid-row:1 / span 3;min-height:100%;border-bottom:0}.label{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.input-cell{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.tax-cell{grid-column:2;justify-content:flex-start;font-size:12px}.label-main{font-size:13px}.label-sub{font-size:11px}.section{margin-top:8px}.card{box-shadow:none}.card-head{align-items:flex-start}.net-badge{font-size:9px}
+  .columns{display:none}.row{display:grid;grid-template-columns:50px 1fr;margin:7px;border:1px solid var(--line);border-radius:8px;overflow:hidden}.row.tax-only .input-cell{display:none}.row.tax-only .tax-cell{border-bottom:0}.code{grid-column:1;grid-row:1 / span 3;min-height:100%;border-bottom:0}.label{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.input-cell{grid-column:2;border-right:0;border-bottom:1px solid var(--line)}.tax-cell{grid-column:2;justify-content:flex-start;font-size:12px}.label-main{font-size:13px}.label-sub{font-size:11px}.section{margin-top:8px}.card{box-shadow:none}.card-head{align-items:flex-start}.net-badge{font-size:9px}
   .qualification p,.result-sub,.fb-explain,.info,.precheck,.legal,.checklist{font-size:13px}.money{font-size:16px;min-height:44px}
   .glossary-grid{grid-template-columns:1fr}.result-summary,.competencies,.project-links,.evaluation-map{grid-template-columns:1fr}.fb-top{flex-direction:column}.fb-values{text-align:left}.result-actions{display:grid;grid-template-columns:1fr}.afc-preview-grid{grid-template-columns:48px 1fr}.afc-preview-grid .head:nth-child(3),.afc-preview-grid .head:nth-child(4){display:none}.afc-preview-grid .pcode{grid-column:1;grid-row:span 3;display:flex;align-items:center;justify-content:center}.afc-preview-grid .plabel{grid-column:2}.afc-preview-grid .pvalue{grid-column:2;text-align:left;padding-top:4px;padding-bottom:4px}.afc-preview-grid .pvalue:not(:empty)::before{content:attr(data-label) ": ";font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
   .mobile-actions{position:fixed;display:grid;grid-template-columns:1.25fr 1fr .8fr;gap:6px;left:0;right:0;bottom:0;z-index:50;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));backdrop-filter:blur(10px)}.mobile-actions .btn{padding:10px 5px;font-size:12px;min-height:45px}
@@ -331,12 +335,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
       <a href="https://www.estv.admin.ch/fr/taux-de-la-tva-suisse" target="_blank" rel="noopener">Taux TVA actuels</a>
       <a href="https://www.estv.admin.ch/fr/decompter-la-tva-en-ligne" target="_blank" rel="noopener">Décompter la TVA en ligne</a>
       <a href="https://www.estv.admin.ch/fr/impot-sur-les-acquisitions-tva" target="_blank" rel="noopener">Impôt sur les acquisitions</a>
-      <a href="https://www.estv.admin.ch/fr/newnsb/Os-oY1FEYEzWtOce1tKdC" target="_blank" rel="noopener">AFC — Formulaire 764</a>
+      <a href="https://www.estv.admin.ch/fr/newnsb/Os-oY1FEYEzWtOce1tKdC" target="_blank" rel="noopener">AFC — actualisation du formulaire 764</a>
       <a href="https://www.fedlex.admin.ch/eli/cc/2009/615/fr" target="_blank" rel="noopener">LTVA sur Fedlex</a>
     </div>
   </section>
 </main>
-<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu et fonctionnement mis à jour le 3 août 2026. Les sources officielles et le service AFC en vigueur restent déterminants.</span></footer>
+<footer class="footer">© 2026 Mariia Lobur · Outil de formation et de démonstration, sans valeur de conseil fiscal.<span class="updated">Contenu, fonctionnement et références contrôlés le 3 août 2026. Les sources officielles et le service AFC en vigueur restent déterminants.</span></footer>
 <div class="mobile-actions" aria-label="Actions du cas">
   <button class="btn primary" id="mobileVerify" type="button" onclick="verify()">Vérifier</button>
   <button class="btn" id="mobileSolution" type="button" onclick="mobileSecondaryAction()">Solution</button>
@@ -354,7 +358,7 @@ const SOURCE_LIBRARY={
   form:{label:'Prototype AFC — méthode effective',url:'https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-effektiv-fr.pdf'},
   rates:{label:'AFC — taux TVA',url:'https://www.estv.admin.ch/fr/taux-de-la-tva-suisse'},
   acquisitions:{label:'AFC — impôt sur les acquisitions',url:'https://www.estv.admin.ch/fr/impot-sur-les-acquisitions-tva'},
-  transfer:{label:'AFC — formulaire 764',url:'https://www.estv.admin.ch/fr/newnsb/Os-oY1FEYEzWtOce1tKdC'}
+  transfer:{label:'AFC — actualisation du formulaire 764',url:'https://www.estv.admin.ch/fr/newnsb/Os-oY1FEYEzWtOce1tKdC'}
 };
 
 const FIELD_META={
@@ -376,7 +380,7 @@ const FIELD_META={
  ch410:{code:'410',label:'Dégrèvement ultérieur de l’impôt préalable',sub:'Montant positif; un relevé détaillé doit être établi et téléversé dans le décompte TVA en ligne.',sign:'+',attachment:true},
  ch415:{code:'415',label:'Corrections de l’impôt préalable',sub:'Saisir une valeur positive; le formulaire applique le signe moins.',sign:'−'},
  ch420:{code:'420',label:'Réduction de la déduction de l’impôt préalable',sub:'Saisir une valeur positive; réduction proportionnelle selon une méthode appropriée et documentée.',sign:'−'},
- ch900:{code:'900',label:'Subventions, taxes touristiques et contributions assimilées',sub:'Autres mouvements de fonds selon l’art. 18, al. 2, let. a à c LTVA.'},
+ ch900:{code:'900',label:'Subventions, taxes touristiques et contributions aux établissements chargés de tâches publiques',sub:'Autres mouvements de fonds selon l’art. 18, al. 2, let. a à c LTVA.'},
  ch910:{code:'910',label:'Dons, dividendes, dédommagements, etc.',sub:'Autres mouvements de fonds selon l’art. 18, al. 2, let. d à l LTVA.'}
 };
 
@@ -665,6 +669,13 @@ function fieldRow(k,tax=''){
  const sign=m.sign?`<span class="field-sign" aria-hidden="true">${m.sign}</span>`:'';
  return `<div class="row" id="row-${k}"><div class="code">${m.code}</div><div class="label"><div class="label-main">${sign}${m.label} ${badge}</div><div class="label-sub">${m.sub}</div></div>${fieldInputCell(k)}<div class="tax-cell" id="tax-${k}">${tax}</div></div>`;
 }
+function taxFieldRow(k){
+ const m=FIELD_META[k];if(state.view==='guided'&&!editable(k))return'';
+ const badge=m.attachment?'<span class="attachment">Justificatif</span>':'';
+ const sign=m.sign?`<span class="field-sign" aria-hidden="true">${m.sign}</span>`:'';
+ const input=editable(k)?inputControl(k,`Chiffre ${m.code} — ${m.label}`):'';
+ return `<div class="row tax-only" id="row-${k}"><div class="code">${m.code}</div><div class="label"><div class="label-main">${sign}${m.label} ${badge}</div><div class="label-sub">${m.sub}</div></div><div class="input-cell readonly locked" aria-label="Aucune base à saisir">—</div><div class="tax-cell">${editable(k)?input:'—'}</div></div>`;
+}
 function rateRow(k,taxValue){return fieldRow(k,`<span><span class="tax-caption">TVA calculée</span><strong>${money(taxValue)}</strong></span>`)}
 function acquisitionRow(){
  const used=editable('ch383base')||editable('ch383tax');if(state.view==='guided'&&!used)return'';
@@ -679,8 +690,8 @@ function computedRow(code,label,sub,baseValue=null,taxValue=null,cls='computed')
 function renderForm(){
  const v=compute();
  const section1=`<div class="section">I. Chiffre d’affaires</div>${fieldRow('ch200')}${fieldRow('ch205')}<div class="section s2">Déductions du chiffre d’affaires</div>${fieldRow('ch220')}${fieldRow('ch221')}${fieldRow('ch225')}${fieldRow('ch230')}${fieldRow('ch235')}${fieldRow('ch280')}${computedRow('289','Total des déductions','Somme des ch. 220, 221, 225, 230, 235 et 280.',v.ch289,null,'total')}${computedRow('299','Total du chiffre d’affaires imposable','Ch. 200 moins ch. 289. Le ch. 205 n’est ni ajouté ni déduit.',v.ch299,null,'total')}`;
- const section2=`<div class="section s2">II. Calcul de l’impôt</div>${rateRow('ch303',v.t303)}${rateRow('ch313',v.t313)}${rateRow('ch343',v.t343)}${computedRow('379','Total du chiffre d’affaires imposable','Somme des bases aux taux actuels.',v.ch379,null,'tax-total')}${acquisitionRow()}${computedRow('399','Total de l’impôt dû','Impôt des ch. 303, 313, 343 et 383.',null,v.ch399,'tax-total')}`;
- const section3=`<div class="section s3">Impôt préalable</div>${fieldRow('ch400')}${fieldRow('ch405')}${fieldRow('ch410')}${fieldRow('ch415')}${fieldRow('ch420')}${computedRow('479','Total de l’impôt préalable','400 + 405 + 410 − 415 − 420.',v.ch479,null,'input-total')}${computedRow('500','Montant à payer à l’AFC','Lorsque le ch. 399 dépasse le ch. 479.',null,v.ch500,v.ch500>0?'pay':'computed')}${computedRow('510','Solde en faveur de l’assujetti','Lorsque le ch. 479 dépasse le ch. 399.',null,v.ch510,v.ch510>0?'credit':'computed')}`;
+ const section2=`<div class="section s2">II. Calcul de l’impôt</div>${rateRow('ch303',v.t303)}${rateRow('ch313',v.t313)}${rateRow('ch343',v.t343)}${computedRow('379','Total du chiffre d’affaires imposable','Somme des bases aux taux actuels.',v.ch379,null,'tax-total')}${acquisitionRow()}${computedRow('399','Total de l’impôt dû','Impôt des ch. 303, 313, 343 et 383.',null,v.ch399,'tax-total tax-only')}`;
+ const section3=`<div class="section s3">Impôt préalable</div>${taxFieldRow('ch400')}${taxFieldRow('ch405')}${taxFieldRow('ch410')}${taxFieldRow('ch415')}${taxFieldRow('ch420')}${computedRow('479','Total de l’impôt préalable','400 + 405 + 410 − 415 − 420.',null,v.ch479,'input-total tax-only')}${computedRow('500','Montant à payer à l’AFC','Lorsque le ch. 399 dépasse le ch. 479.',null,v.ch500,(v.ch500>0?'pay':'computed')+' tax-only')}${computedRow('510','Solde en faveur de l’assujetti','Lorsque le ch. 479 dépasse le ch. 399.',null,v.ch510,(v.ch510>0?'credit':'computed')+' tax-only')}`;
  const section4=`<div class="section s4">III. Autres mouvements de fonds</div>${fieldRow('ch900')}${fieldRow('ch910')}`;
  document.getElementById('form').innerHTML=`<div class="card"><div class="card-head"><div><h2>Vue pédagogique du décompte — méthode effective</h2><p>Saisie nette hors TVA. Les anciens taux, l’arrondi et les pièces jointes ne sont pas reproduits fonctionnellement.</p></div><span class="net-badge">Hors TVA</span></div><div class="columns"><div>Ch.</div><div>Description</div><div>Montant / base CHF</div><div>Impôt CHF</div></div>${section1}${section2}${section3}${section4}<div class="note"><strong>Contrôles clés:</strong> 299 = 200 − 289 · 379 = 299 dans ces exercices · 399 = impôt dû · 479 = impôt préalable net · un seul des ch. 500 ou 510 peut être positif.</div></div>`;
  renderPrecheck();
@@ -818,8 +829,8 @@ function updateComputed(){
  const rateMap={ch303:v.t303,ch313:v.t313,ch343:v.t343};
  Object.entries(rateMap).forEach(([k,value])=>{const el=document.getElementById(`tax-${k}`);if(el)el.innerHTML=`<span><span class="tax-caption">TVA calculée</span><strong>${money(value)}</strong></span>`});
  const r500=document.getElementById('row-500'),r510=document.getElementById('row-510');
- if(r500)r500.className=`row ${v.ch500>0?'pay':'computed'}`;
- if(r510)r510.className=`row ${v.ch510>0?'credit':'computed'}`;
+ if(r500)r500.className=`row ${v.ch500>0?'pay':'computed'} tax-only`;
+ if(r510)r510.className=`row ${v.ch510>0?'credit':'computed'} tax-only`;
  renderPrecheck();
 }
 function setValue(k,v,el){
@@ -849,6 +860,8 @@ function verify(){
  if(missing.length){renderPrecheck(`<div class="precheck warn"><strong>Champs requis manquants</strong><br>Complétez: ${missing.map(k=>`ch. ${FIELD_META[k].code}`).join(', ')}.</div>`);document.getElementById(missing[0])?.focus();return}
  const invalid=c.fields.filter(k=>!validValue(k));
  if(invalid.length){renderPrecheck('<div class="precheck warn"><strong>Format invalide</strong><br>Corrigez les champs signalés en rouge avant de vérifier.</div>');document.getElementById(invalid[0])?.focus();return}
+ const negatives=c.fields.filter(k=>val(k)<0);
+ if(negatives.length){renderPrecheck('<div class="precheck warn"><strong>Montant négatif non admis</strong><br>Saisissez les montants en valeur positive; les signes + ou − des rubriques sont appliqués par le formulaire.</div>');document.getElementById(negatives[0])?.focus();return}
  state.validated=true;state.solutionShown=false;clearPreview();
  const qualificationGood=Number(state.qualification)===c.qualification.correct;
  const items=c.fields.map(k=>({k,good:Math.abs(val(k)-n(c.expected[k]))<=.01,user:val(k),answer:n(c.expected[k])}));
@@ -895,14 +908,16 @@ function renderResult(score,items,isSolution=false,qualificationGood=true,assist
  const bg=isSolution||assisted?'var(--bluebg)':score===100?'var(--greenbg)':score>=60?'var(--amberbg)':'var(--redbg)';
  let title;
  if(isSolution)title='Solution affichée — aucun score enregistré';
- else if(assisted)title='Tentative assistée — non comptabilisée dans la progression autonome';
- else if(state.learningMode==='evaluate')title='Évaluation remise — réponses verrouillées';
- else if(score===100)title='Cas maîtrisé sans aide';
+ else if(assisted)title='Tentative assistée — non comptabilisée dans la progression';
+ else if(state.learningMode==='evaluate')title=score===100?'Évaluation réussie — cas validé':'Évaluation remise — réponses verrouillées';
+ else if(score===100&&state.learningMode==='practice')title='Entraînement réussi — passez en Évaluation pour valider le cas';
+ else if(score===100)title='Cas correctement résolu en mode Apprentissage';
  else if(score>=60)title='Bonne base, mais le cas reste à consolider';
  else title='Reprenez la qualification et les rubriques indiquées';
+ const validationNote=state.learningMode!=='evaluate'&&!isSolution?' Seule une évaluation réussie à 100 % valide le cas.':'';
  const expectedBox=sealedEvaluation?'<div class="summary-box expected"><span>Résultat attendu</span><strong>Masqué jusqu’au corrigé</strong><small>La remise reste une évaluation indépendante.</small></div>':`<div class="summary-box expected"><span>Résultat attendu</span><strong>${balanceText(expected)}</strong><small>399 ${money(expected.ch399)} · 479 ${money(expected.ch479)}</small></div>`;
  const detailHtml=sealedEvaluation?`<div class="evaluation-seal"><strong>Correction non affichée.</strong> Le score et la carte des rubriques indiquent les points maîtrisés sans révéler les montants attendus.</div><div class="evaluation-map">${items.map(x=>`<div class="evaluation-item ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code}</div>`).join('')}</div>`:items.map(x=>`<div class="feedback"><div class="fb-top"><div class="fb-name ${x.good?'okmark':'badmark'}">${x.good?'✓':'✕'} Ch. ${FIELD_META[x.k].code} — ${FIELD_META[x.k].label}</div><div class="fb-values">Votre réponse: ${money(x.user)}<br>Solution: ${money(x.answer)}</div></div><div class="fb-explain">${current().explain[x.k]||''}</div></div>`).join('');
- document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. Le score pondère la qualification et les principaux blocs du décompte.${sealedEvaluation?' Le corrigé n’est pas ouvert.':''}</div></div></div>
+ document.getElementById('result').innerHTML=`<div class="result"><div class="result-head"><div class="score" style="color:${color};background:${bg};border:2px solid ${color}">${isSolution?'SOL.':score+'%'}</div><div><div class="result-title">${title}</div><div class="result-sub">${items.filter(x=>x.good).length}/${items.length} champs corrects. Le score pondère la qualification et les principaux blocs du décompte.${sealedEvaluation?' Le corrigé n’est pas ouvert.':''}${validationNote}</div></div></div>
  <div class="competencies"><div class="competency"><span>Qualification TVA</span><strong class="${qualificationGood?'okmark':'badmark'}">${qualificationGood?'Maîtrisée':'À revoir'} · ${scoring.qualification}/30</strong></div>${scoring.groups.map(group=>`<div class="competency"><span>${group.label}</span><strong>${Math.round(group.earned)}/${Math.round(group.allocated)}</strong></div>`).join('')}</div>
  <div class="result-summary"><div class="summary-box"><span>Votre résultat</span><strong>${balanceText(user)}</strong><small>399 ${money(user.ch399)} · 479 ${money(user.ch479)}</small></div>${expectedBox}</div>
  ${detailHtml}${resultActionButtons(items,isSolution)}</div>`;
