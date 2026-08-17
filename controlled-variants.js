@@ -1,3 +1,4 @@
+import './ux-v3.js';
 import { CASES } from './data.js';
 
 const STORAGE_KEY='tva_effective_case_m_variants_v1';
