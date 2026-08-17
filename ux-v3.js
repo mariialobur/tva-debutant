@@ -1,9 +1,20 @@
+import { CASES } from './data.js';
+
 const $=s=>document.querySelector(s);
+const LEVEL_PLAN_STORAGE='tva_effective_v2_state';
+const LEVEL_PLAN_GROUPS=[
+  {title:'Bases du décompte',ids:['A','B','C','D']},
+  {title:'Exclusions, international & financement',ids:['E','F','G','H']},
+  {title:'Opérations particulières & impôt préalable',ids:['I','J','K','L']},
+  {title:'Périodes, importation & devises',ids:['M','N','O']},
+  {title:'Contrôle & finalisation',ids:['P','Q','R']}
+];
+let planReturnFocus=null;
 
 function loadStyles(){
   if(document.querySelector('link[data-ux-v3]'))return;
   const link=document.createElement('link');
-  link.rel='stylesheet';link.href='ux-v3.css?v=3.4.0';link.dataset.uxV3='true';
+  link.rel='stylesheet';link.href='ux-v3.css?v=3.5.0';link.dataset.uxV3='true';
   document.head.appendChild(link);
 }
 
@@ -69,6 +80,72 @@ function syncStepper(){
   if(prev)prev.disabled=select.selectedIndex<=0;if(next)next.disabled=select.selectedIndex>=select.options.length-1;if(count)count.textContent=`${select.selectedIndex+1} / ${select.options.length}`;
 }
 
+function safePlanState(){
+  try{return JSON.parse(localStorage.getItem(LEVEL_PLAN_STORAGE)||'{}')}catch{return{}}
+}
+function planStatus(id,state){
+  const r=state.records?.[id]||{},d=state.drafts?.[id]||{};
+  if(Number(r.bestEvaluationScore)===100)return{key:'mastered',label:'Maîtrisé ✓'};
+  const attempts=['learningAttempts','practiceAttempts','evaluationAttempts'].some(k=>Number(r[k])>0);
+  const scores=['bestLearningScore','bestPracticeScore','bestEvaluationScore'].some(k=>Number(r[k])>0);
+  const values=Object.values(d.values||{}).some(v=>String(v??'').trim()!=='');
+  if(attempts||scores||values||d.qualification||d.submitted)return{key:'progress',label:'En cours'};
+  return{key:'todo',label:'À faire'};
+}
+function ensureLevelPlan(){
+  if($('#uxLevelPlanLayer'))return;
+  const layer=document.createElement('div');layer.id='uxLevelPlanLayer';layer.className='ux-plan-layer';layer.hidden=true;
+  layer.innerHTML=`<div class="ux-plan-backdrop" data-plan-close></div><section class="ux-plan-dialog" role="dialog" aria-modal="true" aria-labelledby="uxLevelPlanTitle" tabindex="-1"><header class="ux-plan-head"><div><span class="ux-plan-eyebrow">Méthode effective · Niveau 1</span><h2 id="uxLevelPlanTitle">Plan du niveau</h2><p id="uxLevelPlanSummary"></p></div><button type="button" class="ux-plan-close" data-plan-close aria-label="Fermer le plan du niveau">×</button></header><div class="ux-plan-body" id="uxLevelPlanBody"></div><footer class="ux-plan-foot"><button type="button" class="btn" id="uxPlanFinal">Évaluation finale</button><button type="button" class="btn" data-plan-close>Fermer</button></footer></section>`;
+  document.body.appendChild(layer);
+  layer.addEventListener('click',e=>{
+    if(e.target.matches('[data-plan-close]'))closeLevelPlan();
+    const card=e.target.closest('[data-plan-case-index]');
+    if(card){
+      const select=$('#caseSelect'),index=Number(card.dataset.planCaseIndex);
+      if(select&&Number.isInteger(index)){select.selectedIndex=index;select.dispatchEvent(new Event('change',{bubbles:true}))}
+      closeLevelPlan();
+      setTimeout(()=>$('#uxWorkbar')?.scrollIntoView({block:'start'}),0);
+    }
+  });
+  $('#uxPlanFinal')?.addEventListener('click',()=>{
+    closeLevelPlan();
+    setTimeout(()=>{const target=$('#finalEvaluation');target?.scrollIntoView({behavior:'smooth',block:'start'});$('#startFinal')?.focus({preventScroll:true})},0);
+  });
+  layer.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();closeLevelPlan();return}
+    if(e.key!=='Tab')return;
+    const dialog=layer.querySelector('.ux-plan-dialog');
+    const focusables=[...dialog.querySelectorAll('button:not([disabled]),a[href],select,input,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.offsetParent!==null);
+    if(!focusables.length)return;
+    const first=focusables[0],last=focusables[focusables.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  });
+}
+function renderLevelPlan(){
+  ensureLevelPlan();
+  const state=safePlanState(),body=$('#uxLevelPlanBody'),summary=$('#uxLevelPlanSummary'),select=$('#caseSelect');if(!body)return;
+  const statuses=Object.fromEntries(CASES.map(c=>[c.id,planStatus(c.id,state)]));
+  const mastered=CASES.filter(c=>statuses[c.id].key==='mastered').length;
+  if(summary)summary.textContent=`${mastered}/18 maîtrisés · choisissez un cas pour reprendre directement.`;
+  body.innerHTML=LEVEL_PLAN_GROUPS.map(group=>{
+    const cases=group.ids.map(id=>CASES.find(c=>c.id===id)).filter(Boolean);
+    const done=cases.filter(c=>statuses[c.id].key==='mastered').length;
+    return `<section class="ux-plan-group"><div class="ux-plan-group-head"><h3>${group.title}</h3><span>${done}/${cases.length}</span></div><div class="ux-plan-grid">${cases.map(c=>{const i=CASES.indexOf(c),s=statuses[c.id],current=select?.selectedIndex===i;return `<button type="button" class="ux-plan-card is-${s.key}${current?' is-current':''}" data-plan-case-index="${i}"${current?' aria-current="true"':''}><span class="ux-plan-card-main"><strong>${c.id}</strong><span>${c.tab||c.title}</span></span><span class="ux-plan-status">${s.label}</span></button>`}).join('')}</div></section>`;
+  }).join('');
+}
+function openLevelPlan(){
+  ensureLevelPlan();renderLevelPlan();
+  const layer=$('#uxLevelPlanLayer');if(!layer)return;
+  planReturnFocus=document.activeElement;layer.hidden=false;document.body.classList.add('ux-plan-opened');
+  layer.querySelector('.ux-plan-close')?.focus();
+}
+function closeLevelPlan(){
+  const layer=$('#uxLevelPlanLayer');if(!layer||layer.hidden)return;
+  layer.hidden=true;document.body.classList.remove('ux-plan-opened');
+  if(planReturnFocus&&document.contains(planReturnFocus))planReturnFocus.focus();
+}
+
 function enhanceSources(){
   const s=$('.sources');if(!s||s.dataset.uxReady)return;s.dataset.uxReady='1';s.classList.add('ux-sources','ux-collapsed');
   const btn=document.createElement('button');btn.type='button';btn.className='btn ux-sources-toggle';btn.textContent='Voir toutes les sources';btn.setAttribute('aria-expanded','false');
@@ -87,12 +164,12 @@ function buildWorkbar(){
   if($('#uxWorkbar'))return;patchIdentity();compactChrome();patchControls();enhanceSources();
   const caseWrap=$('.case-select-wrap'),controls=$('.controls'),learnbar=$('.learnbar');if(!caseWrap||!controls||!learnbar)return;
   const bar=document.createElement('section');bar.id='uxWorkbar';bar.className='ux-workbar';bar.setAttribute('aria-label','Navigation et réglages du cas');
-  const stepper=document.createElement('div');stepper.className='ux-stepper';stepper.innerHTML='<button type="button" class="ux-step" id="uxPrevCase" aria-label="Cas précédent">←</button><span class="ux-count" id="uxCaseCount"></span><button type="button" class="ux-step" id="uxNextCase" aria-label="Cas suivant">→</button>';
+  const stepper=document.createElement('div');stepper.className='ux-stepper';stepper.innerHTML='<button type="button" class="ux-step" id="uxPrevCase" aria-label="Cas précédent">←</button><span class="ux-count" id="uxCaseCount"></span><button type="button" class="ux-plan-open" id="uxLevelPlanOpen" aria-haspopup="dialog">Plan</button><button type="button" class="ux-step" id="uxNextCase" aria-label="Cas suivant">→</button>';
   const nav=document.createElement('div');nav.className='ux-case-nav';nav.append(stepper,caseWrap);bar.append(nav,controls);learnbar.insertAdjacentElement('afterend',bar);
-  $('#uxPrevCase').addEventListener('click',()=>changeCase(-1));$('#uxNextCase').addEventListener('click',()=>changeCase(1));$('#caseSelect').addEventListener('change',()=>setTimeout(()=>{syncStepper();syncMobileVerify()},0));
+  $('#uxPrevCase').addEventListener('click',()=>changeCase(-1));$('#uxNextCase').addEventListener('click',()=>changeCase(1));$('#uxLevelPlanOpen').addEventListener('click',openLevelPlan);$('#caseSelect').addEventListener('change',()=>setTimeout(()=>{syncStepper();syncMobileVerify()},0));
   document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(()=>{syncStepper();syncMobileVerify()},0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)});
-  window.addEventListener('scroll',syncMobileVerify,{passive:true});window.addEventListener('resize',syncMobileVerify,{passive:true});
-  syncStepper();observeSidebar();observeQualification();ensureMobileVerify();syncMobileVerify();document.body.classList.add('ux-v3');
+  window.addEventListener('scroll',syncMobileVerify,{passive:true});window.addEventListener('resize',syncMobileVerify,{passive:true});window.addEventListener('storage',e=>{if(e.key===LEVEL_PLAN_STORAGE&&!$('#uxLevelPlanLayer')?.hidden)renderLevelPlan()});
+  syncStepper();observeSidebar();observeQualification();ensureMobileVerify();ensureLevelPlan();syncMobileVerify();document.body.classList.add('ux-v3');
 }
 
 loadStyles();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildWorkbar);else buildWorkbar();
