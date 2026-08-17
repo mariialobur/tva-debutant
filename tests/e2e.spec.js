@@ -11,7 +11,8 @@ async function clean(page){
 
 test('desktop: Level 1 exposes 18 cases through the scalable workbar and keeps the final exam locked', async ({page})=>{
   await clean(page);
-  await expect(page.getByRole('heading',{name:/Parcours pratique du décompte TVA suisse/i})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'TVA suisse — méthode effective'})).toBeVisible();
+  await expect(page.locator('.brand p')).toContainText('Niveau 1 · Fondamentaux');
   await expect(page.locator('#globalProgress')).toContainText('0 / 18');
   await expect(page.locator('#tabs button')).toHaveCount(18);
   await expect(page.locator('#tabs')).toBeHidden();
@@ -19,6 +20,7 @@ test('desktop: Level 1 exposes 18 cases through the scalable workbar and keeps t
   await expect(page.locator('#caseSelect')).toBeVisible();
   await expect(page.locator('#caseSelect option')).toHaveCount(18);
   await expect(page.locator('#uxCaseCount')).toContainText('1 / 18');
+  await expect(page.getByRole('button',{name:'Rubriques utiles'})).toBeVisible();
   await expect(page.getByText('Alpina Conseil Sàrl')).toBeVisible();
   await expect(page.locator('#startFinal')).toBeDisabled();
   await expect(page.locator('#finalEvaluation')).toContainText('Progression: 0/18');
@@ -71,11 +73,13 @@ test('Case M controlled variants stay hidden during scored evaluation mode',asyn
   await expect(page.locator('#controlledVariantsM')).toHaveCount(0);
 });
 
-test('mobile: sticky workbar reaches the annual-return case and the form remains usable', async ({page})=>{
+test('mobile: compact dossier controls and sticky verify keep the annual-return case usable', async ({page})=>{
   await page.setViewportSize({width:390,height:844});
   await clean(page);
   await expect(page.locator('#uxWorkbar')).toBeVisible();
   await expect(page.locator('#caseSelect')).toBeVisible();
+  await expect(page.locator('#uxMobileVerify')).toBeVisible();
+  await expect(page.locator('.ux-sidebar-toggle')).toBeVisible();
   await page.locator('#caseSelect').selectOption('17');
   await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');
   await expect(page.locator('#sidebar')).toContainText('Décompte annuel');
