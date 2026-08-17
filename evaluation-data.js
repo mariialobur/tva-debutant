@@ -1,5 +1,5 @@
-export const EXAM_SIZE=12;
-export const PASS_SCORE=9;
+export const EXAM_SIZE=15;
+export const PASS_SCORE=12;
 export const PROJECT_URL='https://mariialobur.github.io/tva-debutant/';
 
 const OFFICIAL={
