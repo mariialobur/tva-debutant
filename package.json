@@ -1,6 +1,6 @@
 {
   "name": "tva-effective-trainer",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,6 +10,7 @@
     "test": "npm run test:smoke && npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
     "@playwright/test": "^1.55.0"
   }
 }
