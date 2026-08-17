@@ -9,12 +9,16 @@ async function clean(page){
   await page.reload();
 }
 
-test('desktop: Level 1 exposes the complete 18-case parcours and keeps the final exam locked', async ({page})=>{
+test('desktop: Level 1 exposes 18 cases through the scalable workbar and keeps the final exam locked', async ({page})=>{
   await clean(page);
   await expect(page.getByRole('heading',{name:/Parcours pratique du décompte TVA suisse/i})).toBeVisible();
   await expect(page.locator('#globalProgress')).toContainText('0 / 18');
   await expect(page.locator('#tabs button')).toHaveCount(18);
+  await expect(page.locator('#tabs')).toBeHidden();
+  await expect(page.locator('#uxWorkbar')).toBeVisible();
+  await expect(page.locator('#caseSelect')).toBeVisible();
   await expect(page.locator('#caseSelect option')).toHaveCount(18);
+  await expect(page.locator('#uxCaseCount')).toContainText('1 / 18');
   await expect(page.getByText('Alpina Conseil Sàrl')).toBeVisible();
   await expect(page.locator('#startFinal')).toBeDisabled();
   await expect(page.locator('#finalEvaluation')).toContainText('Progression: 0/18');
@@ -24,9 +28,20 @@ test('desktop: Level 1 exposes the complete 18-case parcours and keeps the final
   await expect(page.getByText('International, importation et impôt sur les acquisitions',{exact:true})).toBeVisible();
 });
 
+test('workbar previous/next and selector navigate the 18-case course',async({page})=>{
+  await clean(page);
+  await page.locator('#uxNextCase').click();
+  await expect(page.locator('#uxCaseCount')).toContainText('2 / 18');
+  await expect(page.locator('#sidebar')).toContainText('Boulangerie du Lac');
+  await page.locator('#caseSelect').selectOption('17');
+  await expect(page.locator('#uxCaseCount')).toContainText('18 / 18');
+  await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');
+  await expect(page.locator('#uxNextCase')).toBeDisabled();
+});
+
 test('Case M adds three controlled timing variants without changing the 18-case score',async({page})=>{
   await clean(page);
-  await page.locator('#tabs button').nth(12).click();
+  await page.locator('#caseSelect').selectOption('12');
   const panel=page.locator('#controlledVariantsM');
   await expect(panel).toBeVisible();
   await expect(panel).toContainText('Convenues, reçues ou acompte ?');
@@ -50,15 +65,16 @@ test('Case M adds three controlled timing variants without changing the 18-case 
 
 test('Case M controlled variants stay hidden during scored evaluation mode',async({page})=>{
   await clean(page);
-  await page.locator('#tabs button').nth(12).click();
+  await page.locator('#caseSelect').selectOption('12');
   await expect(page.locator('#controlledVariantsM')).toBeVisible();
   await page.locator('[data-mode="evaluate"]').click();
   await expect(page.locator('#controlledVariantsM')).toHaveCount(0);
 });
 
-test('mobile: selector reaches the last new annual-return case and the form remains usable', async ({page})=>{
+test('mobile: sticky workbar reaches the annual-return case and the form remains usable', async ({page})=>{
   await page.setViewportSize({width:390,height:844});
   await clean(page);
+  await expect(page.locator('#uxWorkbar')).toBeVisible();
   await expect(page.locator('#caseSelect')).toBeVisible();
   await page.locator('#caseSelect').selectOption('17');
   await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');
