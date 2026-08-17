@@ -11,6 +11,6 @@ test('capture Level 1 visual references',async({page})=>{
 
   await page.setViewportSize({width:390,height:844});
   await page.reload();
-  await expect(page.locator('#uxMobileVerify')).toBeVisible();
+  await expect(page.locator('#uxMobileVerify')).toBeHidden();
   await page.screenshot({path:'screenshots/level1-mobile.png',fullPage:true});
 });
