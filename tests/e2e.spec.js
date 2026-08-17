@@ -24,6 +24,38 @@ test('desktop: Level 1 exposes the complete 18-case parcours and keeps the final
   await expect(page.getByText('International, importation et impôt sur les acquisitions',{exact:true})).toBeVisible();
 });
 
+test('Case M adds three controlled timing variants without changing the 18-case score',async({page})=>{
+  await clean(page);
+  await page.locator('#caseSelect').selectOption('12');
+  const panel=page.locator('#controlledVariantsM');
+  await expect(panel).toBeVisible();
+  await expect(panel).toContainText('Convenues, reçues ou acompte ?');
+  await expect(panel).toContainText('0/3');
+
+  await panel.getByLabel('T2 2026').first().check();
+  await panel.getByRole('button',{name:'Vérifier la variante'}).click();
+  await expect(panel.locator('.cv-feedback')).toContainText('Correct');
+
+  await panel.getByRole('tab',{name:/M-B · Reçues/}).click();
+  await panel.getByLabel('T3 2026').check();
+  await panel.getByRole('button',{name:'Vérifier la variante'}).click();
+  await expect(panel.locator('.cv-feedback')).toContainText('Correct');
+
+  await panel.getByRole('tab',{name:/M-C · Acompte/}).click();
+  await panel.getByLabel('Le déclarer en T2 2026').check();
+  await panel.getByRole('button',{name:'Vérifier la variante'}).click();
+  await expect(page.locator('#controlledVariantsM')).toContainText('3/3');
+  await expect(page.locator('#globalProgress')).toContainText('0 / 18');
+});
+
+test('Case M controlled variants stay hidden during scored evaluation mode',async({page})=>{
+  await clean(page);
+  await page.locator('#caseSelect').selectOption('12');
+  await expect(page.locator('#controlledVariantsM')).toBeVisible();
+  await page.locator('[data-mode="evaluate"]').click();
+  await expect(page.locator('#controlledVariantsM')).toHaveCount(0);
+});
+
 test('mobile: selector reaches the last new annual-return case and the form remains usable', async ({page})=>{
   await page.setViewportSize({width:390,height:844});
   await clean(page);
