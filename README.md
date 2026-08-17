@@ -1,37 +1,45 @@
-# Simulateur du décompte TVA suisse — méthode effective
+# 🇨🇭 TVA suisse — méthode effective
 
-Version mise à jour le 30 juillet 2026.
+Entraînement pratique et indépendant au décompte TVA suisse selon la **méthode effective**.
 
-## Fichiers à remplacer
+**En ligne :** https://mariialobur.github.io/tva-debutant/
 
-Téléverser `index.html` à la racine du dépôt `tva-debutant` et remplacer l’ancien fichier.
+> [!IMPORTANT]
+> Projet pédagogique indépendant, sans affiliation avec l’AFC/ESTV ou le SEFRI. Il ne remplace ni le Portail AFC, ni la pratique officielle, ni l’analyse d’un dossier réel.
 
-Les fichiers favicon et `site.webmanifest` déjà présents dans le dépôt doivent être conservés.
+## Parcours
 
-## Principales améliorations
+- 12 cas pratiques audités, du niveau débutant aux situations particulières;
+- méthode de travail: **Qualifier → Reporter → Contrôler → Interpréter**;
+- modes Apprentissage, Entraînement et Évaluation;
+- rubriques inspirées du prototype AFC de la méthode effective;
+- mémo professionnel intégré;
+- évaluation finale: **12 questions**, réussite dès **9/12**;
+- attestation de parcours locale après validation des 12 cas à 100 % en mode Évaluation et réussite du test final.
 
-- navigation vers le simulateur TDFN et le profil LinkedIn de Mariia Lobur;
-- positionnement du parcours du niveau débutant aux situations particulières;
-- question de qualification TVA avant le remplissage du décompte;
-- trois modes: apprentissage, entraînement et évaluation;
-- score séparant qualification TVA (30 %) et rubriques/calculs (70 %);
-- impossibilité d’obtenir un score autonome après affichage de la solution;
-- mémorisation des brouillons par cas;
-- suivi de la première tentative, du meilleur score autonome et des solutions consultées;
-- validation stricte des formats numériques;
-- confirmation avant effacement;
-- lisibilité mobile améliorée;
-- sources officielles générales et sources pertinentes par cas.
+## Contenu fiscal
 
-## Publication
+Le parcours couvre notamment les taux actuels, ch. 200/205/220/221/225/230/235/280, impôt dû 303/313/343/383/399, impôt préalable 400/405/410/415/420/479, solde 500/510, subventions ch. 900 et dons ch. 910, exportations, prestations à l’étranger, impôt sur les acquisitions, double affectation, option immobilière, procédure de déclaration et dégrèvement ultérieur.
 
-Dans GitHub:
+**Revue fiscale ciblée : 17.08.2026.**
 
-1. ouvrir le dépôt `tva-debutant`;
-2. choisir **Add file → Upload files**;
-3. déposer le nouveau `index.html`;
-4. confirmer le remplacement et valider le commit dans `main`;
-5. attendre le déploiement GitHub Pages;
-6. ouvrir le site avec `Ctrl + F5`.
+## Attestation
 
-Le projet est pédagogique et indépendant. Il ne remplace pas le Portail AFC, les formulaires en vigueur ou l’analyse d’un dossier réel.
+Le document généré est une **ATTESTATION DE PARCOURS**, pas une certification professionnelle. Il confirme uniquement l’achèvement du parcours et la réussite de l’auto-évaluation finale. Le nom est saisi localement, l’identité n’est pas vérifiée et le résultat n’est pas enregistré dans un registre public.
+
+## Développement
+
+```bash
+npm install
+npm test
+```
+
+Le test complet exécute smoke tests, unit tests et Playwright E2E.
+
+## Sources prioritaires
+
+- LTVA et OTVA sur Fedlex;
+- prototype AFC du décompte TVA — méthode effective;
+- pages AFC sur les taux TVA, l’impôt sur les acquisitions, la procédure de déclaration, le décompte annuel et les rectifications.
+
+**Conception : Mariia Lobur**
