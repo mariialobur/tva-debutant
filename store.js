@@ -1,4 +1,5 @@
 import './level1-extension.js';
+import './effective-path-progress.js';
 
 const STORAGE_KEY = 'tva_effective_v2_state';
 const LEGACY_KEYS = ['tvaEffectiveTrainerV6','tvaEffectiveTrainerV5','tvaEffectiveTrainerV4'];
