@@ -73,16 +73,20 @@ test('Case M controlled variants stay hidden during scored evaluation mode',asyn
   await expect(page.locator('#controlledVariantsM')).toHaveCount(0);
 });
 
-test('mobile: compact dossier controls and sticky verify keep the annual-return case usable', async ({page})=>{
+test('mobile: Verify becomes sticky only after the original action is scrolled past', async ({page})=>{
   await page.setViewportSize({width:390,height:844});
   await clean(page);
   await expect(page.locator('#uxWorkbar')).toBeVisible();
   await expect(page.locator('#caseSelect')).toBeVisible();
-  await expect(page.locator('#uxMobileVerify')).toBeVisible();
   await expect(page.locator('.ux-sidebar-toggle')).toBeVisible();
+  await expect(page.locator('#sidebar .case-nav')).toBeHidden();
+  await expect(page.locator('#uxMobileVerify')).toBeHidden();
   await page.locator('#caseSelect').selectOption('17');
   await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');
   await expect(page.locator('#sidebar')).toContainText('Décompte annuel');
+  await page.locator('#form').scrollIntoViewIfNeeded();
+  await page.evaluate(()=>window.scrollBy(0,250));
+  await expect(page.locator('#uxMobileVerify')).toBeVisible();
   await expect(page.getByText('Vue pédagogique du décompte')).toBeVisible();
   await expect(page.locator('input[data-field="ch200"]')).toBeVisible();
 });
