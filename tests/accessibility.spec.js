@@ -21,6 +21,13 @@ test('desktop initial Level 1 has no serious or critical automated WCAG violatio
   await scan(page);
 });
 
+test('Level 1 plan dialog has no serious or critical automated WCAG violations',async({page})=>{
+  await page.goto('/');
+  await page.locator('#uxLevelPlanOpen').click();
+  await expect(page.getByRole('dialog',{name:'Plan du niveau'})).toBeVisible();
+  await scan(page);
+});
+
 test('mobile working view has no serious or critical automated WCAG violations',async({page})=>{
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
