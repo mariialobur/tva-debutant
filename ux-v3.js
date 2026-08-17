@@ -3,7 +3,7 @@ const $=s=>document.querySelector(s);
 function loadStyles(){
   if(document.querySelector('link[data-ux-v3]'))return;
   const link=document.createElement('link');
-  link.rel='stylesheet';link.href='ux-v3.css?v=3.2.1';link.dataset.uxV3='true';
+  link.rel='stylesheet';link.href='ux-v3.css?v=3.3.0';link.dataset.uxV3='true';
   document.head.appendChild(link);
 }
 
@@ -86,10 +86,13 @@ function ensureMobileVerify(){
   document.body.appendChild(btn);
 }
 function syncMobileVerify(){
-  ensureMobileVerify();const copy=$('#uxMobileVerify'),original=$('#sidebar [data-verify]');
+  ensureMobileVerify();
+  const copy=$('#uxMobileVerify'),original=$('#sidebar [data-verify]');
   if(!copy)return;
-  if(!original){copy.hidden=true;return}
+  if(!original){copy.hidden=true;copy.classList.remove('is-visible');return}
   copy.hidden=false;copy.disabled=original.disabled;copy.textContent=original.textContent||'Vérifier mes réponses';
+  const passed=window.innerWidth<=700&&original.getBoundingClientRect().bottom<0;
+  copy.classList.toggle('is-visible',passed);
 }
 
 function observeSidebar(){
@@ -113,8 +116,10 @@ function buildWorkbar(){
   learnbar.insertAdjacentElement('afterend',bar);
   $('#uxPrevCase').addEventListener('click',()=>changeCase(-1));
   $('#uxNextCase').addEventListener('click',()=>changeCase(1));
-  $('#caseSelect').addEventListener('change',()=>setTimeout(syncStepper,0));
-  document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(syncStepper,0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)});
+  $('#caseSelect').addEventListener('change',()=>setTimeout(()=>{syncStepper();syncMobileVerify()},0));
+  document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(()=>{syncStepper();syncMobileVerify()},0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)});
+  window.addEventListener('scroll',syncMobileVerify,{passive:true});
+  window.addEventListener('resize',syncMobileVerify,{passive:true});
   syncStepper();observeSidebar();observeQualification();ensureMobileVerify();syncMobileVerify();
   document.body.classList.add('ux-v3');
 }
