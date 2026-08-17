@@ -1,5 +1,12 @@
 const $=s=>document.querySelector(s);
 
+function loadStyles(){
+  if(document.querySelector('link[data-ux-v3]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';link.href='ux-v3.css?v=3.1.0';link.dataset.uxV3='true';
+  document.head.appendChild(link);
+}
+
 function changeCase(delta){
   const select=$('#caseSelect');
   if(!select)return;
@@ -35,4 +42,5 @@ function buildWorkbar(){
   document.body.classList.add('ux-v3');
 }
 
+loadStyles();
 document.addEventListener('DOMContentLoaded',buildWorkbar);
