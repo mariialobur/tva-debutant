@@ -36,7 +36,7 @@ const variants=[
   }
 ];
 
-let activeId='MA';
+let activeId='MA',expanded=false;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch{return{}}}
 function save(state){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch{}}
@@ -46,15 +46,17 @@ function masteredCount(){const done=load().done||{};return variants.filter(v=>do
 
 function render(){
   document.querySelector('#controlledVariantsM')?.remove();
-  if(currentCase()?.id!=='M'||currentMode()==='evaluate')return;
+  if(currentCase()?.id!=='M'){expanded=false;return}
+  if(currentMode()==='evaluate')return;
   const host=document.querySelector('#caseInfo');if(!host)return;
   const done=load().done||{};
   const active=variants.find(v=>v.id===activeId)||variants[0];
-  const panel=document.createElement('section');panel.id='controlledVariantsM';panel.className='controlled-variants';
-  panel.innerHTML=`<div class="cv-head"><div><span class="cv-eyebrow">Variantes contrôlées · Case M</span><h2>Convenues, reçues ou acompte ?</h2><p>Les mêmes dates donnent un résultat différent quand <strong>un seul fait déterminant</strong> change. Ces mini-cas complètent Case M sans modifier la progression 18/18.</p></div><div class="cv-progress"><strong>${masteredCount()}/3</strong><span>variantes maîtrisées</span></div></div>
-  <div class="cv-tabs" role="tablist" aria-label="Variantes du Case M">${variants.map(v=>`<button type="button" role="tab" aria-selected="${v.id===active.id}" class="${v.id===active.id?'active':''} ${done[v.id]?'done':''}" data-cv-tab="${v.id}">${done[v.id]?'✓ ':''}${esc(v.short)}</button>`).join('')}</div>
-  <article class="cv-card"><h3>${esc(active.title)}</h3><p class="cv-facts">${esc(active.facts)}</p><fieldset><legend>${esc(active.question)}</legend>${active.options.map((o,i)=>`<label><input type="radio" name="cv-${active.id}" value="${i}"><span>${esc(o)}</span></label>`).join('')}</fieldset><div class="cv-actions"><button type="button" class="btn primary" data-cv-check="${active.id}">Vérifier la variante</button><a href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer">AFC — contrôle TVA ↗</a></div><div class="cv-feedback" aria-live="polite"></div></article>`;
+  const panel=document.createElement('section');panel.id='controlledVariantsM';panel.className=`controlled-variants ${expanded?'is-open':'is-collapsed'}`;
+  const body=expanded?`<div class="cv-tabs" role="tablist" aria-label="Variantes du Case M">${variants.map(v=>`<button type="button" role="tab" aria-selected="${v.id===active.id}" class="${v.id===active.id?'active':''} ${done[v.id]?'done':''}" data-cv-tab="${v.id}">${done[v.id]?'✓ ':''}${esc(v.short)}</button>`).join('')}</div>
+  <article class="cv-card"><h3>${esc(active.title)}</h3><p class="cv-facts">${esc(active.facts)}</p><fieldset><legend>${esc(active.question)}</legend>${active.options.map((o,i)=>`<label><input type="radio" name="cv-${active.id}" value="${i}"><span>${esc(o)}</span></label>`).join('')}</fieldset><div class="cv-actions"><button type="button" class="btn primary" data-cv-check="${active.id}">Vérifier la variante</button><a href="${SOURCE_URL}" target="_blank" rel="noopener noreferrer">AFC — contrôle TVA ↗</a></div><div class="cv-feedback" aria-live="polite"></div></article>`:'';
+  panel.innerHTML=`<div class="cv-head"><div><span class="cv-eyebrow">Variantes contrôlées · Case M</span><h2>Convenues, reçues ou acompte ?</h2><p>Un même calendrier peut changer de traitement lorsque le mode de décompte ou l’existence d’un acompte change.</p></div><div class="cv-head-actions"><div class="cv-progress"><strong>${masteredCount()}/3</strong><span>variantes maîtrisées</span></div><button type="button" class="btn cv-toggle" data-cv-toggle aria-expanded="${expanded}">${expanded?'Réduire':'Ouvrir les variantes'}</button></div></div>${body}`;
   host.insertAdjacentElement('afterend',panel);
+  panel.querySelector('[data-cv-toggle]')?.addEventListener('click',()=>{expanded=!expanded;render()});
   panel.querySelectorAll('[data-cv-tab]').forEach(btn=>btn.addEventListener('click',()=>{activeId=btn.dataset.cvTab;render()}));
   panel.querySelector('[data-cv-check]')?.addEventListener('click',()=>check(active,panel));
 }
