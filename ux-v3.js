@@ -3,7 +3,7 @@ const $=s=>document.querySelector(s);
 function loadStyles(){
   if(document.querySelector('link[data-ux-v3]'))return;
   const link=document.createElement('link');
-  link.rel='stylesheet';link.href='ux-v3.css?v=3.2.0';link.dataset.uxV3='true';
+  link.rel='stylesheet';link.href='ux-v3.css?v=3.2.1';link.dataset.uxV3='true';
   document.head.appendChild(link);
 }
 
@@ -29,6 +29,18 @@ function patchControls(){
     const active=blocks[0].querySelector('[data-mode].active')?.dataset.mode||'learn';
     hint.textContent=modeHelp[active]||'';blocks[0].appendChild(hint);
   }
+}
+
+function patchAccessibleNames(){
+  const qualification=$('#qualificationSelect');
+  if(qualification&&!qualification.getAttribute('aria-label'))qualification.setAttribute('aria-label','Qualification TVA — choisir une réponse');
+}
+
+function observeQualification(){
+  const host=$('#qualification');if(!host||host.dataset.uxObserved)return;
+  host.dataset.uxObserved='1';
+  new MutationObserver(()=>requestAnimationFrame(patchAccessibleNames)).observe(host,{childList:true,subtree:true});
+  patchAccessibleNames();
 }
 
 function changeCase(delta){
@@ -102,8 +114,8 @@ function buildWorkbar(){
   $('#uxPrevCase').addEventListener('click',()=>changeCase(-1));
   $('#uxNextCase').addEventListener('click',()=>changeCase(1));
   $('#caseSelect').addEventListener('change',()=>setTimeout(syncStepper,0));
-  document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(syncStepper,0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify()},0)});
-  syncStepper();observeSidebar();ensureMobileVerify();syncMobileVerify();
+  document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(syncStepper,0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)});
+  syncStepper();observeSidebar();observeQualification();ensureMobileVerify();syncMobileVerify();
   document.body.classList.add('ux-v3');
 }
 
