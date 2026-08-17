@@ -1,8 +1,8 @@
 {
-  "name": "Simulateur du décompte TVA suisse",
-  "short_name": "TVA Suisse",
-  "description": "Simulateur pédagogique indépendant du décompte TVA suisse selon la méthode effective.",
-  "lang": "fr",
+  "name": "TVA suisse — méthode effective · Niveau 1",
+  "short_name": "TVA Effective N1",
+  "description": "Parcours pédagogique indépendant de 18 cas pratiques sur le décompte TVA suisse selon la méthode effective.",
+  "lang": "fr-CH",
   "id": "./",
   "start_url": "./",
   "scope": "./",
