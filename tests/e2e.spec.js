@@ -26,7 +26,7 @@ test('desktop: Level 1 exposes the complete 18-case parcours and keeps the final
 
 test('Case M adds three controlled timing variants without changing the 18-case score',async({page})=>{
   await clean(page);
-  await page.locator('#caseSelect').selectOption('12');
+  await page.locator('#tabs button').nth(12).click();
   const panel=page.locator('#controlledVariantsM');
   await expect(panel).toBeVisible();
   await expect(panel).toContainText('Convenues, reçues ou acompte ?');
@@ -50,7 +50,7 @@ test('Case M adds three controlled timing variants without changing the 18-case 
 
 test('Case M controlled variants stay hidden during scored evaluation mode',async({page})=>{
   await clean(page);
-  await page.locator('#caseSelect').selectOption('12');
+  await page.locator('#tabs button').nth(12).click();
   await expect(page.locator('#controlledVariantsM')).toBeVisible();
   await page.locator('[data-mode="evaluate"]').click();
   await expect(page.locator('#controlledVariantsM')).toHaveCount(0);
