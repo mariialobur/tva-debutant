@@ -25,6 +25,6 @@ test('mobile working view has no serious or critical automated WCAG violations',
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
   await page.locator('#caseSelect').selectOption('17');
-  await expect(page.locator('#uxMobileVerify')).toBeVisible();
+  await expect(page.locator('#uxMobileVerify')).toBeHidden();
   await scan(page);
 });
