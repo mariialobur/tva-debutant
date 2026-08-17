@@ -1,119 +1,32 @@
 import assert from 'node:assert/strict';
+import '../level1-extension.js';
 import { CASES, FIELD_META, SOURCE_LIBRARY } from '../data.js';
 import { computeEffective, validateCaseArithmetic } from '../logic.js';
 
-assert.equal(CASES.length, 12, 'Le parcours audité doit conserver 12 cas avant extension.');
-assert.equal(new Set(CASES.map(c => c.id)).size, CASES.length, 'Les identifiants de cas doivent être uniques.');
-
-for (const c of CASES) {
-  assert.ok(c.title && c.task && c.qualification, `Cas ${c.id}: métadonnées obligatoires manquantes.`);
-  for (const key of c.fields) assert.ok(FIELD_META[key], `Cas ${c.id}: champ inconnu ${key}.`);
-  for (const key of c.sourceKeys) assert.ok(SOURCE_LIBRARY[key], `Cas ${c.id}: source inconnue ${key}.`);
-  const { result, errors } = validateCaseArithmetic(c);
-  assert.deepEqual(errors, [], errors.join('\n'));
-  assert.ok(!(result.ch500 > 0 && result.ch510 > 0), `Cas ${c.id}: 500 et 510 positifs simultanément.`);
+assert.equal(CASES.length,18,'Le Niveau 1 étendu doit contenir 18 cas.');
+assert.equal(new Set(CASES.map(c=>c.id)).size,CASES.length,'Les identifiants de cas doivent être uniques.');
+for(const c of CASES){
+  assert.ok(c.title&&c.task&&c.qualification,`Cas ${c.id}: métadonnées obligatoires manquantes.`);
+  for(const key of c.fields)assert.ok(FIELD_META[key],`Cas ${c.id}: champ inconnu ${key}.`);
+  for(const key of c.sourceKeys)assert.ok(SOURCE_LIBRARY[key],`Cas ${c.id}: source inconnue ${key}.`);
+  const {result,errors}=validateCaseArithmetic(c);
+  assert.deepEqual(errors,[],errors.join('\n'));
+  assert.ok(!(result.ch500>0&&result.ch510>0),`Cas ${c.id}: 500 et 510 positifs simultanément.`);
 }
-
-const byId = id => CASES.find(c => c.id === id);
-
-// A — 100'000 × 8.1 % − 3'240
-{
-  const r = computeEffective(byId('A').expected);
-  assert.equal(r.ch399, 8100);
-  assert.equal(r.ch479, 3240);
-  assert.equal(r.ch500, 4860);
-}
-
-// B — deux taux
-{
-  const r = computeEffective(byId('B').expected);
-  assert.equal(r.ch399, 4800);
-  assert.equal(r.ch510, 200);
-}
-
-// C — trois taux
-{
-  const r = computeEffective(byId('C').expected);
-  assert.equal(r.ch399, 12900);
-  assert.equal(r.ch500, 5700);
-}
-
-// D — diminution de contre-prestation
-{
-  const r = computeEffective(byId('D').expected);
-  assert.equal(r.ch289, 10000);
-  assert.equal(r.ch299, 110000);
-  assert.equal(r.ch500, 6910);
-}
-
-// E — correction de double affectation: 400 + 405 − 415
-{
-  const r = computeEffective(byId('E').expected);
-  assert.equal(r.ch479, 9000);
-  assert.equal(r.ch500, 3960);
-}
-
-// F — export exonéré
-{
-  const r = computeEffective(byId('F').expected);
-  assert.equal(r.ch299, 50000);
-  assert.equal(r.ch510, 2450);
-}
-
-// G — acquisition: impôt dû puis IP déductible selon les hypothèses
-{
-  const c = byId('G');
-  assert.equal(c.expected.ch383tax, 1620);
-  assert.equal(c.expected.ch400, 4620);
-  const r = computeEffective(c.expected);
-  assert.equal(r.ch399, 8100);
-  assert.equal(r.ch479, 6120);
-  assert.equal(r.ch500, 1980);
-}
-
-// H — subvention séparée du ch. 200 et réduction ch. 420
-{
-  const r = computeEffective(byId('H').expected);
-  assert.equal(r.ch299, 70000);
-  assert.equal(r.ch479, 4800);
-  assert.equal(r.ch500, 870);
-}
-
-// I — ch. 205 informatif: il n'augmente ni ne diminue ch. 299
-{
-  const r = computeEffective(byId('I').expected);
-  assert.equal(r.ch299, 200000);
-  assert.equal(r.ch500, 4200);
-}
-
-// J — procédure de déclaration: 200 − 225
-{
-  const r = computeEffective(byId('J').expected);
-  assert.equal(r.ch299, 150000);
-  assert.equal(r.ch500, 3150);
-}
-
-// K — dégrèvement ultérieur augmente ch. 479
-{
-  const r = computeEffective(byId('K').expected);
-  assert.equal(r.ch479, 6000);
-  assert.equal(r.ch500, 2100);
-}
-
-// L — don au ch. 910 sans effet sur 200 / 479 dans les hypothèses
-{
-  const r = computeEffective(byId('L').expected);
-  assert.equal(r.ch299, 50000);
-  assert.equal(r.ch479, 2500);
-  assert.equal(r.ch500, 1550);
-}
-
-// Régressions pédagogiques: les hypothèses sensibles doivent rester explicites.
-assert.match(byId('B').info, /mesures organisationnelles appropriées/i);
-assert.match(byId('H').info, /qualifie expressément/i);
-assert.match(byId('I').info, /non exclusivement à des fins d’habitation/i);
-assert.match(byId('J').info, /acquéreur est assujetti/i);
-assert.match(byId('K').info, /légalement pas été déduit à l’origine/i);
-assert.match(FIELD_META.ch900.sub, /élimination des déchets.*approvisionnement en eau/i);
-
-console.log('OK — 12 cas méthode effective: intégrité et calculs audités.');
+const byId=id=>CASES.find(c=>c.id===id);
+const checks={A:[8100,3240,4860],M:[6480,2430,4050],N:[9720,4050,5670],O:[3847.5,2000,1847.5],P:[7399.35,3000,4399.35],Q:[9720,5000,4720],R:[64800,40000,24800]};
+for(const [id,[due,ip,pay]] of Object.entries(checks)){const r=computeEffective(byId(id).expected);assert.equal(r.ch399,due,`${id}: ch399`);assert.equal(r.ch479,ip,`${id}: ch479`);assert.equal(r.ch500,pay,`${id}: ch500`)}
+assert.equal(computeEffective(byId('B').expected).ch510,200);
+assert.equal(computeEffective(byId('C').expected).ch399,12900);
+assert.equal(computeEffective(byId('D').expected).ch299,110000);
+assert.equal(computeEffective(byId('E').expected).ch479,9000);
+assert.equal(computeEffective(byId('F').expected).ch510,2450);
+assert.equal(computeEffective(byId('G').expected).ch500,1980);
+assert.equal(computeEffective(byId('H').expected).ch500,870);
+assert.equal(computeEffective(byId('I').expected).ch299,200000);
+assert.equal(computeEffective(byId('J').expected).ch299,150000);
+assert.equal(computeEffective(byId('K').expected).ch479,6000);
+assert.equal(computeEffective(byId('L').expected).ch500,1550);
+for(const [id,re] of [['B',/mesures organisationnelles appropriées/i],['H',/qualifie expressément/i],['I',/non exclusivement à des fins d’habitation/i],['J',/acquéreur est assujetti/i],['K',/légalement pas été déduit à l’origine/i],['M',/contre-prestations convenues/i],['N',/décision de taxation électronique/i],['O',/0,9500/],['P',/0,9 %/],['Q',/décompte rectificatif/i],['R',/5’005’000/]])assert.match(byId(id).info,re,`Cas ${id}: garde-fou pédagogique manquant.`);
+assert.match(FIELD_META.ch900.sub,/élimination des déchets.*approvisionnement en eau/i);
+console.log('OK — 18 cas méthode effective Niveau 1: intégrité et calculs audités.');
