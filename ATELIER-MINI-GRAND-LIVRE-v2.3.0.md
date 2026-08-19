@@ -14,6 +14,10 @@ L’atelier contient 12 lignes: ventes suisses au taux normal, exportation docum
 
 Les hypothèses déterminantes sont volontairement explicites. Les traitements ne doivent pas être généralisés hors de ces faits.
 
+### Garde-fou spécifique — subvention L6
+
+La subvention de CHF 5’000 est expressément qualifiée comme telle par l’autorité publique. Pour éviter le raccourci pédagogique `subvention = ch. 900 seulement`, le scénario précise en plus que les fonds financent exclusivement des charges sans TVA et qu’aucun impôt préalable n’est attribuable à ces fonds. La réduction ch. 420 est donc nulle **dans ce scénario uniquement**. Dans un dossier réel, l’effet d’une subvention sur le droit à l’impôt préalable doit être analysé séparément.
+
 ## Contrôle attendu
 
 Le participant effectue 29 contrôles: 12 qualifications et 17 rubriques / totaux. Le seuil pédagogique de réussite est fixé à 85 %. Le meilleur score est conservé localement sous `tva_effective_atelier_ledger_v1`.
@@ -34,11 +38,12 @@ Réconciliation du scénario:
 - Prototype AFC — décompte méthode effective: https://www.estv2.admin.ch/mwst/formulare/mwst-form-abr-muster-effektiv-fr.pdf
 - AFC — impôt sur les acquisitions: https://www.estv.admin.ch/fr/impot-sur-les-acquisitions-tva
 - AFC — DTe import/export: https://www.estv.admin.ch/fr/decisions-de-taxation-electroniques-de-la-douane
+- AFC — concordance annuelle / corrections et réduction d’IP: https://www.estv.admin.ch/fr/tva-concordance-annuelle
 - AFC — déroulement d’un contrôle TVA: https://www.estv.admin.ch/fr/deroulement-dun-controle-tva
 - LTVA — Fedlex: https://www.fedlex.admin.ch/eli/cc/2009/615/fr
 
 ## QA
 
-`tests/atelier.spec.js` vérifie l’ouverture de l’atelier, les 12 lignes, les 17 champs, une résolution complète à 100 % et l’absence d’impact sur la progression 18/18. Le smoke test exécute également `node --check` sur le module et vérifie les constantes essentielles du scénario.
+`tests/atelier.spec.js` vérifie l’ouverture de l’atelier, les 12 lignes, les 17 champs, une résolution complète à 100 % et l’absence d’impact sur la progression 18/18. Le smoke test exécute également `node --check` sur le module et sur le garde-fou de subvention, puis vérifie les constantes essentielles du scénario.
 
 Le reset global du Niveau 1 efface aussi la progression de cet atelier.
