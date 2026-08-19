@@ -28,6 +28,13 @@ test('Level 1 plan dialog has no serious or critical automated WCAG violations',
   await scan(page);
 });
 
+test('Level 1 declaration synthesis dialog has no serious or critical automated WCAG violations',async({page})=>{
+  await page.goto('/');
+  await page.getByRole('button',{name:'Ouvrir l’exercice'}).click();
+  await expect(page.getByRole('dialog',{name:'Exercice — Décompte complet'})).toBeVisible();
+  await scan(page);
+});
+
 test('mobile working view has no serious or critical automated WCAG violations',async({page})=>{
   await page.setViewportSize({width:390,height:844});
   await page.goto('/');
