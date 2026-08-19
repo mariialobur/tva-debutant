@@ -4,7 +4,7 @@
 
 ### Fondamentaux pratiques du décompte TVA suisse
 
-Un parcours interactif en français pour **qualifier les opérations, construire le décompte, comprendre l’impôt préalable et installer les réflexes de travail de la méthode effective**.
+Un parcours interactif en français pour **qualifier les opérations, remplir le décompte, comprendre l’impôt préalable et installer les réflexes de déclaration selon la méthode effective**.
 
 [![TVA suisse](https://img.shields.io/badge/TVA-Suisse-1f6b7a)](https://mariialobur.github.io/tva-debutant/)
 [![Méthode](https://img.shields.io/badge/méthode-effective-145f82)](https://mariialobur.github.io/tva-debutant/)
@@ -12,7 +12,7 @@ Un parcours interactif en français pour **qualifier les opérations, construire
 [![Cas](https://img.shields.io/badge/cas-18-3d7f68)](https://mariialobur.github.io/tva-debutant/)
 [![Examen](https://img.shields.io/badge/examen-15%20questions%20·%2080%25-6552a3)](https://mariialobur.github.io/tva-debutant/)
 [![QA](https://img.shields.io/badge/QA-smoke%20·%20unit%20·%20E2E%20·%20axe-506473)](https://github.com/mariialobur/tva-debutant)
-[![Version](https://img.shields.io/badge/version-2.3.0-506473)](https://github.com/mariialobur/tva-debutant)
+[![Version](https://img.shields.io/badge/version-2.3.1-506473)](https://github.com/mariialobur/tva-debutant)
 
 ### 👉 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/)
 
@@ -37,17 +37,19 @@ Un décompte TVA n’est pas seulement une addition de montants. Avant de saisir
 
 Le Niveau 1 installe ces automatismes avec 18 cas progressifs. Les premiers construisent le socle du formulaire. Les suivants introduisent exportations, prestations à l’étranger, acquisitions, subventions, option immobilière, procédure de déclaration, changements d’affectation, facturation/encaissement, importations, devises, parts privées, rectifications et décompte annuel.
 
+Le périmètre reste volontairement étroit: **s’entraîner à remplir correctement une déclaration TVA**, pas reproduire un cursus complet de fiduciaire.
+
 ---
 
 ## En un coup d’œil
 
 | Élément | Contenu |
 | --- | --- |
-| **18 cas** | du premier décompte aux situations fiduciaires courantes |
+| **18 cas** | du premier décompte aux principales situations de déclaration |
 | **3 modes** | Apprentissage · Entraînement · Évaluation |
 | **Méthode** | qualifier → reporter → contrôler → interpréter |
 | **Plan du niveau** | 18 cas regroupés par compétences avec `À faire / En cours / Maîtrisé` |
-| **Atelier autonome** | mini-grand-livre de 12 opérations → qualification + reconstruction de 17 rubriques / totaux |
+| **Exercice de synthèse** | 10 opérations résumées → remplissage de 18 rubriques / totaux du décompte |
 | **International** | export, lieu de prestation, acquisitions, importations, DTe et devises |
 | **Impôt préalable** | ch. 400/405, double affectation, 410/415/420 |
 | **Évaluation finale** | 15 questions · **5 blocs de compétences représentés** · seuil 12/15 |
@@ -105,11 +107,11 @@ Taux normal, réduit et spécial, prestations exclues, exonérées, fournies à 
 
 ### `3` Comprendre l’impôt préalable
 
-Le parcours introduit 400/405, double affectation, correction 415, réduction 420 et dégrèvement 410, avec l’idée centrale que **l’affectation et les pièces déterminent le traitement**.
+Le parcours introduit 400/405, double affectation, correction 415, réduction 420 et dégrèvement 410, avec l’idée centrale que **l’affectation et les conditions du cas déterminent le traitement**.
 
 ### `4` Séparer les mécanismes internationaux
 
-Exportation, prestation à l’étranger, acquisition de service étranger et importation physique ne sont pas interchangeables. Le dossier DTe introduit le raisonnement documentaire associé à la TVA à l’importation.
+Exportation, prestation à l’étranger, acquisition de service étranger et importation physique ne sont pas interchangeables. Le dossier DTe introduit le bon report de la TVA à l’importation sans la confondre avec le ch. 383.
 
 ### `5` Travailler les périodes
 
@@ -127,15 +129,15 @@ La progression reste enregistrée localement dans le navigateur.
 
 ---
 
-## 🧾 Atelier autonome — Mini-grand-livre → décompte
+## 🧾 Exercice de synthèse — Décompte complet
 
-La v2.3.0 ajoute une pratique de synthèse distincte du compteur 18/18. Le participant reçoit **12 opérations non préclassées**: ventes suisses, exportation, prestation B2B à l’étranger, option immobilière, avoir, subvention, don, impôt préalable, acquisition de service étranger, DTe d’importation et part privée.
+La v2.3.1 remplace l’ancien mini-grand-livre par un exercice plus court et strictement centré sur la déclaration. Le participant reçoit **10 opérations déjà résumées avec les hypothèses nécessaires** puis complète directement 18 rubriques / totaux.
 
-Le travail comporte **29 contrôles**: 12 qualifications puis 17 rubriques / totaux à reconstruire. Le scénario se réconcilie sur `ch. 299 = ch. 379 = CHF 53’600.00`, avec un solde final `ch. 510 = CHF 3’353.40`.
+Il n’y a plus de qualification de 12 lignes, de checklist documentaire ni de travail de revue. Le scénario se réconcilie sur `ch. 299 = ch. 379 = CHF 50’000.00`, avec `ch. 399 = CHF 4’698.00`, `ch. 479 = CHF 8’343.00` et `ch. 510 = CHF 3’645.00`.
 
-Cet atelier est volontairement **hors attestation**: son score sert à l’entraînement et ne modifie ni les 18 cas maîtrisés ni le gate de l’examen final. Le meilleur résultat est conservé localement et le reset global l’efface également.
+Cet exercice est **hors attestation**: son score ne modifie ni les 18 cas maîtrisés ni le gate de l’examen final.
 
-📄 [ATELIER-MINI-GRAND-LIVRE-v2.3.0.md](ATELIER-MINI-GRAND-LIVRE-v2.3.0.md)
+📄 [Documentation de l’exercice](ATELIER-MINI-GRAND-LIVRE-v2.3.0.md)
 
 ---
 
@@ -143,7 +145,7 @@ Cet atelier est volontairement **hors attestation**: son score sert à l’entra
 
 L’examen se débloque après validation des **18/18 cas** en mode Évaluation.
 
-Le tirage reste aléatoire, mais il suit désormais un **blueprint de compétences** : chaque tentative contient 3 questions dans chacun des cinq blocs suivants.
+Le tirage reste aléatoire, mais il suit un **blueprint de compétences** : chaque tentative contient 3 questions dans chacun des cinq blocs suivants.
 
 | Bloc | Questions |
 | --- | ---: |
@@ -193,10 +195,10 @@ npm test
 
 Le filet de sécurité comprend :
 
-- smoke tests et contrôles de syntaxe, y compris le module atelier ;
+- smoke tests et contrôles de syntaxe ;
 - unit tests sur les 18 cas, leurs calculs, sources et garde-fous ;
 - test du **blueprint** de l’évaluation finale et de ses quotas ;
-- Playwright E2E sur desktop/mobile, progression, Plan, examen et mini-grand-livre ;
+- Playwright E2E sur desktop/mobile, progression, Plan, examen et exercice de synthèse ;
 - axe accessibility sur les vues principales ;
 - captures de référence visuelles dans le workflow QA.
 
@@ -204,7 +206,7 @@ Le filet de sécurité comprend :
 
 ## 🔒 Données et confidentialité
 
-Le projet est statique et fonctionne sans compte utilisateur. Progression, résultat final, score de l’atelier et nom de l’attestation restent dans le navigateur.
+Le projet est statique et fonctionne sans compte utilisateur. Progression, résultat final, score de l’exercice et nom de l’attestation restent dans le navigateur.
 
 ---
 
@@ -212,15 +214,15 @@ Le projet est statique et fonctionne sans compte utilisateur. Progression, résu
 
 | Étape | Projet | Rôle |
 | --- | --- | --- |
-| **01** | **Méthode effective — Niveau 1** | fondamentaux et réflexes de travail |
-| **02** | [Méthode effective — Niveau 2](https://mariialobur.github.io/tva-avance/) | dossiers fiduciaires, revue et contrôle |
+| **01** | **Méthode effective — Niveau 1** | fondamentaux de la déclaration |
+| **02** | [Méthode effective — Niveau 2](https://mariialobur.github.io/tva-avance/) | déclarations complexes, corrections et concordance |
 | **Spécialisation** | [Méthode TDFN](https://mariialobur.github.io/tva-tdfn/) | méthode de décompte distincte |
 
 ---
 
 <div align="center">
 
-**Version 2.3.0 · 18 cas · atelier mini-grand-livre · évaluation structurée 15 questions · QA renforcé**
+**Version 2.3.1 · 18 cas · exercice de décompte complet · évaluation structurée 15 questions · QA renforcé**
 
 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/) · [Continuer avec le Niveau 2](https://mariialobur.github.io/tva-avance/) · [Ouvrir la spécialisation TDFN](https://mariialobur.github.io/tva-tdfn/)
 
