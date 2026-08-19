@@ -12,7 +12,7 @@ Un parcours interactif en français pour **qualifier les opérations, construire
 [![Cas](https://img.shields.io/badge/cas-18-3d7f68)](https://mariialobur.github.io/tva-debutant/)
 [![Examen](https://img.shields.io/badge/examen-15%20questions%20·%2080%25-6552a3)](https://mariialobur.github.io/tva-debutant/)
 [![QA](https://img.shields.io/badge/QA-smoke%20·%20unit%20·%20E2E%20·%20axe-506473)](https://github.com/mariialobur/tva-debutant)
-[![Version](https://img.shields.io/badge/version-2.2.0-506473)](https://github.com/mariialobur/tva-debutant)
+[![Version](https://img.shields.io/badge/version-2.3.0-506473)](https://github.com/mariialobur/tva-debutant)
 
 ### 👉 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/)
 
@@ -47,6 +47,7 @@ Le Niveau 1 installe ces automatismes avec 18 cas progressifs. Les premiers cons
 | **3 modes** | Apprentissage · Entraînement · Évaluation |
 | **Méthode** | qualifier → reporter → contrôler → interpréter |
 | **Plan du niveau** | 18 cas regroupés par compétences avec `À faire / En cours / Maîtrisé` |
+| **Atelier autonome** | mini-grand-livre de 12 opérations → qualification + reconstruction de 17 rubriques / totaux |
 | **International** | export, lieu de prestation, acquisitions, importations, DTe et devises |
 | **Impôt préalable** | ch. 400/405, double affectation, 410/415/420 |
 | **Évaluation finale** | 15 questions · **5 blocs de compétences représentés** · seuil 12/15 |
@@ -126,6 +127,18 @@ La progression reste enregistrée localement dans le navigateur.
 
 ---
 
+## 🧾 Atelier autonome — Mini-grand-livre → décompte
+
+La v2.3.0 ajoute une pratique de synthèse distincte du compteur 18/18. Le participant reçoit **12 opérations non préclassées**: ventes suisses, exportation, prestation B2B à l’étranger, option immobilière, avoir, subvention, don, impôt préalable, acquisition de service étranger, DTe d’importation et part privée.
+
+Le travail comporte **29 contrôles**: 12 qualifications puis 17 rubriques / totaux à reconstruire. Le scénario se réconcilie sur `ch. 299 = ch. 379 = CHF 53’600.00`, avec un solde final `ch. 510 = CHF 3’353.40`.
+
+Cet atelier est volontairement **hors attestation**: son score sert à l’entraînement et ne modifie ni les 18 cas maîtrisés ni le gate de l’examen final. Le meilleur résultat est conservé localement et le reset global l’efface également.
+
+📄 [ATELIER-MINI-GRAND-LIVRE-v2.3.0.md](ATELIER-MINI-GRAND-LIVRE-v2.3.0.md)
+
+---
+
 ## 🧠 Évaluation finale structurée — Niveau 1
 
 L’examen se débloque après validation des **18/18 cas** en mode Évaluation.
@@ -180,10 +193,10 @@ npm test
 
 Le filet de sécurité comprend :
 
-- smoke tests et contrôles de syntaxe ;
+- smoke tests et contrôles de syntaxe, y compris le module atelier ;
 - unit tests sur les 18 cas, leurs calculs, sources et garde-fous ;
 - test du **blueprint** de l’évaluation finale et de ses quotas ;
-- Playwright E2E sur desktop/mobile, progression, Plan et examen ;
+- Playwright E2E sur desktop/mobile, progression, Plan, examen et mini-grand-livre ;
 - axe accessibility sur les vues principales ;
 - captures de référence visuelles dans le workflow QA.
 
@@ -191,7 +204,7 @@ Le filet de sécurité comprend :
 
 ## 🔒 Données et confidentialité
 
-Le projet est statique et fonctionne sans compte utilisateur. Progression, résultat final et nom de l’attestation restent dans le navigateur.
+Le projet est statique et fonctionne sans compte utilisateur. Progression, résultat final, score de l’atelier et nom de l’attestation restent dans le navigateur.
 
 ---
 
@@ -207,7 +220,7 @@ Le projet est statique et fonctionne sans compte utilisateur. Progression, résu
 
 <div align="center">
 
-**Version 2.2.0 · 18 cas · évaluation structurée 15 questions · QA renforcé**
+**Version 2.3.0 · 18 cas · atelier mini-grand-livre · évaluation structurée 15 questions · QA renforcé**
 
 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/) · [Continuer avec le Niveau 2](https://mariialobur.github.io/tva-avance/) · [Ouvrir la spécialisation TDFN](https://mariialobur.github.io/tva-tdfn/)
 
