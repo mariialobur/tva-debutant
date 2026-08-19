@@ -6,3 +6,4 @@ if(!document.querySelector('link[data-atelier-practice]')){
   document.head.appendChild(link);
 }
 import './atelier-practice.js';
+import './atelier-fiscal-note.js';
