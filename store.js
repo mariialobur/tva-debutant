@@ -3,6 +3,7 @@ import './effective-path-progress.js';
 
 const STORAGE_KEY = 'tva_effective_v2_state';
 const LEGACY_KEYS = ['tvaEffectiveTrainerV6','tvaEffectiveTrainerV5','tvaEffectiveTrainerV4'];
+const FINAL_KEYS = ['tva_effective_final_evaluation_v1','tva_effective_final_evaluation_v2','tva_effective_final_evaluation_v3_blueprint'];
 
 const DEFAULT_STATE = {
   version: 2,
@@ -71,6 +72,7 @@ export function saveState(state){ safeSet(STORAGE_KEY,JSON.stringify(state)); }
 export function clearState(){
   safeRemove(STORAGE_KEY);
   LEGACY_KEYS.forEach(safeRemove);
+  FINAL_KEYS.forEach(safeRemove);
 }
 export function stateKey(){ return STORAGE_KEY; }
 export function blankRecord(){ return normalizeRecord({}); }
