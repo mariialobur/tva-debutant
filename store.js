@@ -1,9 +1,11 @@
 import './level1-extension.js';
 import './effective-path-progress.js';
+import './atelier-loader.js';
 
 const STORAGE_KEY = 'tva_effective_v2_state';
 const LEGACY_KEYS = ['tvaEffectiveTrainerV6','tvaEffectiveTrainerV5','tvaEffectiveTrainerV4'];
 const FINAL_KEYS = ['tva_effective_final_evaluation_v1','tva_effective_final_evaluation_v2','tva_effective_final_evaluation_v3_blueprint'];
+const ATELIER_KEYS = ['tva_effective_atelier_ledger_v1'];
 
 const DEFAULT_STATE = {
   version: 2,
@@ -73,6 +75,7 @@ export function clearState(){
   safeRemove(STORAGE_KEY);
   LEGACY_KEYS.forEach(safeRemove);
   FINAL_KEYS.forEach(safeRemove);
+  ATELIER_KEYS.forEach(safeRemove);
 }
 export function stateKey(){ return STORAGE_KEY; }
 export function blankRecord(){ return normalizeRecord({}); }
