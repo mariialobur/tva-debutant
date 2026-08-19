@@ -3,7 +3,7 @@ import { loadState } from './store.js';
 import { EXAM_SIZE, PASS_SCORE, PROJECT_URL, QUESTION_BANK } from './evaluation-data.js';
 import { selectBlueprintQuestions, shuffle } from './exam-blueprint.js';
 
-const STORAGE_KEY='tva_effective_final_evaluation_v2';
+const STORAGE_KEY='tva_effective_final_evaluation_v3_blueprint';
 const EXAM_BLUEPRINT=[
   {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205','235','299','balance']},
   {label:'Chiffre d’affaires & international',count:3,ids:['export','abroad','225','900','910']},
