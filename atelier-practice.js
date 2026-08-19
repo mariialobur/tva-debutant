@@ -1,7 +1,8 @@
 // TVA suisse — méthode effective · Niveau 1
 // Atelier de synthèse centré uniquement sur le remplissage du décompte.
 
-const STORAGE_KEY='tva_effective_atelier_declaration_v2';
+const STORAGE_KEY='tva_effective_atelier_ledger_v1';
+const STATE_SCOPE='declaration-v2';
 const PASS_PERCENT=85;
 
 const SOURCES=[
@@ -44,11 +45,12 @@ const FIELDS=[
   ['ch900','ch. 900 — Subventions',5000]
 ];
 
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
 const fmt=v=>new Intl.NumberFormat('fr-CH',{minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(v||0));
 function parseAmount(value){const s=String(value??'').trim();if(!s)return null;const n=Number(s.replace(/CHF/gi,'').replace(/[’'\s\u00a0\u202f]/g,'').replace(',','.'));return Number.isFinite(n)?n:null}
 function closeEnough(a,b){return Number.isFinite(a)&&Math.abs(a-b)<=0.011}
-function load(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||{fields:{},bestScore:0,attempts:0}}catch{return{fields:{},bestScore:0,attempts:0}}}
+function blank(){return{scope:STATE_SCOPE,fields:{},bestScore:0,attempts:0}}
+function load(){try{const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');return parsed?.scope===STATE_SCOPE?parsed:blank()}catch{return blank()}}
 function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch{}}
 let state=load();
 
@@ -70,7 +72,7 @@ function bindDialog(){
   d.addEventListener('click',e=>{if(e.target===d)d.close()});
   d.addEventListener('input',e=>{const field=e.target.closest('[data-atelier-field]');if(field){state.fields[field.dataset.atelierField]=field.value;save()}});
   d.querySelector('[data-atelier-check]')?.addEventListener('click',checkAtelier);
-  d.querySelector('[data-atelier-reset]')?.addEventListener('click',()=>{if(!confirm('Réinitialiser toutes les réponses de cet exercice?'))return;state={fields:{},bestScore:state.bestScore||0,attempts:state.attempts||0};save();d.outerHTML=dialogMarkup();ensureDialog();document.querySelector('#level1AtelierDialog').showModal()});
+  d.querySelector('[data-atelier-reset]')?.addEventListener('click',()=>{if(!confirm('Réinitialiser toutes les réponses de cet exercice?'))return;state={...blank(),bestScore:state.bestScore||0,attempts:state.attempts||0};save();d.outerHTML=dialogMarkup();ensureDialog();document.querySelector('#level1AtelierDialog').showModal()});
 }
 
 function checkAtelier(){
