@@ -6,11 +6,11 @@ import { selectBlueprintQuestions, shuffle } from './exam-blueprint.js';
 const STORAGE_KEY='tva_effective_final_evaluation_v3_blueprint';
 const TRAINER_VERSION='2026.08.23';
 const EXAM_BLUEPRINT=[
-  {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205','235','299','balance']},
-  {label:'Chiffre d’affaires & international',count:3,ids:['export','abroad','225','900','910']},
-  {label:'Acquisitions, importation & devises',count:3,ids:['acq','acq-deduct','import-vs-acquisition','dte-proof','fx-consistency']},
-  {label:'Impôt préalable & corrections',count:3,ids:['410','415','420','residual','479','vehicle-private']},
-  {label:'Périodes, rectification & annuel',count:3,ids:['timing-convenued','timing-advance','rectification','rectification-period','annual','annual-three-instalments','annual-deadline']}
+  {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205']},
+  {label:'Chiffre d’affaires & mouvements de fonds',count:3,ids:['235','225','299','900','910']},
+  {label:'International & acquisitions',count:3,ids:['export','abroad','acq','acq-deduct']},
+  {label:'Impôt préalable & corrections',count:3,ids:['410','415','420','residual','479']},
+  {label:'Contrôle, rectification & annuel',count:3,ids:['balance','rectification','annual']}
 ];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let attempt=null,lastResult=loadResult();
