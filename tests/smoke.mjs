@@ -6,13 +6,13 @@ for(const file of ['index.html','styles.css','evaluation.css','data.js','level1-
 for(const file of ['app.js','evaluation.js','evaluation-data.js','exam-blueprint.js','level1-extension.js','store.js','ux-v3.js','progress-ui.js','controlled-variants.js','atelier-loader.js','atelier-practice.js'])execFileSync(process.execPath,['--check',file],{stdio:'pipe'});
 
 const html=fs.readFileSync('index.html','utf8');
-for(const token of ['app.js?v=2.1.0','controlled-variants.js?v=1.1.0','evaluation.js?v=3.3.0','progress-ui.js?v=1.4.0','styles.css?v=2.0.0','evaluation.css?v=1.0.0','Mémo professionnel','finalEvaluation','0 / 18 maîtrisés'])assert.ok(html.includes(token),`Missing token: ${token}`);
+for(const token of ['app.js?v=2.1.0','controlled-variants.js?v=1.1.0','evaluation.js?v=3.4.0','progress-ui.js?v=1.4.0','styles.css?v=2.0.0','evaluation.css?v=1.0.0','Mémo professionnel','finalEvaluation','0 / 18 maîtrisés'])assert.ok(html.includes(token),`Missing token: ${token}`);
 
 const variantsJs=fs.readFileSync('controlled-variants.js','utf8');
 assert.ok(variantsJs.includes("import './ux-v3.js?v=3.6.0'"),'UX module cache version is stale.');
 
 const evalJs=fs.readFileSync('evaluation.js','utf8');
-for(const token of ['ATTESTATION DE RÉUSSITE DU PARCOURS','tva_effective_final_evaluation_v3_blueprint','ASSESSMENT_VERSION=\'blueprint-v2\'','meilleur résultat conservé','Niveau 1','selectBlueprintQuestions','5 blocs de compétences','ce repère n’est pas une condition d’accès','Les réponses attendues ne sont pas affichées après un échec','remplissage de déclarations TVA','level1-extension.js'])assert.ok(evalJs.includes(token),`Missing evaluation token: ${token}`);
+for(const token of ["evaluation-data.js?v=2.4.1",'ATTESTATION DE RÉUSSITE DU PARCOURS','tva_effective_final_evaluation_v3_blueprint','ASSESSMENT_VERSION=\'blueprint-v2\'','meilleur résultat conservé','Niveau 1','selectBlueprintQuestions','5 blocs de compétences','ce repère n’est pas une condition d’accès','Les réponses attendues ne sont pas affichées après un échec','remplissage de déclarations TVA','level1-extension.js'])assert.ok(evalJs.includes(token),`Missing evaluation token: ${token}`);
 assert.ok(!evalJs.includes('Validez d’abord les'),'Legacy 18/18 exam gate returned');
 assert.ok(!evalJs.includes("['Pratique fiduciaire'"),'Legacy fiduciaire attestation theme returned');
 
