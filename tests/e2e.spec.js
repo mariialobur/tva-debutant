@@ -31,6 +31,32 @@ test('Case M controlled variants stay hidden during scored evaluation mode',asyn
   await clean(page);await page.locator('#caseSelect').selectOption('12');await expect(page.locator('#controlledVariantsM')).toBeVisible();await page.locator('[data-mode="evaluate"]').click();await expect(page.locator('#controlledVariantsM')).toHaveCount(0)
 });
 
+test('failed case evaluation can be corrected repeatedly without losing the current answers',async({page})=>{
+  await page.addInitScript(()=>{
+    localStorage.setItem('tva_effective_v2_state',JSON.stringify({
+      caseIndex:4,
+      view:'extended',
+      mode:'evaluate',
+      records:{E:{evaluationAttempts:1,bestEvaluationScore:73}},
+      drafts:{E:{evaluate:{
+        values:{ch200:250000,ch230:90000,ch303:16000,ch400:12000,ch405:3000,ch415:6000},
+        qualification:'1',assisted:false,submitted:true,correctionShown:false,lastScore:73
+      }}}
+    }));
+  });
+  await page.goto('/');
+  await expect(page.locator('#sidebar')).toContainText('Cabinet Dr Weber');
+  await expect(page.locator('#uxRetryCurrent')).toHaveText('Corriger ma tentative');
+  await page.locator('#uxRetryCurrent').click();
+  await expect(page.locator('input[data-field="ch303"]')).toBeEnabled();
+  await expect(page.locator('#uxRetryCurrent')).toHaveCount(0);
+  await page.locator('#sidebar [data-verify]').click();
+  await expect(page.locator('#uxRetryCurrent')).toHaveText('Corriger ma tentative');
+  await page.locator('#uxRetryCurrent').click();
+  await expect(page.locator('input[data-field="ch303"]')).toBeEnabled();
+  await expect(page.locator('#sidebar [data-reset]')).toHaveText('Nouvelle évaluation');
+});
+
 test('mobile: Verify becomes sticky only after the original action is scrolled past', async ({page})=>{
   await page.setViewportSize({width:390,height:844});await clean(page);await expect(page.locator('#uxWorkbar')).toBeVisible();await expect(page.locator('#caseSelect')).toBeVisible();await expect(page.locator('.ux-sidebar-toggle')).toBeVisible();await expect(page.locator('#sidebar .case-nav')).toBeHidden();await expect(page.locator('#uxMobileVerify')).toBeHidden();await page.locator('#caseSelect').selectOption('17');await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');await expect(page.locator('#sidebar')).toContainText('Décompte annuel');await page.locator('#form').scrollIntoViewIfNeeded();await page.evaluate(()=>window.scrollBy(0,250));await expect(page.locator('#uxMobileVerify')).toBeVisible();await expect(page.getByText('Vue pédagogique du décompte')).toBeVisible();await expect(page.locator('input[data-field="ch200"]')).toBeVisible()
 });
