@@ -8,6 +8,9 @@ assert.equal(PASS_SCORE,12);
 assert.ok(QUESTION_BANK.length>=30,'La banque finale étendue doit contenir au moins 30 questions.');
 assert.equal(new Set(QUESTION_BANK.map(q=>q.id)).size,QUESTION_BANK.length,'IDs de questions uniques.');
 for(const q of QUESTION_BANK){assert.ok(q.q&&q.w&&q.s&&q.u,`Question ${q.id}: métadonnées manquantes.`);assert.equal(q.o.length,4,`Question ${q.id}: exactement 4 options.`);assert.ok(Number.isInteger(q.a)&&q.a>=0&&q.a<4,`Question ${q.id}: réponse invalide.`);assert.equal(new Set(q.o).size,4,`Question ${q.id}: options dupliquées.`)}
+const rectification=QUESTION_BANK.find(q=>q.id==='rectification');
+assert.ok(rectification,'Question rectification absente.');
+assert.match(rectification.u,/\/tva-decompte-de-rectification$/,'La question sur une erreur isolée doit pointer vers le décompte rectificatif, pas vers la concordance annuelle.');
 
 const blueprint=[
   {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205']},
