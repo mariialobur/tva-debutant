@@ -86,31 +86,24 @@ function copyAttemptToPractice(){
   location.reload();
 }
 function syncRetryControls(){
-  document.querySelector('#uxPracticeCorrection')?.remove();
+  document.querySelector('#uxRetryCurrent')?.remove();
   const reset=document.querySelector('#sidebar [data-reset]');
   if(!reset)return;
-  delete reset.dataset.retryCurrent;
-  reset.removeAttribute('title');
 
   const failed=failedEvaluationState();
   if(!failed)return;
 
-  if(!failed.correctionSeen){
-    reset.textContent='Corriger ma tentative';
-    reset.dataset.retryCurrent='1';
-    reset.title='Conserver les réponses saisies et déverrouiller ce cas pour les corriger.';
-    return;
-  }
-
   reset.textContent='Nouvelle évaluation';
-  const practiceBtn=document.createElement('button');
-  practiceBtn.type='button';
-  practiceBtn.id='uxPracticeCorrection';
-  practiceBtn.className='btn';
-  practiceBtn.textContent='Corriger mes réponses (entraînement)';
-  practiceBtn.title='Le corrigé a déjà été consulté : vos réponses seront reprises en mode Entraînement, sans valider le cas en Évaluation.';
-  practiceBtn.addEventListener('click',copyAttemptToPractice);
-  reset.insertAdjacentElement('beforebegin',practiceBtn);
+  const retry=document.createElement('button');
+  retry.type='button';
+  retry.id='uxRetryCurrent';
+  retry.className='btn';
+  retry.textContent=failed.correctionSeen?'Corriger ma tentative (entraînement)':'Corriger ma tentative';
+  retry.title=failed.correctionSeen
+    ?'Le corrigé a déjà été consulté : reprendre vos réponses en mode Entraînement, sans valider le cas en Évaluation.'
+    :'Conserver vos réponses et déverrouiller ce cas pour les corriger. Vous pourrez recommencer autant de fois que nécessaire.';
+  retry.addEventListener('click',()=>failed.correctionSeen?copyAttemptToPractice():reopenCurrentEvaluationAttempt());
+  reset.insertAdjacentElement('beforebegin',retry);
 }
 function syncUi(forced){
   removeOldPathCounters();
@@ -132,15 +125,6 @@ document.addEventListener('change',e=>{
     setTimeout(()=>syncUi(),0);
   }
 });
-
-document.addEventListener('click',e=>{
-  const retry=e.target.closest?.('#sidebar [data-reset][data-retry-current="1"]');
-  if(!retry)return;
-  e.preventDefault();
-  e.stopPropagation();
-  e.stopImmediatePropagation();
-  reopenCurrentEvaluationAttempt();
-},true);
 
 document.addEventListener('click',e=>{
   if(e.target.closest?.('[data-prev],[data-next],#uxPrevCase,#uxNextCase,[data-case]')){
