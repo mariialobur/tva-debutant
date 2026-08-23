@@ -29,6 +29,10 @@ function labelCasePosition(){
   const wanted=`Cas ${select.selectedIndex+1} / ${select.options.length}`;
   if(count.textContent!==wanted)count.textContent=wanted;
 }
+function clearStaleResult(){
+  const result=document.querySelector('#result');
+  if(result)result.innerHTML='';
+}
 function renderAll(){
   removeOldPathCounters();
   renderHeaderProgress();
@@ -41,8 +45,18 @@ window.addEventListener('effective-progress',e=>{
   setTimeout(labelCasePosition,0);
 });
 window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY)renderAll()});
-document.addEventListener('change',e=>{if(e.target?.id==='caseSelect')setTimeout(labelCasePosition,0)});
-document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next],#uxPrevCase,#uxNextCase,[data-case]'))setTimeout(labelCasePosition,0)});
+document.addEventListener('change',e=>{
+  if(e.target?.id==='caseSelect'){
+    clearStaleResult();
+    setTimeout(labelCasePosition,0);
+  }
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest?.('[data-prev],[data-next],#uxPrevCase,#uxNextCase,[data-case]')){
+    clearStaleResult();
+    setTimeout(labelCasePosition,0);
+  }
+});
 
 document.addEventListener('DOMContentLoaded',()=>{
   renderAll();
