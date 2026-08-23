@@ -35,8 +35,12 @@ test('mobile: Verify becomes sticky only after the original action is scrolled p
   await page.setViewportSize({width:390,height:844});await clean(page);await expect(page.locator('#uxWorkbar')).toBeVisible();await expect(page.locator('#caseSelect')).toBeVisible();await expect(page.locator('.ux-sidebar-toggle')).toBeVisible();await expect(page.locator('#sidebar .case-nav')).toBeHidden();await expect(page.locator('#uxMobileVerify')).toBeHidden();await page.locator('#caseSelect').selectOption('17');await expect(page.locator('#sidebar')).toContainText('MicroTech Sàrl');await expect(page.locator('#sidebar')).toContainText('Décompte annuel');await page.locator('#form').scrollIntoViewIfNeeded();await page.evaluate(()=>window.scrollBy(0,250));await expect(page.locator('#uxMobileVerify')).toBeVisible();await expect(page.getByText('Vue pédagogique du décompte')).toBeVisible();await expect(page.locator('input[data-field="ch200"]')).toBeVisible()
 });
 
-test('shared progress combines both effective levels from local browser state', async ({page})=>{
-  await page.addInitScript(({l1,l2})=>{localStorage.setItem('tva_effective_v2_state',JSON.stringify({records:l1}));localStorage.setItem('tva_avance_v1_state',JSON.stringify({records:l2}))},{l1:masteredRecords(3),l2:masteredRecords(2)});await page.goto('/');const bar=page.locator('#effectivePathProgress');await expect(bar).toContainText('Niveau 1 3/18');await expect(bar).toContainText('Niveau 2 2/18');await expect(bar).toContainText('Total 5/36')
+test('compact mastery status reflects Level 1 state without the removed multi-level counter strip', async ({page})=>{
+  await page.addInitScript(records=>{localStorage.setItem('tva_effective_v2_state',JSON.stringify({records}))},masteredRecords(3));
+  await page.goto('/');
+  await expect(page.locator('#globalProgress')).toContainText('3 / 18 maîtrisés');
+  await expect(page.locator('#effectivePathProgress')).toHaveCount(0);
+  await expect(page.locator('#sidebar .progress')).toContainText('Repère de pratique');
 });
 
 test('final evaluation is available with partial practice progress and keeps a structured 15-question blueprint', async ({page})=>{
@@ -52,4 +56,13 @@ test('legacy random-exam pass does not grant the new blueprint attestation',asyn
   await expect(page.locator('#startFinal')).toBeEnabled();
   await expect(page.locator('#openAttestation')).toHaveCount(0);
   expect(await page.evaluate(()=>localStorage.getItem('tva_effective_final_evaluation_v3_blueprint'))).toBeNull();
+});
+
+test('legacy blueprint-v1 pass does not grant the v2.4 attestation',async({page})=>{
+  await page.addInitScript(()=>{
+    localStorage.setItem('tva_effective_final_evaluation_v3_blueprint',JSON.stringify({score:15,total:15,percent:100,passed:true,date:new Date().toISOString(),assessment:'blueprint-v1'}));
+  });
+  await page.goto('/');
+  await expect(page.locator('#startFinal')).toBeEnabled();
+  await expect(page.locator('#openAttestation')).toHaveCount(0);
 });
