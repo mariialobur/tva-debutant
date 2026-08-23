@@ -90,7 +90,10 @@ function planStatus(id,state){
   const scores=['bestLearningScore','bestPracticeScore','bestEvaluationScore'].some(k=>Number(r[k])>0);
   const modeDrafts=Object.values(d).filter(x=>x&&typeof x==='object');
   const values=modeDrafts.some(draft=>Object.values(draft.values||{}).some(v=>String(v??'').trim()!==''));
-  const draftActivity=modeDrafts.some(draft=>String(draft.qualification??'').trim()!==''||Boolean(draft.submitted)||Boolean(draft.correctionShown)||Number.isFinite(Number(draft.lastScore)));
+  const draftActivity=modeDrafts.some(draft=>{
+    const hasScore=draft.lastScore!==null&&draft.lastScore!==''&&Number.isFinite(Number(draft.lastScore));
+    return String(draft.qualification??'').trim()!==''||Boolean(draft.submitted)||Boolean(draft.correctionShown)||hasScore;
+  });
   if(attempts||scores||values||draftActivity)return{key:'progress',label:'En cours'};
   return{key:'todo',label:'À faire'};
 }
