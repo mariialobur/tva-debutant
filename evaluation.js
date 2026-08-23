@@ -1,3 +1,4 @@
+import './level1-extension.js';
 import { CASES } from './data.js';
 import { loadState } from './store.js';
 import { EXAM_SIZE, PASS_SCORE, PROJECT_URL, QUESTION_BANK } from './evaluation-data.js';
@@ -8,11 +9,11 @@ const TRAINER_VERSION='2026.08.23';
 const EXAM_BLUEPRINT=[
   {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205']},
   {label:'Chiffre d’affaires & mouvements de fonds',count:3,ids:['235','225','299','900','910']},
-  {label:'International & acquisitions',count:3,ids:['export','abroad','acq','acq-deduct']},
-  {label:'Impôt préalable & corrections',count:3,ids:['410','415','420','residual','479']},
-  {label:'Contrôle, rectification & annuel',count:3,ids:['balance','rectification','annual']}
+  {label:'International & acquisitions',count:3,ids:['export','abroad','acq','acq-deduct','import-vs-acquisition','dte-proof','fx-consistency']},
+  {label:'Impôt préalable & corrections',count:3,ids:['410','415','420','residual','479','vehicle-private']},
+  {label:'Contrôle, rectification & annuel',count:3,ids:['balance','rectification','annual','timing-convenued','timing-advance','rectification-period','annual-three-instalments','annual-deadline']}
 ];
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
 let attempt=null,lastResult=loadResult();
 
 function loadResult(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')}catch{return null}}
