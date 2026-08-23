@@ -12,7 +12,7 @@ Un parcours interactif en français pour **qualifier les opérations, remplir le
 [![Cas](https://img.shields.io/badge/cas-18-3d7f68)](https://mariialobur.github.io/tva-debutant/)
 [![Examen](https://img.shields.io/badge/examen-15%20questions%20·%2080%25-6552a3)](https://mariialobur.github.io/tva-debutant/)
 [![QA](https://img.shields.io/badge/QA-smoke%20·%20unit%20·%20E2E%20·%20axe-506473)](https://github.com/mariialobur/tva-debutant)
-[![Version](https://img.shields.io/badge/version-2.3.1-506473)](https://github.com/mariialobur/tva-debutant)
+[![Version](https://img.shields.io/badge/version-2.4.0-506473)](https://github.com/mariialobur/tva-debutant)
 
 ### 👉 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/)
 
@@ -53,7 +53,7 @@ Le périmètre reste volontairement étroit: **s’entraîner à remplir correct
 | **International** | export, lieu de prestation, acquisitions, importations, DTe et devises |
 | **Impôt préalable** | ch. 400/405, double affectation, 410/415/420 |
 | **Évaluation finale** | 15 questions · **5 blocs de compétences représentés** · seuil 12/15 |
-| **Attestation** | 2 pages générées localement après validation du niveau |
+| **Attestation** | 2 pages générées localement après réussite de l’évaluation finale |
 | **QA** | smoke + unit + Playwright E2E + axe + visual references |
 
 ---
@@ -91,7 +91,7 @@ Avec 18 cas, la navigation linéaire ne suffit plus pour réviser une compétenc
 
 `À faire` · `En cours` · `Maîtrisé ✓`
 
-Un clic ouvre directement le dossier souhaité. Sur mobile, le plan est adapté à une navigation tactile sans afficher 18 onglets serrés.
+Le statut `Maîtrisé` est un **repère personnel de progression**, pas une condition d’accès à l’évaluation finale ni à l’attestation. Un clic ouvre directement le dossier souhaité. Sur mobile, le plan est adapté à une navigation tactile sans afficher 18 onglets serrés.
 
 ---
 
@@ -131,11 +131,11 @@ La progression reste enregistrée localement dans le navigateur.
 
 ## 🧾 Exercice de synthèse — Décompte complet
 
-La v2.3.1 remplace l’ancien mini-grand-livre par un exercice plus court et strictement centré sur la déclaration. Le participant reçoit **10 opérations déjà résumées avec les hypothèses nécessaires** puis complète directement 18 rubriques / totaux.
+La v2.4.0 conserve l’exercice de synthèse court et strictement centré sur la déclaration. Le participant reçoit **10 opérations déjà résumées avec les hypothèses nécessaires** puis complète directement 18 rubriques / totaux.
 
-Il n’y a plus de qualification de 12 lignes, de checklist documentaire ni de travail de revue. Le scénario se réconcilie sur `ch. 299 = ch. 379 = CHF 50’000.00`, avec `ch. 399 = CHF 4’698.00`, `ch. 479 = CHF 8’343.00` et `ch. 510 = CHF 3’645.00`.
+Il n’y a pas de qualification de 12 lignes, de checklist documentaire ni de travail de revue. Le scénario se réconcilie sur `ch. 299 = ch. 379 = CHF 50’000.00`, avec `ch. 399 = CHF 4’698.00`, `ch. 479 = CHF 8’343.00` et `ch. 510 = CHF 3’645.00`.
 
-Cet exercice est **hors attestation**: son score ne modifie ni les 18 cas maîtrisés ni le gate de l’examen final.
+Cet exercice est **hors attestation**: son score ne modifie ni la progression des 18 cas ni l’accès à l’examen final.
 
 📄 [Documentation de l’exercice](ATELIER-MINI-GRAND-LIVRE-v2.3.0.md)
 
@@ -143,20 +143,20 @@ Cet exercice est **hors attestation**: son score ne modifie ni les 18 cas maîtr
 
 ## 🧠 Évaluation finale structurée — Niveau 1
 
-L’examen se débloque après validation des **18/18 cas** en mode Évaluation.
+Les **18 cas pratiques sont libres**: ils servent à apprendre, s’entraîner et revenir sur les points faibles. Il n’est plus nécessaire de les valider tous à 100 % pour accéder à l’évaluation finale.
 
-Le tirage reste aléatoire, mais il suit un **blueprint de compétences** : chaque tentative contient 3 questions dans chacun des cinq blocs suivants.
+Le participant peut lancer l’examen lorsqu’il se sent prêt. Le tirage est aléatoire et suit un **blueprint de compétences** : chaque tentative contient 3 questions dans chacun des cinq blocs suivants.
 
 | Bloc | Questions |
 | --- | ---: |
 | Fondamentaux du décompte | 3 |
-| Chiffre d’affaires & international | 3 |
-| Acquisitions, importation & devises | 3 |
+| Chiffre d’affaires & mouvements de fonds | 3 |
+| International & acquisitions | 3 |
 | Impôt préalable & corrections | 3 |
-| Périodes, rectification & annuel | 3 |
+| Contrôle, rectification & annuel | 3 |
 | **Total** | **15** |
 
-Le seuil est **12/15 (80 %)**. Toutes les questions doivent être répondues. Les options sont mélangées, la correction et les sources apparaissent après la remise, et une nouvelle tentative génère une autre sélection **à l’intérieur des mêmes quotas thématiques**.
+Le seuil est **12/15 (80 %)**. Toutes les questions doivent être répondues et les options sont mélangées. En cas d’échec, le trainer indique les **thèmes à revoir sans révéler les réponses attendues**; une nouvelle tentative recompose la sélection dans les mêmes quotas thématiques. Après réussite, le corrigé détaillé peut être consulté.
 
 > [!NOTE]
 > Cette auto-évaluation mesure la réussite dans le périmètre du projet. Elle ne constitue pas une certification professionnelle générale des compétences TVA.
@@ -165,9 +165,9 @@ Le seuil est **12/15 (80 %)**. Toutes les questions doivent être répondues. Le
 
 ## 📄 Attestation
 
-Après validation des 18 cas et réussite de l’évaluation structurée, une attestation en deux pages peut être générée localement : résultat sur la première page, relevé des thèmes sur la seconde.
+Après réussite de l’évaluation finale à **12/15 minimum**, une attestation en deux pages peut être générée localement. La validation préalable des 18 cas n’est pas exigée.
 
-Le nom reste local au navigateur. Aucun registre serveur des résultats n’est tenu et l’identité n’est pas vérifiée.
+L’attestation indique le **score final, le pourcentage, la date du résultat et la version pédagogique**. Le nom reste local au navigateur. Aucun registre serveur des résultats n’est tenu et l’identité n’est pas vérifiée.
 
 > [!CAUTION]
 > L’attestation ne constitue ni un diplôme, ni un titre professionnel, ni une certification reconnue ou accréditée.
@@ -222,7 +222,7 @@ Le projet est statique et fonctionne sans compte utilisateur. Progression, résu
 
 <div align="center">
 
-**Version 2.3.1 · 18 cas · exercice de décompte complet · évaluation structurée 15 questions · QA renforcé**
+**Version 2.4.0 · 18 cas libres · exercice de décompte complet · évaluation structurée 15 questions · attestation sur réussite du final**
 
 [Commencer le Niveau 1](https://mariialobur.github.io/tva-debutant/) · [Continuer avec le Niveau 2](https://mariialobur.github.io/tva-avance/) · [Ouvrir la spécialisation TDFN](https://mariialobur.github.io/tva-tdfn/)
 
