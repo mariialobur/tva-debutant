@@ -167,7 +167,14 @@ function buildWorkbar(){
   const stepper=document.createElement('div');stepper.className='ux-stepper';stepper.innerHTML='<button type="button" class="ux-step" id="uxPrevCase" aria-label="Cas précédent">←</button><span class="ux-count" id="uxCaseCount"></span><button type="button" class="ux-plan-open" id="uxLevelPlanOpen" aria-haspopup="dialog">Plan</button><button type="button" class="ux-step" id="uxNextCase" aria-label="Cas suivant">→</button>';
   const nav=document.createElement('div');nav.className='ux-case-nav';nav.append(stepper,caseWrap);bar.append(nav,controls);learnbar.insertAdjacentElement('afterend',bar);
   $('#uxPrevCase').addEventListener('click',()=>changeCase(-1));$('#uxNextCase').addEventListener('click',()=>changeCase(1));$('#uxLevelPlanOpen').addEventListener('click',openLevelPlan);$('#caseSelect').addEventListener('change',()=>setTimeout(()=>{syncStepper();syncMobileVerify()},0));
-  document.addEventListener('click',e=>{if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(()=>{syncStepper();syncMobileVerify()},0);if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)});
+  document.addEventListener('click',e=>{
+    const resultNext=e.target.closest?.('#result [data-next]');
+    if(resultNext){e.preventDefault();changeCase(1);return}
+    const resultCorrection=e.target.closest?.('#result [data-correction]');
+    if(resultCorrection){e.preventDefault();$('#sidebar [data-correction]')?.click();return}
+    if(e.target.closest?.('[data-prev],[data-next]'))setTimeout(()=>{syncStepper();syncMobileVerify()},0);
+    if(e.target.closest?.('[data-mode]'))setTimeout(()=>{patchControls();syncMobileVerify();patchAccessibleNames()},0)
+  });
   window.addEventListener('scroll',syncMobileVerify,{passive:true});window.addEventListener('resize',syncMobileVerify,{passive:true});window.addEventListener('storage',e=>{if(e.key===LEVEL_PLAN_STORAGE&&!$('#uxLevelPlanLayer')?.hidden)renderLevelPlan()});
   syncStepper();observeSidebar();observeQualification();ensureMobileVerify();ensureLevelPlan();syncMobileVerify();document.body.classList.add('ux-v3');
 }
