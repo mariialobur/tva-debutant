@@ -5,6 +5,7 @@ import { EXAM_SIZE, PASS_SCORE, PROJECT_URL, QUESTION_BANK } from './evaluation-
 import { selectBlueprintQuestions, shuffle } from './exam-blueprint.js';
 
 const STORAGE_KEY='tva_effective_final_evaluation_v3_blueprint';
+const ASSESSMENT_VERSION='blueprint-v2';
 const TRAINER_VERSION='2026.08.23';
 const EXAM_BLUEPRINT=[
   {label:'Fondamentaux du décompte',count:3,ids:['rate-normal','rate-reduced','rate-hotel','205']},
@@ -13,10 +14,15 @@ const EXAM_BLUEPRINT=[
   {label:'Impôt préalable & corrections',count:3,ids:['410','415','420','residual','479','vehicle-private']},
   {label:'Contrôle, rectification & annuel',count:3,ids:['balance','rectification','annual','timing-convenued','timing-advance','rectification-period','annual-three-instalments','annual-deadline']}
 ];
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let attempt=null,lastResult=loadResult();
 
-function loadResult(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')}catch{return null}}
+function loadResult(){
+  try{
+    const result=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
+    return result?.assessment===ASSESSMENT_VERSION?result:null;
+  }catch{return null}
+}
 function saveResult(r){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(r))}catch{}lastResult=r}
 function masteredCount(){const s=loadState();return CASES.filter(c=>(s.records?.[c.id]?.bestEvaluationScore||0)===100).length}
 
@@ -50,7 +56,7 @@ function submitExam(e){
   if(missing){const box=e.currentTarget.querySelector('#examError');box.hidden=false;box.textContent=`Répondez aux ${missing} question${missing>1?'s':''} restante${missing>1?'s':''} avant de remettre l’évaluation.`;return}
   const review=[];let score=0;
   attempt.questions.forEach((q,i)=>{const selected=Number(form.get('q'+i)),chosen=q.options[selected],correct=Boolean(chosen?.correct);if(correct)score++;review.push({q:q.q,selected:chosen?.label||'',correctAnswer:q.options.find(o=>o.correct)?.label||'',correct,why:q.w,s:q.s,u:q.u,theme:q.examTheme||''})});
-  const passed=score>=PASS_SCORE,result={score,total:EXAM_SIZE,percent:Math.round(score/EXAM_SIZE*100),passed,date:new Date().toISOString(),review,assessment:'blueprint-v2'};
+  const passed=score>=PASS_SCORE,result={score,total:EXAM_SIZE,percent:Math.round(score/EXAM_SIZE*100),passed,date:new Date().toISOString(),review,assessment:ASSESSMENT_VERSION};
   const persisted=passed?result:{...result,review:review.map(({correctAnswer,why,...rest})=>rest)};
   if(passed&&(!lastResult?.passed||score>(lastResult.score||0)))saveResult(persisted);else if(!lastResult?.passed)saveResult(persisted);
   renderReview(result);launcher();
