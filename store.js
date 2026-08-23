@@ -1,5 +1,4 @@
 import './level1-extension.js';
-import './effective-path-progress.js';
 import './atelier-loader.js';
 
 const STORAGE_KEY = 'tva_effective_v2_state';
