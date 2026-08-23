@@ -33,28 +33,51 @@ function clearStaleResult(){
   const result=document.querySelector('#result');
   if(result)result.innerHTML='';
 }
+function ensureRetryButton(){
+  const feedback=document.querySelector('#qualification .qual-feedback.bad');
+  const select=document.querySelector('#qualificationSelect');
+  const evaluationActive=document.querySelector('[data-mode="evaluate"].active');
+  if(!feedback||!select?.disabled||!evaluationActive){
+    document.querySelector('#uxRetryEvaluation')?.remove();
+    return;
+  }
+  if(document.querySelector('#uxRetryEvaluation'))return;
+  const wrap=document.createElement('div');
+  wrap.id='uxRetryEvaluation';
+  wrap.style.marginTop='10px';
+  wrap.innerHTML='<button type="button" class="btn" style="min-height:40px">Nouvelle tentative</button><small style="display:block;margin-top:6px;color:#5f6d72">La tentative remise reste enregistrée; cette action rouvre le même cas pour un nouvel essai.</small>';
+  wrap.querySelector('button').addEventListener('click',()=>{
+    const reset=document.querySelector('#sidebar [data-reset]');
+    reset?.click();
+  });
+  feedback.insertAdjacentElement('afterend',wrap);
+}
 function renderAll(){
   removeOldPathCounters();
   renderHeaderProgress();
   labelCasePosition();
+  ensureRetryButton();
 }
 
 window.addEventListener('effective-progress',e=>{
   removeOldPathCounters();
   renderHeaderProgress(e.detail?.mastered);
-  setTimeout(labelCasePosition,0);
+  setTimeout(()=>{labelCasePosition();ensureRetryButton()},0);
 });
 window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY)renderAll()});
 document.addEventListener('change',e=>{
   if(e.target?.id==='caseSelect'){
     clearStaleResult();
-    setTimeout(labelCasePosition,0);
+    setTimeout(()=>{labelCasePosition();ensureRetryButton()},0);
   }
 });
 document.addEventListener('click',e=>{
   if(e.target.closest?.('[data-prev],[data-next],#uxPrevCase,#uxNextCase,[data-case]')){
     clearStaleResult();
-    setTimeout(labelCasePosition,0);
+    setTimeout(()=>{labelCasePosition();ensureRetryButton()},0);
+  }
+  if(e.target.closest?.('[data-mode],[data-verify],[data-correction],[data-reset]')){
+    setTimeout(ensureRetryButton,0);
   }
 });
 
@@ -63,6 +86,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const bodyObserver=new MutationObserver(()=>{
     removeOldPathCounters();
     labelCasePosition();
+    ensureRetryButton();
   });
   bodyObserver.observe(document.body,{childList:true,subtree:true});
 });
