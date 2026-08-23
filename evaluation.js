@@ -1,7 +1,7 @@
 import './level1-extension.js';
 import { CASES } from './data.js';
 import { loadState } from './store.js';
-import { EXAM_SIZE, PASS_SCORE, PROJECT_URL, QUESTION_BANK } from './evaluation-data.js';
+import { EXAM_SIZE, PASS_SCORE, PROJECT_URL, QUESTION_BANK } from './evaluation-data.js?v=2.4.1';
 import { selectBlueprintQuestions, shuffle } from './exam-blueprint.js';
 
 const STORAGE_KEY='tva_effective_final_evaluation_v3_blueprint';
