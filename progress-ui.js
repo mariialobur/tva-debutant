@@ -46,30 +46,13 @@ function currentEvaluationDraft(){
   if(!id)return null;
   return readState().drafts?.[id]?.evaluate||null;
 }
-function canCorrectCurrentAttempt(){
+function failedEvaluationState(){
   const draft=currentEvaluationDraft();
   const evaluationActive=document.querySelector('[data-mode="evaluate"].active');
-  return Boolean(
-    evaluationActive&&
-    draft?.submitted&&
-    Number.isFinite(Number(draft.lastScore))&&
-    Number(draft.lastScore)<100&&
-    !draft.correctionShown
-  );
+  if(!evaluationActive||!draft?.submitted||!Number.isFinite(Number(draft.lastScore))||Number(draft.lastScore)>=100)return null;
+  return {draft,correctionSeen:Boolean(draft.correctionShown)};
 }
-function syncRetryButton(){
-  const reset=document.querySelector('#sidebar [data-reset]');
-  if(!reset)return;
-  if(canCorrectCurrentAttempt()){
-    reset.textContent='Corriger ma tentative';
-    reset.dataset.retryCurrent='1';
-    reset.title='Conserver les réponses saisies et déverrouiller ce cas pour les corriger.';
-  }else{
-    delete reset.dataset.retryCurrent;
-    reset.removeAttribute('title');
-  }
-}
-function reopenCurrentAttempt(){
+function reopenCurrentEvaluationAttempt(){
   const id=currentCaseId();
   if(!id)return;
   const state=readState();
@@ -82,11 +65,58 @@ function reopenCurrentAttempt(){
   writeState(state);
   location.reload();
 }
+function copyAttemptToPractice(){
+  const id=currentCaseId();
+  if(!id)return;
+  const state=readState();
+  const source=state.drafts?.[id]?.evaluate;
+  if(!source)return;
+  if(!state.drafts)state.drafts={};
+  if(!state.drafts[id])state.drafts[id]={};
+  state.drafts[id].practice={
+    values:{...(source.values||{})},
+    qualification:source.qualification??'',
+    assisted:true,
+    submitted:false,
+    correctionShown:false,
+    lastScore:null
+  };
+  state.mode='practice';
+  writeState(state);
+  location.reload();
+}
+function syncRetryControls(){
+  document.querySelector('#uxPracticeCorrection')?.remove();
+  const reset=document.querySelector('#sidebar [data-reset]');
+  if(!reset)return;
+  delete reset.dataset.retryCurrent;
+  reset.removeAttribute('title');
+
+  const failed=failedEvaluationState();
+  if(!failed)return;
+
+  if(!failed.correctionSeen){
+    reset.textContent='Corriger ma tentative';
+    reset.dataset.retryCurrent='1';
+    reset.title='Conserver les réponses saisies et déverrouiller ce cas pour les corriger.';
+    return;
+  }
+
+  reset.textContent='Nouvelle évaluation';
+  const practiceBtn=document.createElement('button');
+  practiceBtn.type='button';
+  practiceBtn.id='uxPracticeCorrection';
+  practiceBtn.className='btn';
+  practiceBtn.textContent='Corriger mes réponses (entraînement)';
+  practiceBtn.title='Le corrigé a déjà été consulté : vos réponses seront reprises en mode Entraînement, sans valider le cas en Évaluation.';
+  practiceBtn.addEventListener('click',copyAttemptToPractice);
+  reset.insertAdjacentElement('beforebegin',practiceBtn);
+}
 function syncUi(forced){
   removeOldPathCounters();
   renderHeaderProgress(forced);
   labelCasePosition();
-  syncRetryButton();
+  syncRetryControls();
 }
 
 window.addEventListener('effective-progress',e=>{
@@ -109,7 +139,7 @@ document.addEventListener('click',e=>{
   e.preventDefault();
   e.stopPropagation();
   e.stopImmediatePropagation();
-  reopenCurrentAttempt();
+  reopenCurrentEvaluationAttempt();
 },true);
 
 document.addEventListener('click',e=>{
