@@ -8,7 +8,7 @@ const OFFICIAL={
   rates:'https://www.estv.admin.ch/fr/taux-de-la-tva-suisse',
   acquisitions:'https://www.estv.admin.ch/fr/impot-sur-les-acquisitions-tva',
   annual:'https://www.estv.admin.ch/fr/tva-decompte-annuel-2025',
-  rectification:'https://www.estv.admin.ch/fr/tva-concordance-annuelle'
+  rectification:'https://www.estv.admin.ch/fr/tva-decompte-de-rectification'
 };
 
 export const QUESTION_BANK=[
@@ -32,5 +32,5 @@ export const QUESTION_BANK=[
  {id:'479',q:'Quelle formule correspond au ch. 479 dans le parcours?',o:['400 + 405 + 410 − 415 − 420','400 + 405 − 410 + 415 + 420','399 − 289','200 − 379'],a:0,w:'Le parcours reproduit la structure du prototype pour ces rubriques d’impôt préalable.',s:'Prototype AFC — méthode effective',u:OFFICIAL.form},
  {id:'balance',q:'Si le ch. 399 dépasse le ch. 479, où apparaît le solde dans le modèle?',o:['Au ch. 500, montant à payer','Au ch. 510, solde en faveur','Au ch. 900','Au ch. 205'],a:0,w:'Un solde positif en faveur de l’AFC est porté au ch. 500.',s:'Prototype AFC — méthode effective',u:OFFICIAL.form},
  {id:'annual',q:'Depuis 2025, quel plafond annuel de chiffre d’affaires conditionne notamment l’accès au décompte annuel sur demande?',o:["CHF 5’005’000","CHF 5’024’000","CHF 100’000","CHF 108’000"],a:0,w:'L’AFC indique un seuil de CHF 5’005’000 pour le décompte annuel.',s:'AFC — décompte annuel',u:OFFICIAL.annual},
- {id:'rectification',q:'Une erreur isolée est découverte dans un décompte trimestriel déjà remis. Quelle procédure l’AFC indique-t-elle?',o:['Utiliser le décompte rectificatif de la période concernée','Attendre obligatoirement la concordance annuelle','Ajouter silencieusement la différence au trimestre suivant','Modifier uniquement la comptabilité'],a:0,w:'Les corrections d’une période isolée passent par le décompte rectificatif de cette période.',s:'AFC — rectification / concordance',u:OFFICIAL.rectification}
+ {id:'rectification',q:'Une erreur isolée est découverte dans un décompte trimestriel déjà remis. Quelle procédure l’AFC indique-t-elle?',o:['Utiliser le décompte rectificatif de la période concernée','Attendre obligatoirement la concordance annuelle','Ajouter silencieusement la différence au trimestre suivant','Modifier uniquement la comptabilité'],a:0,w:'Les corrections d’une période isolée passent par le décompte rectificatif de cette période.',s:'AFC — décompte de rectification TVA',u:OFFICIAL.rectification}
 ];
